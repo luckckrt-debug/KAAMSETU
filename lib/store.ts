@@ -23,9 +23,20 @@ import {
   BookingStatus,
   VerificationStatus,
   UserRole,
+  WorkerWallet,
+  WalletLedgerEntry,
+  Withdrawal,
+  PayoutAccount,
+  CommissionRule,
+  WorkerEarningSummary,
+  FinancialAuditLog,
+  LedgerTransactionType,
+  WithdrawalStatus,
 } from './types';
 import { calculateDistanceKm, calculateEstimatedEtaMinutes } from './geo';
 import { getProfessionBySlug } from './professions';
+import { calculateJobCommission } from './commission';
+import { dispatchPayout } from './payout';
 
 const DATA_DIR = path.join(process.cwd(), 'data');
 const STORE_FILE = path.join(DATA_DIR, 'kaamsetu_store.json');
@@ -47,6 +58,12 @@ export interface DatabaseState {
   disputes: JobDispute[];
   chatMessages: ChatMessage[];
   notifications: Notification[];
+  wallets: WorkerWallet[];
+  ledgerEntries: WalletLedgerEntry[];
+  withdrawals: Withdrawal[];
+  payoutAccounts: PayoutAccount[];
+  commissionRules: CommissionRule[];
+  financialAuditLogs: FinancialAuditLog[];
   auditLogs: Array<{
     id: string;
     adminUserId?: string;
@@ -76,15 +93,25 @@ export function loadStore(): DatabaseState {
     try {
       const content = fs.readFileSync(STORE_FILE, 'utf-8');
       memoryState = JSON.parse(content);
-      // Ensure all expanded categories are present
-      if (memoryState && (!memoryState.categories || memoryState.categories.length < seed.categories.length)) {
-        memoryState.categories = seed.categories;
-        seed.users.forEach((u) => {
-          if (!memoryState!.users.some((mu) => mu.id === u.id)) memoryState!.users.push(u);
-        });
-        seed.workerProfiles.forEach((wp) => {
-          if (!memoryState!.workerProfiles.some((mwp) => mwp.id === wp.id)) memoryState!.workerProfiles.push(wp);
-        });
+      
+      // Ensure all expanded categories, wallets, ledger, and payout arrays are initialized
+      if (memoryState) {
+        if (!memoryState.wallets || memoryState.wallets.length === 0) memoryState.wallets = seed.wallets;
+        if (!memoryState.ledgerEntries || memoryState.ledgerEntries.length === 0) memoryState.ledgerEntries = seed.ledgerEntries;
+        if (!memoryState.withdrawals) memoryState.withdrawals = seed.withdrawals;
+        if (!memoryState.payoutAccounts || memoryState.payoutAccounts.length === 0) memoryState.payoutAccounts = seed.payoutAccounts;
+        if (!memoryState.commissionRules || memoryState.commissionRules.length === 0) memoryState.commissionRules = seed.commissionRules;
+        if (!memoryState.financialAuditLogs) memoryState.financialAuditLogs = [];
+
+        if (!memoryState.categories || memoryState.categories.length < seed.categories.length) {
+          memoryState.categories = seed.categories;
+          seed.users.forEach((u) => {
+            if (!memoryState!.users.some((mu) => mu.id === u.id)) memoryState!.users.push(u);
+          });
+          seed.workerProfiles.forEach((wp) => {
+            if (!memoryState!.workerProfiles.some((mwp) => mwp.id === wp.id)) memoryState!.workerProfiles.push(wp);
+          });
+        }
         saveStore();
       }
       return memoryState!;
@@ -2096,6 +2123,198 @@ export function getInitialSeedData(): DatabaseState {
     },
   ];
 
+  // -------------------------------------------------------------
+  // FINANCIAL ENTITIES SEED DATA
+  // -------------------------------------------------------------
+  const commissionRules: CommissionRule[] = [
+    {
+      id: 'crule-default',
+      name: 'Default Marketplace Commission',
+      commissionType: 'PERCENTAGE',
+      percentageRate: 10.0,
+      effectiveFrom: '2026-01-01T00:00:00.000Z',
+      isActive: true,
+      createdAt: '2026-01-01T00:00:00.000Z',
+    },
+    {
+      id: 'crule-heavy',
+      name: 'Heavy Machinery & Cranes Rate',
+      professionSlug: 'machine-operators',
+      serviceCategory: 'cat-heavy-machinery',
+      commissionType: 'PERCENTAGE',
+      percentageRate: 8.0,
+      effectiveFrom: '2026-01-01T00:00:00.000Z',
+      isActive: true,
+      createdAt: '2026-01-01T00:00:00.000Z',
+    },
+    {
+      id: 'crule-cleaning',
+      name: 'Cleaning & Housekeeping Rate',
+      professionSlug: 'cleaners',
+      serviceCategory: 'cat-housekeeping',
+      commissionType: 'PERCENTAGE',
+      percentageRate: 12.0,
+      effectiveFrom: '2026-01-01T00:00:00.000Z',
+      isActive: true,
+      createdAt: '2026-01-01T00:00:00.000Z',
+    },
+  ];
+
+  const payoutAccounts: PayoutAccount[] = [
+    {
+      id: 'pacc-1',
+      workerProfileId: 'worker-prof-1',
+      accountType: 'BANK_ACCOUNT',
+      accountHolderName: 'Ramesh Sharma',
+      bankName: 'HDFC Bank Ltd',
+      accountNumberMasked: '•••• •••• 4821',
+      accountNumberHash: 'hash_4821',
+      ifscCode: 'HDFC0001234',
+      isPrimary: true,
+      verificationStatus: 'VERIFIED',
+      beneficiaryId: 'ben_rzp_4821',
+      createdAt: '2026-01-10T10:00:00.000Z',
+      updatedAt: '2026-01-10T10:00:00.000Z',
+    },
+    {
+      id: 'pacc-2',
+      workerProfileId: 'worker-prof-1',
+      accountType: 'UPI',
+      accountHolderName: 'Ramesh Sharma',
+      upiId: 'ramesh.sharma@okaxis',
+      isPrimary: false,
+      verificationStatus: 'VERIFIED',
+      createdAt: '2026-01-12T12:00:00.000Z',
+      updatedAt: '2026-01-12T12:00:00.000Z',
+    },
+    {
+      id: 'pacc-3',
+      workerProfileId: 'worker-prof-2',
+      accountType: 'BANK_ACCOUNT',
+      accountHolderName: 'Suresh Verma',
+      bankName: 'State Bank of India',
+      accountNumberMasked: '•••• •••• 9012',
+      ifscCode: 'SBIN0004567',
+      isPrimary: true,
+      verificationStatus: 'VERIFIED',
+      createdAt: '2026-01-15T09:00:00.000Z',
+      updatedAt: '2026-01-15T09:00:00.000Z',
+    },
+  ];
+
+  const wallets: WorkerWallet[] = [
+    {
+      id: 'wallet-worker-1',
+      workerProfileId: 'worker-prof-1',
+      availableBalance: 2840,
+      reservedBalance: 0,
+      pendingBalance: 0,
+      totalLifetimeEarnings: 38400,
+      totalWithdrawn: 35560,
+      totalCommissionPaid: 4200,
+      totalCompletedJobs: 42,
+      commissionPayable: 0,
+      currency: 'INR',
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: new Date().toISOString(),
+    },
+    {
+      id: 'wallet-worker-2',
+      workerProfileId: 'worker-prof-2',
+      availableBalance: 1450,
+      reservedBalance: 0,
+      pendingBalance: 0,
+      totalLifetimeEarnings: 18500,
+      totalWithdrawn: 17050,
+      totalCommissionPaid: 1850,
+      totalCompletedJobs: 21,
+      commissionPayable: 0,
+      currency: 'INR',
+      createdAt: '2026-01-01T00:00:00.000Z',
+      updatedAt: new Date().toISOString(),
+    },
+  ];
+
+  const ledgerEntries: WalletLedgerEntry[] = [
+    {
+      id: 'led-1',
+      walletId: 'wallet-worker-1',
+      workerProfileId: 'worker-prof-1',
+      bookingId: 'book-seed-1',
+      transactionType: 'JOB_EARNING',
+      grossAmount: 1500,
+      commissionAmount: 150,
+      feeAmount: 0,
+      netAmount: 1350,
+      balanceBefore: 1490,
+      balanceAfter: 2840,
+      currency: 'INR',
+      status: 'COMPLETED',
+      description: 'Job earnings for booking #KS-1045 (Emergency Wiring Repair)',
+      paymentReference: 'pay_rzp_mock_1045',
+      idempotencyKey: 'job_earn_book-seed-1_pay-1',
+      createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
+    },
+    {
+      id: 'led-2',
+      walletId: 'wallet-worker-1',
+      workerProfileId: 'worker-prof-1',
+      bookingId: 'book-seed-1',
+      transactionType: 'PLATFORM_COMMISSION',
+      grossAmount: 150,
+      commissionAmount: 150,
+      feeAmount: 0,
+      netAmount: -150,
+      balanceBefore: 2840,
+      balanceAfter: 2840,
+      currency: 'INR',
+      status: 'COMPLETED',
+      description: 'Platform commission deduction (10%) for booking #KS-1045',
+      idempotencyKey: 'comm_book-seed-1_pay-1',
+      createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
+    },
+    {
+      id: 'led-3',
+      walletId: 'wallet-worker-1',
+      workerProfileId: 'worker-prof-1',
+      withdrawalId: 'wdr-hist-1',
+      transactionType: 'WITHDRAWAL_SUCCESS',
+      grossAmount: 2000,
+      commissionAmount: 0,
+      feeAmount: 0,
+      netAmount: -2000,
+      balanceBefore: 3490,
+      balanceAfter: 1490,
+      currency: 'INR',
+      status: 'COMPLETED',
+      description: 'Bank transfer payout to HDFC Bank (•••• 4821)',
+      payoutReference: 'pout_rzp_mock_101',
+      idempotencyKey: 'wdr_hist_1',
+      createdAt: new Date(Date.now() - 5 * 86400000).toISOString(),
+    },
+  ];
+
+  const withdrawals: Withdrawal[] = [
+    {
+      id: 'wdr-hist-1',
+      walletId: 'wallet-worker-1',
+      workerProfileId: 'worker-prof-1',
+      payoutAccountId: 'pacc-1',
+      payoutAccountType: 'BANK_ACCOUNT',
+      payoutTargetMasked: 'HDFC Bank (•••• 4821)',
+      amount: 2000,
+      fee: 0,
+      netPayout: 2000,
+      currency: 'INR',
+      status: 'SUCCESS',
+      provider: 'RAZORPAYX',
+      providerPayoutId: 'pout_rzp_mock_101',
+      idempotencyKey: 'wdr_key_101',
+      requestedAt: new Date(Date.now() - 5 * 86400000).toISOString(),
+      completedAt: new Date(Date.now() - 5 * 86400000 + 3600000).toISOString(),
+    },
+  ];
+
   return {
     users,
     workerProfiles,
@@ -2113,6 +2332,12 @@ export function getInitialSeedData(): DatabaseState {
     disputes: [],
     chatMessages,
     notifications,
+    wallets,
+    ledgerEntries,
+    withdrawals,
+    payoutAccounts,
+    commissionRules,
+    financialAuditLogs: [],
     auditLogs: [
       {
         id: 'audit-1',
@@ -2634,9 +2859,10 @@ export const dbStore = {
 
     payment.status = 'PAID';
     payment.providerPaymentId = providerPaymentId;
+    payment.paidAt = new Date().toISOString();
     payment.updatedAt = new Date().toISOString();
 
-    // Also update booking status to PAYMENT_PAID
+    // Update booking status to PAYMENT_PAID
     const booking = store.bookings.find(b => b.id === payment.bookingId);
     if (booking) {
       booking.status = 'PAYMENT_PAID';
@@ -2644,7 +2870,738 @@ export const dbStore = {
     }
 
     saveStore();
+
+    // Automatically trigger instant wallet credit to the assigned worker
+    this.creditJobEarning({
+      bookingId: payment.bookingId,
+      paymentId: payment.id,
+      isCash: false,
+    });
+
     return payment;
+  },
+
+  // -------------------------------------------------------------
+  // DIGITAL WALLET & TRANSACTION LEDGER REPOSITORY
+  // -------------------------------------------------------------
+
+  getOrCreateWorkerWallet(workerProfileId: string): WorkerWallet {
+    const store = loadStore();
+    if (!store.wallets) store.wallets = [];
+    
+    let wallet = store.wallets.find(w => w.workerProfileId === workerProfileId);
+    if (!wallet) {
+      wallet = {
+        id: `wallet-${workerProfileId}`,
+        workerProfileId,
+        availableBalance: 0,
+        reservedBalance: 0,
+        pendingBalance: 0,
+        totalLifetimeEarnings: 0,
+        totalWithdrawn: 0,
+        totalCommissionPaid: 0,
+        totalCompletedJobs: 0,
+        commissionPayable: 0,
+        currency: 'INR',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      store.wallets.push(wallet);
+      saveStore();
+    }
+    return wallet;
+  },
+
+  getWorkerWallet(workerProfileId: string): WorkerWallet {
+    return this.getOrCreateWorkerWallet(workerProfileId);
+  },
+
+  getWorkerLedger(workerProfileId: string, filter?: string): WalletLedgerEntry[] {
+    const store = loadStore();
+    if (!store.ledgerEntries) store.ledgerEntries = [];
+
+    let entries = store.ledgerEntries.filter(l => l.workerProfileId === workerProfileId);
+
+    if (filter && filter !== 'ALL') {
+      if (filter === 'EARNINGS') {
+        entries = entries.filter(e => e.transactionType === 'JOB_EARNING');
+      } else if (filter === 'WITHDRAWALS') {
+        entries = entries.filter(e => e.transactionType.startsWith('WITHDRAWAL_'));
+      } else if (filter === 'PENDING') {
+        entries = entries.filter(e => e.status === 'PENDING');
+      } else if (filter === 'COMPLETED') {
+        entries = entries.filter(e => e.status === 'COMPLETED');
+      } else if (filter === 'FAILED') {
+        entries = entries.filter(e => e.status === 'FAILED');
+      }
+    }
+
+    return entries.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  },
+
+  getWorkerEarningsSummary(workerProfileId: string): WorkerEarningSummary {
+    const store = loadStore();
+    const wallet = this.getOrCreateWorkerWallet(workerProfileId);
+    if (!store.ledgerEntries) store.ledgerEntries = [];
+
+    const now = new Date();
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const weekStart = now.getTime() - 7 * 86400000;
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).getTime();
+
+    const earningEntries = store.ledgerEntries.filter(
+      l => l.workerProfileId === workerProfileId && l.transactionType === 'JOB_EARNING' && l.status === 'COMPLETED'
+    );
+
+    const todayEarnings = earningEntries
+      .filter(l => new Date(l.createdAt).getTime() >= todayStart)
+      .reduce((sum, l) => sum + l.netAmount, 0);
+
+    const thisWeekEarnings = earningEntries
+      .filter(l => new Date(l.createdAt).getTime() >= weekStart)
+      .reduce((sum, l) => sum + l.netAmount, 0);
+
+    const thisMonthEarnings = earningEntries
+      .filter(l => new Date(l.createdAt).getTime() >= monthStart)
+      .reduce((sum, l) => sum + l.netAmount, 0);
+
+    const totalJobs = wallet.totalCompletedJobs || 1;
+    const avgEarning = Math.round(wallet.totalLifetimeEarnings / totalJobs);
+
+    const refundsAdjustments = store.ledgerEntries
+      .filter(l => l.workerProfileId === workerProfileId && (l.transactionType === 'REFUND' || l.transactionType === 'REVERSAL' || l.transactionType === 'ADJUSTMENT'))
+      .reduce((sum, l) => sum + l.netAmount, 0);
+
+    return {
+      wallet,
+      todayEarnings,
+      thisWeekEarnings,
+      thisMonthEarnings,
+      lifetimeEarnings: wallet.totalLifetimeEarnings,
+      averageEarningPerJob: avgEarning,
+      withdrawableAmount: wallet.availableBalance,
+      pendingEarnings: wallet.pendingBalance,
+      commissionDeductions: wallet.totalCommissionPaid,
+      refundsAdjustments,
+      totalWithdrawn: wallet.totalWithdrawn,
+      totalCompletedJobs: wallet.totalCompletedJobs,
+      commissionPayable: wallet.commissionPayable,
+    };
+  },
+
+  getPayoutAccounts(workerProfileId: string): PayoutAccount[] {
+    const store = loadStore();
+    if (!store.payoutAccounts) store.payoutAccounts = [];
+    return store.payoutAccounts.filter(p => p.workerProfileId === workerProfileId);
+  },
+
+  addPayoutAccount(workerProfileId: string, data: Partial<PayoutAccount>): PayoutAccount {
+    const store = loadStore();
+    if (!store.payoutAccounts) store.payoutAccounts = [];
+
+    const existing = store.payoutAccounts.filter(p => p.workerProfileId === workerProfileId);
+    const isFirst = existing.length === 0;
+
+    let masked = '';
+    if (data.accountType === 'BANK_ACCOUNT' && data.accountNumberMasked) {
+      masked = data.accountNumberMasked;
+    } else if (data.accountType === 'BANK_ACCOUNT') {
+      masked = '•••• •••• ' + String(Date.now()).slice(-4);
+    } else {
+      masked = data.upiId || 'worker@upi';
+    }
+
+    const newAccount: PayoutAccount = {
+      id: `pacc-${Date.now()}`,
+      workerProfileId,
+      accountType: data.accountType || 'BANK_ACCOUNT',
+      accountHolderName: data.accountHolderName || 'Verified Worker',
+      bankName: data.bankName || (data.accountType === 'BANK_ACCOUNT' ? 'HDFC Bank' : undefined),
+      accountNumberMasked: masked,
+      accountNumberHash: `hash_${Date.now()}`,
+      ifscCode: data.ifscCode ? data.ifscCode.toUpperCase() : undefined,
+      upiId: data.upiId,
+      isPrimary: data.isPrimary !== undefined ? data.isPrimary : isFirst,
+      verificationStatus: 'VERIFIED',
+      beneficiaryId: `ben_${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (newAccount.isPrimary) {
+      store.payoutAccounts
+        .filter(p => p.workerProfileId === workerProfileId)
+        .forEach(p => (p.isPrimary = false));
+    }
+
+    store.payoutAccounts.push(newAccount);
+    saveStore();
+    return newAccount;
+  },
+
+  deletePayoutAccount(workerProfileId: string, accountId: string): boolean {
+    const store = loadStore();
+    if (!store.payoutAccounts) return false;
+
+    const idx = store.payoutAccounts.findIndex(p => p.id === accountId && p.workerProfileId === workerProfileId);
+    if (idx === -1) return false;
+
+    store.payoutAccounts.splice(idx, 1);
+    saveStore();
+    return true;
+  },
+
+  /**
+   * Automatic Instant Wallet Credit after Job Completion and Payment Verification
+   * Idempotent: Never credits twice for the same booking + payment
+   */
+  creditJobEarning(params: {
+    bookingId: string;
+    paymentId?: string;
+    isCash?: boolean;
+    customAmount?: number;
+  }): {
+    success: boolean;
+    wallet: WorkerWallet;
+    ledgerEntry: WalletLedgerEntry;
+    alreadyCredited?: boolean;
+    message: string;
+  } {
+    const store = loadStore();
+    const booking = store.bookings.find(b => b.id === params.bookingId);
+    if (!booking) {
+      throw new Error(`Booking ${params.bookingId} not found`);
+    }
+
+    const workerProfileId = booking.assignedWorkerProfileId;
+    if (!workerProfileId) {
+      throw new Error(`No worker assigned to booking ${params.bookingId}`);
+    }
+
+    // 1. Check idempotency: If already credited, return existing state
+    const idempotencyKey = `job_earn_${params.bookingId}_${params.paymentId || 'default'}`;
+    const existingEntry = store.ledgerEntries?.find(l => l.idempotencyKey === idempotencyKey);
+    const wallet = this.getOrCreateWorkerWallet(workerProfileId);
+
+    if (existingEntry) {
+      return {
+        success: true,
+        wallet,
+        ledgerEntry: existingEntry,
+        alreadyCredited: true,
+        message: 'Job earnings already credited previously (Idempotent).',
+      };
+    }
+
+    // 2. Transparent Commission Calculation
+    const jobAmount = params.customAmount || booking.finalAmount || booking.estimatedAmount;
+    const commissionRules = store.commissionRules || [];
+    const breakdown = calculateJobCommission({
+      jobAmount,
+      professionSlug: booking.serviceCategory,
+      serviceCategory: booking.serviceCategory,
+      workerProfileId,
+      isCash: params.isCash,
+      customRules: commissionRules,
+    });
+
+    const nowIso = new Date().toISOString();
+    let ledgerEntry: WalletLedgerEntry;
+
+    // 3. Update Wallet Balance atomically
+    if (!params.isCash) {
+      // ONLINE PAYMENT: Net amount credited directly to digital earning wallet
+      const balanceBefore = wallet.availableBalance;
+      wallet.availableBalance = Math.round((wallet.availableBalance + breakdown.workerNetEarning) * 100) / 100;
+      wallet.totalLifetimeEarnings = Math.round((wallet.totalLifetimeEarnings + breakdown.workerNetEarning) * 100) / 100;
+      wallet.totalCommissionPaid = Math.round((wallet.totalCommissionPaid + breakdown.commissionAmount) * 100) / 100;
+      wallet.totalCompletedJobs += 1;
+      wallet.updatedAt = nowIso;
+
+      // Immutable Credit Ledger Entry
+      ledgerEntry = {
+        id: `led-${Date.now()}-1`,
+        walletId: wallet.id,
+        workerProfileId,
+        bookingId: booking.id,
+        paymentId: params.paymentId,
+        transactionType: 'JOB_EARNING',
+        grossAmount: breakdown.jobAmount,
+        commissionAmount: breakdown.commissionAmount,
+        feeAmount: breakdown.additionalFees,
+        netAmount: breakdown.workerNetEarning,
+        balanceBefore,
+        balanceAfter: wallet.availableBalance,
+        currency: 'INR',
+        status: 'COMPLETED',
+        description: `Job earnings for booking #${booking.id.slice(-6)} (${booking.serviceCategory})`,
+        paymentReference: params.paymentId || 'online_gateway',
+        idempotencyKey,
+        metadata: {
+          ratePercent: breakdown.commissionRatePercent,
+          ruleApplied: breakdown.ruleApplied,
+          isExempt: breakdown.isExempt,
+        },
+        createdAt: nowIso,
+      };
+      store.ledgerEntries.push(ledgerEntry);
+
+      // Immutable Platform Commission Deduction Record
+      const commEntry: WalletLedgerEntry = {
+        id: `led-${Date.now()}-2`,
+        walletId: wallet.id,
+        workerProfileId,
+        bookingId: booking.id,
+        paymentId: params.paymentId,
+        transactionType: 'PLATFORM_COMMISSION',
+        grossAmount: breakdown.commissionAmount,
+        commissionAmount: breakdown.commissionAmount,
+        feeAmount: 0,
+        netAmount: -breakdown.commissionAmount,
+        balanceBefore: wallet.availableBalance,
+        balanceAfter: wallet.availableBalance,
+        currency: 'INR',
+        status: 'COMPLETED',
+        description: `Platform commission (${breakdown.commissionRatePercent}%) for booking #${booking.id.slice(-6)}`,
+        idempotencyKey: `comm_${params.bookingId}_${params.paymentId || 'default'}`,
+        createdAt: nowIso,
+      };
+      store.ledgerEntries.push(commEntry);
+    } else {
+      // CASH PAYMENT: Worker collected full cash at site
+      // Platform commission tracked as commissionPayable (do NOT credit cash to digital wallet)
+      wallet.commissionPayable = Math.round((wallet.commissionPayable + breakdown.commissionAmount) * 100) / 100;
+      wallet.totalCommissionPaid = Math.round((wallet.totalCommissionPaid + breakdown.commissionAmount) * 100) / 100;
+      wallet.totalCompletedJobs += 1;
+      wallet.updatedAt = nowIso;
+
+      ledgerEntry = {
+        id: `led-${Date.now()}-cash`,
+        walletId: wallet.id,
+        workerProfileId,
+        bookingId: booking.id,
+        transactionType: 'CASH_COMMISSION_PAYABLE',
+        grossAmount: breakdown.jobAmount,
+        commissionAmount: breakdown.commissionAmount,
+        feeAmount: 0,
+        netAmount: 0,
+        balanceBefore: wallet.availableBalance,
+        balanceAfter: wallet.availableBalance,
+        currency: 'INR',
+        status: 'COMPLETED',
+        description: `Cash job completed #${booking.id.slice(-6)}. Cash collected: ₹${breakdown.jobAmount}. Commission payable: ₹${breakdown.commissionAmount}`,
+        idempotencyKey,
+        metadata: { isCash: true, commissionAmount: breakdown.commissionAmount },
+        createdAt: nowIso,
+      };
+      store.ledgerEntries.push(ledgerEntry);
+    }
+
+    // 4. In-App Notification for Worker
+    const workerUser = store.workerProfiles.find(w => w.id === workerProfileId);
+    if (workerUser) {
+      store.notifications.push({
+        id: `notif-earn-${Date.now()}`,
+        userId: workerUser.userId,
+        title: params.isCash ? 'Cash Job Completed' : `₹${breakdown.workerNetEarning} Credited to Wallet!`,
+        body: params.isCash
+          ? `Cash collected ₹${breakdown.jobAmount} for booking #${booking.id.slice(-6)}. Commission payable: ₹${breakdown.commissionAmount}.`
+          : `₹${breakdown.workerNetEarning} (₹${breakdown.jobAmount} minus ₹${breakdown.commissionAmount} commission) has been credited to your earning wallet.`,
+        actionUrl: '/worker/earnings',
+        type: 'PAYMENT',
+        isRead: false,
+        createdAt: nowIso,
+      });
+    }
+
+    saveStore();
+
+    // 5. Real-Time Socket.IO Broadcast to Worker Dashboard & Booking Room
+    if ((global as any).__kaamsetu_io) {
+      const io = (global as any).__kaamsetu_io;
+      io.to(`worker:${workerProfileId}`).emit('wallet:balance:updated', {
+        workerProfileId,
+        availableBalance: wallet.availableBalance,
+        reservedBalance: wallet.reservedBalance,
+        updatedAt: wallet.updatedAt,
+      });
+      io.to(`worker:${workerProfileId}`).emit('wallet:earning:credited', {
+        workerProfileId,
+        bookingId: booking.id,
+        grossAmount: breakdown.jobAmount,
+        commissionAmount: breakdown.commissionAmount,
+        netAmount: breakdown.workerNetEarning,
+        isCash: Boolean(params.isCash),
+        timestamp: nowIso,
+      });
+      io.to(`booking:${booking.id}`).emit('booking:earning:credited', {
+        bookingId: booking.id,
+        workerNetEarning: breakdown.workerNetEarning,
+      });
+      io.to('admin:operations').emit('wallet:transaction:created', ledgerEntry);
+    }
+
+    return {
+      success: true,
+      wallet,
+      ledgerEntry,
+      alreadyCredited: false,
+      message: params.isCash
+        ? 'Cash job recorded. Commission payable tracked.'
+        : `₹${breakdown.workerNetEarning} successfully credited to digital wallet.`,
+    };
+  },
+
+  /**
+   * Functional Withdrawal Request with Balance Locking & Provider Integration
+   */
+  async requestWithdrawal(params: {
+    workerProfileId: string;
+    payoutAccountId: string;
+    amount: number;
+    idempotencyKey?: string;
+  }): Promise<{ success: boolean; withdrawal?: Withdrawal; error?: string }> {
+    const store = loadStore();
+    const wallet = this.getOrCreateWorkerWallet(params.workerProfileId);
+    const amount = Number(params.amount);
+
+    if (isNaN(amount) || amount <= 0) {
+      return { success: false, error: 'Invalid withdrawal amount' };
+    }
+
+    // Minimum / Maximum Limits
+    const MIN_WITHDRAWAL = 100;
+    const MAX_WITHDRAWAL = 50000;
+    if (amount < MIN_WITHDRAWAL) {
+      return { success: false, error: `Minimum withdrawal amount is ₹${MIN_WITHDRAWAL}` };
+    }
+    if (amount > MAX_WITHDRAWAL) {
+      return { success: false, error: `Maximum single withdrawal limit is ₹${MAX_WITHDRAWAL}` };
+    }
+
+    // Atomic Balance Check: Prevent overspending
+    if (wallet.availableBalance < amount) {
+      return {
+        success: false,
+        error: `Insufficient available balance. You have ₹${wallet.availableBalance} available.`,
+      };
+    }
+
+    // Validate Payout Account
+    const account = store.payoutAccounts?.find(
+      p => p.id === params.payoutAccountId && p.workerProfileId === params.workerProfileId
+    );
+    if (!account) {
+      return { success: false, error: 'Payout account not found or does not belong to you' };
+    }
+
+    // Transparent Payout Fee (₹0 for UPI, or nominal)
+    const payoutFee = 0;
+    const netPayout = amount - payoutFee;
+    const idempotencyKey = params.idempotencyKey || `wdr_${params.workerProfileId}_${Date.now()}`;
+
+    // Atomic Balance Lock: Move from available to reserved
+    const balanceBefore = wallet.availableBalance;
+    wallet.availableBalance = Math.round((wallet.availableBalance - amount) * 100) / 100;
+    wallet.reservedBalance = Math.round((wallet.reservedBalance + amount) * 100) / 100;
+    wallet.updatedAt = new Date().toISOString();
+
+    const withdrawal: Withdrawal = {
+      id: `wdr-${Date.now()}`,
+      walletId: wallet.id,
+      workerProfileId: params.workerProfileId,
+      payoutAccountId: account.id,
+      payoutAccountType: account.accountType,
+      payoutTargetMasked: account.accountType === 'UPI' ? (account.upiId || 'UPI') : `${account.bankName || 'Bank'} (${account.accountNumberMasked})`,
+      amount,
+      fee: payoutFee,
+      netPayout,
+      currency: 'INR',
+      status: 'PROCESSING',
+      provider: 'RAZORPAYX',
+      idempotencyKey,
+      requestedAt: new Date().toISOString(),
+    };
+
+    if (!store.withdrawals) store.withdrawals = [];
+    store.withdrawals.push(withdrawal);
+
+    // Record immutable ledger entry for withdrawal request
+    store.ledgerEntries.push({
+      id: `led-wdr-${Date.now()}`,
+      walletId: wallet.id,
+      workerProfileId: params.workerProfileId,
+      withdrawalId: withdrawal.id,
+      transactionType: 'WITHDRAWAL_REQUEST',
+      grossAmount: amount,
+      commissionAmount: 0,
+      feeAmount: payoutFee,
+      netAmount: -amount,
+      balanceBefore,
+      balanceAfter: wallet.availableBalance,
+      currency: 'INR',
+      status: 'PENDING',
+      description: `Withdrawal request #${withdrawal.id.slice(-6)} to ${withdrawal.payoutTargetMasked}`,
+      idempotencyKey,
+      createdAt: new Date().toISOString(),
+    });
+
+    saveStore();
+
+    // Dispatch to Payout Provider
+    const worker = this.getWorkerById(params.workerProfileId);
+    const workerName = worker?.user?.fullName || 'Worker';
+    const dispatchResult = await dispatchPayout({
+      withdrawal,
+      account,
+      workerName,
+    });
+
+    if (dispatchResult.status === 'SUCCESS') {
+      this.finalizeWithdrawal(withdrawal.id, true, dispatchResult.providerPayoutId);
+    } else if (dispatchResult.status === 'FAILED') {
+      this.finalizeWithdrawal(withdrawal.id, false, undefined, dispatchResult.message);
+    } else {
+      // NOT_CONFIGURED or PROCESSING: Keep status in PROCESSING with funds reserved
+      withdrawal.providerPayoutId = dispatchResult.providerPayoutId;
+      withdrawal.status = 'PROCESSING';
+      saveStore();
+    }
+
+    // Socket.IO Broadcast
+    if ((global as any).__kaamsetu_io) {
+      const io = (global as any).__kaamsetu_io;
+      io.to(`worker:${params.workerProfileId}`).emit('wallet:balance:updated', {
+        workerProfileId: params.workerProfileId,
+        availableBalance: wallet.availableBalance,
+        reservedBalance: wallet.reservedBalance,
+      });
+      io.to(`worker:${params.workerProfileId}`).emit('wallet:withdrawal:created', withdrawal);
+    }
+
+    return { success: true, withdrawal };
+  },
+
+  /**
+   * Finalizes Withdrawal: Deducts from reserved if success; Restores balance if failed!
+   */
+  finalizeWithdrawal(
+    withdrawalId: string,
+    success: boolean,
+    providerRef?: string,
+    failureReason?: string
+  ): Withdrawal | null {
+    const store = loadStore();
+    const withdrawal = store.withdrawals?.find(w => w.id === withdrawalId);
+    if (!withdrawal) return null;
+
+    const wallet = this.getOrCreateWorkerWallet(withdrawal.workerProfileId);
+    const nowIso = new Date().toISOString();
+
+    if (success) {
+      wallet.reservedBalance = Math.max(0, Math.round((wallet.reservedBalance - withdrawal.amount) * 100) / 100);
+      wallet.totalWithdrawn = Math.round((wallet.totalWithdrawn + withdrawal.netPayout) * 100) / 100;
+      wallet.updatedAt = nowIso;
+
+      withdrawal.status = 'SUCCESS';
+      withdrawal.providerPayoutId = providerRef || withdrawal.providerPayoutId || `pout_mock_${Date.now()}`;
+      withdrawal.completedAt = nowIso;
+
+      // Immutable Success Ledger Entry
+      store.ledgerEntries.push({
+        id: `led-wsucc-${Date.now()}`,
+        walletId: wallet.id,
+        workerProfileId: withdrawal.workerProfileId,
+        withdrawalId: withdrawal.id,
+        transactionType: 'WITHDRAWAL_SUCCESS',
+        grossAmount: withdrawal.amount,
+        commissionAmount: 0,
+        feeAmount: withdrawal.fee,
+        netAmount: -withdrawal.netPayout,
+        balanceBefore: wallet.availableBalance,
+        balanceAfter: wallet.availableBalance,
+        currency: 'INR',
+        status: 'COMPLETED',
+        description: `Settled withdrawal #${withdrawal.id.slice(-6)} to ${withdrawal.payoutTargetMasked}`,
+        payoutReference: withdrawal.providerPayoutId,
+        idempotencyKey: `wsucc_${withdrawal.id}`,
+        createdAt: nowIso,
+      });
+    } else {
+      // Payout Failed -> Restore reserved funds back to available balance!
+      wallet.reservedBalance = Math.max(0, Math.round((wallet.reservedBalance - withdrawal.amount) * 100) / 100);
+      wallet.availableBalance = Math.round((wallet.availableBalance + withdrawal.amount) * 100) / 100;
+      wallet.updatedAt = nowIso;
+
+      withdrawal.status = 'FAILED';
+      withdrawal.failureReason = failureReason || 'Payout transaction failed at gateway';
+
+      // Immutable Restoration Ledger Entry
+      store.ledgerEntries.push({
+        id: `led-wfail-${Date.now()}`,
+        walletId: wallet.id,
+        workerProfileId: withdrawal.workerProfileId,
+        withdrawalId: withdrawal.id,
+        transactionType: 'WITHDRAWAL_FAILED',
+        grossAmount: withdrawal.amount,
+        commissionAmount: 0,
+        feeAmount: 0,
+        netAmount: withdrawal.amount, // Positive restoration
+        balanceBefore: wallet.availableBalance - withdrawal.amount,
+        balanceAfter: wallet.availableBalance,
+        currency: 'INR',
+        status: 'FAILED',
+        description: `Restored ₹${withdrawal.amount} to wallet. Reason: ${withdrawal.failureReason}`,
+        idempotencyKey: `wfail_${withdrawal.id}`,
+        createdAt: nowIso,
+      });
+    }
+
+    saveStore();
+
+    // Broadcast Real-time Events
+    if ((global as any).__kaamsetu_io) {
+      const io = (global as any).__kaamsetu_io;
+      io.to(`worker:${withdrawal.workerProfileId}`).emit('wallet:balance:updated', {
+        workerProfileId: withdrawal.workerProfileId,
+        availableBalance: wallet.availableBalance,
+        reservedBalance: wallet.reservedBalance,
+      });
+      io.to(`worker:${withdrawal.workerProfileId}`).emit('wallet:withdrawal:updated', withdrawal);
+    }
+
+    return withdrawal;
+  },
+
+  // -------------------------------------------------------------
+  // ADMIN FINANCIAL REPORTING & COMMISSION REPOSITORY
+  // -------------------------------------------------------------
+
+  getAdminFinancialSummary() {
+    const store = loadStore();
+    if (!store.ledgerEntries) store.ledgerEntries = [];
+    if (!store.withdrawals) store.withdrawals = [];
+    if (!store.wallets) store.wallets = [];
+
+    const jobEarnings = store.ledgerEntries.filter(l => l.transactionType === 'JOB_EARNING' && l.status === 'COMPLETED');
+    const commissions = store.ledgerEntries.filter(l => l.transactionType === 'PLATFORM_COMMISSION' && l.status === 'COMPLETED');
+    const cashJobs = store.ledgerEntries.filter(l => l.transactionType === 'CASH_COMMISSION_PAYABLE');
+    const withdrawals = store.withdrawals;
+
+    const totalGrossRevenue = jobEarnings.reduce((sum, l) => sum + l.grossAmount, 0) + cashJobs.reduce((sum, l) => sum + l.grossAmount, 0);
+    const totalWorkerEarnings = jobEarnings.reduce((sum, l) => sum + l.netAmount, 0);
+    const totalPlatformCommissions = commissions.reduce((sum, l) => sum + Math.abs(l.grossAmount), 0);
+    const totalCashVolume = cashJobs.reduce((sum, l) => sum + l.grossAmount, 0);
+    const totalOutstandingCashCommission = store.wallets.reduce((sum, w) => sum + (w.commissionPayable || 0), 0);
+
+    const successfulWithdrawals = withdrawals.filter(w => w.status === 'SUCCESS');
+    const totalWithdrawnAmount = successfulWithdrawals.reduce((sum, w) => sum + w.netPayout, 0);
+    const pendingWithdrawals = withdrawals.filter(w => w.status === 'REQUESTED' || w.status === 'PROCESSING' || w.status === 'UNDER_REVIEW');
+    const pendingWithdrawalsAmount = pendingWithdrawals.reduce((sum, w) => sum + w.amount, 0);
+    const failedWithdrawals = withdrawals.filter(w => w.status === 'FAILED');
+
+    return {
+      totalGrossRevenue,
+      totalWorkerEarnings,
+      totalPlatformCommissions,
+      totalWithdrawnAmount,
+      pendingWithdrawalsCount: pendingWithdrawals.length,
+      pendingWithdrawalsAmount,
+      failedWithdrawalsCount: failedWithdrawals.length,
+      totalCashVolume,
+      totalOutstandingCashCommission,
+      totalWalletsCount: store.wallets.length,
+      totalLedgerEntriesCount: store.ledgerEntries.length,
+    };
+  },
+
+  getAdminFinancialTransactions(filters?: { type?: string; workerId?: string; bookingId?: string }): WalletLedgerEntry[] {
+    const store = loadStore();
+    if (!store.ledgerEntries) store.ledgerEntries = [];
+
+    let entries = [...store.ledgerEntries];
+    if (filters?.type && filters.type !== 'ALL') {
+      entries = entries.filter(e => e.transactionType === filters.type);
+    }
+    if (filters?.workerId) {
+      entries = entries.filter(e => e.workerProfileId === filters.workerId);
+    }
+    if (filters?.bookingId) {
+      entries = entries.filter(e => e.bookingId === filters.bookingId);
+    }
+
+    return entries.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  },
+
+  getAdminWithdrawals(filters?: { status?: string }): Withdrawal[] {
+    const store = loadStore();
+    if (!store.withdrawals) store.withdrawals = [];
+
+    let list = [...store.withdrawals];
+    if (filters?.status && filters.status !== 'ALL') {
+      list = list.filter(w => w.status === filters.status);
+    }
+    return list.sort((a, b) => new Date(b.requestedAt).getTime() - new Date(a.requestedAt).getTime());
+  },
+
+  getCommissionRules(): CommissionRule[] {
+    const store = loadStore();
+    return store.commissionRules || [];
+  },
+
+  createOrUpdateCommissionRule(ruleData: Partial<CommissionRule>): CommissionRule {
+    const store = loadStore();
+    if (!store.commissionRules) store.commissionRules = [];
+
+    let rule: CommissionRule;
+    if (ruleData.id) {
+      const idx = store.commissionRules.findIndex(r => r.id === ruleData.id);
+      if (idx !== -1) {
+        store.commissionRules[idx] = { ...store.commissionRules[idx], ...ruleData };
+        saveStore();
+        return store.commissionRules[idx];
+      }
+    }
+
+    rule = {
+      id: `crule-${Date.now()}`,
+      name: ruleData.name || 'Custom Commission Rule',
+      professionSlug: ruleData.professionSlug,
+      serviceCategory: ruleData.serviceCategory,
+      commissionType: ruleData.commissionType || 'PERCENTAGE',
+      percentageRate: ruleData.percentageRate !== undefined ? Number(ruleData.percentageRate) : 10,
+      fixedAmount: ruleData.fixedAmount ? Number(ruleData.fixedAmount) : undefined,
+      effectiveFrom: ruleData.effectiveFrom || new Date().toISOString(),
+      isActive: ruleData.isActive !== undefined ? ruleData.isActive : true,
+      exemptWorkerProfileIds: ruleData.exemptWorkerProfileIds,
+      createdAt: new Date().toISOString(),
+    };
+
+    store.commissionRules.push(rule);
+    saveStore();
+    return rule;
+  },
+
+  recordFinancialAudit(actorUserId: string, actorRole: string, action: string, entityType: any, entityId: string, details: string, amount?: number) {
+    const store = loadStore();
+    if (!store.financialAuditLogs) store.financialAuditLogs = [];
+
+    store.financialAuditLogs.unshift({
+      id: `faudit-${Date.now()}`,
+      actorUserId,
+      actorRole,
+      action,
+      entityType,
+      entityId,
+      amount,
+      details,
+      timestamp: new Date().toISOString(),
+    });
+
+    if (store.financialAuditLogs.length > 500) {
+      store.financialAuditLogs = store.financialAuditLogs.slice(0, 500);
+    }
+    saveStore();
   },
 
   // Tenders

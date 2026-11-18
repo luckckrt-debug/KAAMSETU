@@ -170,6 +170,19 @@ app.prepare().then(() => {
       io.to(room).emit('chat:received', msg);
     });
 
+    // 9. Worker Wallet realtime subscription
+    socket.on('wallet:subscribe', ({ workerProfileId }) => {
+      if (workerProfileId) {
+        socket.join(`worker:${workerProfileId}`);
+        socket.join(`wallet:${workerProfileId}`);
+      }
+    });
+
+    // 10. Admin Finance room
+    socket.on('admin:finance:subscribe', () => {
+      socket.join('admin:finance');
+    });
+
     socket.on('disconnect', () => {
       // Clean disconnect
     });

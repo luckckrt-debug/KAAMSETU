@@ -337,8 +337,154 @@ export interface Payment {
   status: PaymentStatus;
   platformCommission: number;
   workerPayoutAmount: number;
+  paymentMethod?: 'ONLINE' | 'CASH' | 'WALLET' | 'UPI';
+  paidAt?: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export type LedgerTransactionType = 
+  | 'JOB_EARNING'
+  | 'PLATFORM_COMMISSION'
+  | 'WITHDRAWAL_REQUEST'
+  | 'WITHDRAWAL_PROCESSING'
+  | 'WITHDRAWAL_SUCCESS'
+  | 'WITHDRAWAL_FAILED'
+  | 'REFUND'
+  | 'REVERSAL'
+  | 'BONUS'
+  | 'ADJUSTMENT'
+  | 'CASH_COMMISSION_PAYABLE'
+  | 'CASH_COMMISSION_DEDUCTED';
+
+export type WithdrawalStatus = 
+  | 'REQUESTED'
+  | 'UNDER_REVIEW'
+  | 'PROCESSING'
+  | 'SUCCESS'
+  | 'FAILED'
+  | 'CANCELLED';
+
+export interface PayoutAccount {
+  id: string;
+  workerProfileId: string;
+  accountType: 'BANK_ACCOUNT' | 'UPI';
+  accountHolderName: string;
+  bankName?: string;
+  accountNumberMasked?: string;
+  accountNumberHash?: string;
+  ifscCode?: string;
+  upiId?: string;
+  isPrimary: boolean;
+  verificationStatus: 'VERIFIED' | 'PENDING' | 'REJECTED';
+  beneficiaryId?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WorkerWallet {
+  id: string;
+  workerProfileId: string;
+  availableBalance: number;
+  reservedBalance: number;
+  pendingBalance: number;
+  totalLifetimeEarnings: number;
+  totalWithdrawn: number;
+  totalCommissionPaid: number;
+  totalCompletedJobs: number;
+  commissionPayable: number;
+  currency: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WalletLedgerEntry {
+  id: string;
+  walletId: string;
+  workerProfileId: string;
+  bookingId?: string;
+  withdrawalId?: string;
+  paymentId?: string;
+  transactionType: LedgerTransactionType;
+  grossAmount: number;
+  commissionAmount: number;
+  feeAmount: number;
+  netAmount: number; // positive = credit, negative = debit
+  balanceBefore: number;
+  balanceAfter: number;
+  currency: string;
+  status: 'COMPLETED' | 'PENDING' | 'REVERSED' | 'FAILED';
+  description: string;
+  paymentReference?: string;
+  payoutReference?: string;
+  idempotencyKey: string;
+  metadata?: Record<string, any>;
+  createdAt: string;
+}
+
+export interface Withdrawal {
+  id: string;
+  walletId: string;
+  workerProfileId: string;
+  payoutAccountId: string;
+  payoutAccountType: 'BANK_ACCOUNT' | 'UPI';
+  payoutTargetMasked: string;
+  amount: number;
+  fee: number;
+  netPayout: number;
+  currency: string;
+  status: WithdrawalStatus;
+  provider: string;
+  providerPayoutId?: string;
+  failureReason?: string;
+  idempotencyKey: string;
+  requestedAt: string;
+  reviewedAt?: string;
+  processedAt?: string;
+  completedAt?: string;
+}
+
+export interface CommissionRule {
+  id: string;
+  name: string;
+  professionSlug?: string;
+  serviceCategory?: string;
+  commissionType: 'PERCENTAGE' | 'FIXED' | 'HYBRID';
+  percentageRate: number;
+  fixedAmount?: number;
+  effectiveFrom: string;
+  effectiveTo?: string;
+  isActive: boolean;
+  exemptWorkerProfileIds?: string[];
+  createdAt: string;
+}
+
+export interface WorkerEarningSummary {
+  wallet: WorkerWallet;
+  todayEarnings: number;
+  thisWeekEarnings: number;
+  thisMonthEarnings: number;
+  lifetimeEarnings: number;
+  averageEarningPerJob: number;
+  withdrawableAmount: number;
+  pendingEarnings: number;
+  commissionDeductions: number;
+  refundsAdjustments: number;
+  totalWithdrawn: number;
+  totalCompletedJobs: number;
+  commissionPayable: number;
+}
+
+export interface FinancialAuditLog {
+  id: string;
+  actorUserId?: string;
+  actorRole: string;
+  action: string;
+  entityType: 'WALLET' | 'LEDGER' | 'WITHDRAWAL' | 'COMMISSION_RULE' | 'REFUND';
+  entityId: string;
+  amount?: number;
+  details: string;
+  timestamp: string;
 }
 
 export interface WorkerPayout {

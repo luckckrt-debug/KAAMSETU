@@ -46,6 +46,18 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
       cancellationReason,
     });
 
+    // Automatically trigger wallet earning credit if customer confirmed cash job or paid online
+    if (newStatus === 'PAYMENT_PAID' || (body.paymentMethod === 'CASH' && (newStatus === 'CUSTOMER_CONFIRMED' || newStatus === 'WORK_COMPLETED'))) {
+      try {
+        dbStore.creditJobEarning({
+          bookingId: params.id,
+          isCash: body.paymentMethod === 'CASH',
+        });
+      } catch (e) {
+        console.error('Wallet credit notice on status transition:', e);
+      }
+    }
+
     // Notify realtime room via socket if server active
     if ((global as any).__kaamsetu_io) {
       (global as any).__kaamsetu_io.to(`booking:${params.id}`).emit('booking:status_changed', {

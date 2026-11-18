@@ -153,6 +153,14 @@ export default function AdminBackofficePage() {
 
           <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
             <Link
+              href="/admin/finance"
+              className="px-5 py-2.5 rounded-xl bg-cta hover:bg-[#e09346] text-white text-xs font-black flex items-center gap-2 shadow-sm transition"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span>FINANCE & SETTLEMENTS (वित्त व निकासी)</span>
+            </Link>
+
+            <Link
               href="/admin/operations"
               className="px-5 py-2.5 rounded-xl bg-lime hover:bg-[#a5d259] text-forest text-xs font-black flex items-center gap-2 shadow-sm transition"
             >
@@ -258,9 +266,18 @@ export default function AdminBackofficePage() {
 
             {/* Financial Overview */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-border shadow-xs space-y-4">
-              <h2 className="text-base font-black text-forest border-b border-border pb-3">
-                Financial Volume & Platform Commission Ledger
-              </h2>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-border gap-2">
+                <h2 className="text-base font-black text-forest">
+                  Financial Volume & Platform Commission Ledger
+                </h2>
+                <Link
+                  href="/admin/finance"
+                  className="inline-flex items-center gap-1.5 text-xs font-black text-forest hover:text-forest-light bg-lime/30 hover:bg-lime/50 px-3.5 py-1.5 rounded-xl border border-lime/50 transition w-fit"
+                >
+                  <CreditCard className="w-3.5 h-3.5 text-forest" />
+                  <span>Open Full Finance & Payout Desk →</span>
+                </Link>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs">
                 <div className="p-5 rounded-2xl bg-bg border border-border">
