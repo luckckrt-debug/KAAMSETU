@@ -14,8 +14,15 @@ export default function BulkHiringSection() {
     'Electricians': 1100,
     'Carpenters': 1000,
     'Construction Labourers': 650,
-    'Painters': 850,
-    'Welders': 1150,
+    'Steel Barbenders & Rebar': 1100,
+    'Painters & Polishers': 850,
+    'Welders & Fabricators': 1150,
+    'Tiles & Marble Setters': 1100,
+    'Civil Site Supervisors': 1800,
+    'Heavy Machinery / JCB Operators': 1500,
+    'Security Guards & Bouncers': 850,
+    'Deep Housekeeping Crew': 750,
+    'Warehouse & Packaging Staff': 700,
   };
 
   const currentRate = tradeDailyRates[selectedTrade] || 850;

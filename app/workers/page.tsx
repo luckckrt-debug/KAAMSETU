@@ -121,14 +121,41 @@ function WorkersDirectoryContent() {
                 onChange={(e) => setCategory(e.target.value)}
                 className="px-4 py-3 rounded-xl border border-border bg-bg text-xs font-bold text-forest focus:outline-none focus:border-forest"
               >
-                <option value="">All Categories (सभी)</option>
-                <option value="electrician">Electrician (बिजली)</option>
-                <option value="plumber">Plumber (नल)</option>
-                <option value="mason">Mason (राज मिस्त्री)</option>
-                <option value="carpenter">Carpenter (बढ़ई)</option>
-                <option value="painter">Painter (पेंटर)</option>
-                <option value="ac-appliance-technician">AC Technician</option>
-                <option value="construction-labour">Labour / Beldar</option>
+                <option value="">All Categories (सभी श्रेणियां)</option>
+                <optgroup label="🏠 Home Repair & Domestic">
+                  <option value="electrician">Electrician (बिजली मिस्त्री)</option>
+                  <option value="plumber">Plumber (नल मिस्त्री)</option>
+                  <option value="carpenter">Carpenter (बढ़ई)</option>
+                  <option value="painter">Painter (रंग मिस्त्री)</option>
+                  <option value="ac-appliance-technician">AC & Appliance Technician</option>
+                  <option value="water-purifier-ro-technician">RO & Water Purifier Tech</option>
+                  <option value="pest-control-specialist">Pest Control Specialist</option>
+                </optgroup>
+                <optgroup label="🏗️ Construction & Civil Works">
+                  <option value="mason">Mason / Raj Mistri (राज मिस्त्री)</option>
+                  <option value="construction-labour">Labour / Beldar (मजदूर)</option>
+                  <option value="steel-barbender-rebar">Steel Barbender (सरिया मिस्त्री)</option>
+                  <option value="tiles-marble-granite">Tiles & Marble Specialist</option>
+                  <option value="welder">Welder & Metal Fabricator</option>
+                </optgroup>
+                <optgroup label="⚡ Engineering & Supervision">
+                  <option value="solar-inverter-technician">Solar & Inverter Engineer</option>
+                  <option value="civil-engineer-supervisor">Civil Site Engineer / Supervisor</option>
+                  <option value="cctv-smart-security">CCTV & Smart Security Tech</option>
+                </optgroup>
+                <optgroup label="🚚 Logistics & Heavy Machinery">
+                  <option value="commercial-driver">Commercial Driver & Chauffeur</option>
+                  <option value="heavy-machinery-jcb-operator">Heavy Machinery & JCB Operator</option>
+                  <option value="warehouse-packaging-workforce">Warehouse & Packaging Workforce</option>
+                </optgroup>
+                <optgroup label="🏢 Facility & Security">
+                  <option value="deep-cleaning-housekeeping">Deep Cleaning & Housekeeping</option>
+                  <option value="security-guard-bouncers">Security Personnel & Guards</option>
+                </optgroup>
+                <optgroup label="🌿 Agriculture & Events">
+                  <option value="gardener-mali-landscaper">Gardener / Mali & Landscaper</option>
+                  <option value="event-setup-banquet-workforce">Event Setup & Banquet Staff</option>
+                </optgroup>
               </select>
 
               <button

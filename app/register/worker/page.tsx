@@ -280,14 +280,40 @@ export default function WorkerRegistrationPage() {
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl border border-border bg-bg text-sm font-bold text-forest focus:outline-none focus:border-forest"
               >
-                <option value="cat-electrician">Electrician (बिजली मिस्त्री)</option>
-                <option value="cat-plumber">Plumber (नल मिस्त्री)</option>
-                <option value="cat-mason">Mason (राज मिस्त्री)</option>
-                <option value="cat-carpenter">Carpenter (बढ़ई)</option>
-                <option value="cat-painter">Painter (रंग मिस्त्री)</option>
-                <option value="cat-welder">Welder & Fabricator (वेल्डर)</option>
-                <option value="cat-ac-tech">AC & Appliance Technician (एसी रिपेयर)</option>
-                <option value="cat-labour">Construction Labour / Helper (मजदूर / बेलदार)</option>
+                <optgroup label="🏠 Home Repair & Maintenance">
+                  <option value="cat-electrician">Electrician (बिजली मिस्त्री)</option>
+                  <option value="cat-plumber">Plumber & Sanitary Specialist (नल मिस्त्री)</option>
+                  <option value="cat-carpenter">Carpenter & Woodworker (बढ़ई)</option>
+                  <option value="cat-painter">Painter & Waterproofing (रंग मिस्त्री)</option>
+                  <option value="cat-ac-tech">AC & Refrigeration Tech (एसी रिपेयर)</option>
+                  <option value="cat-ro-appliance">Water Purifier & RO Tech (आरओ)</option>
+                  <option value="cat-pest-control">Pest Control Specialist (पेस्ट कंट्रोल)</option>
+                </optgroup>
+                <optgroup label="🏗️ Construction & Civil Works">
+                  <option value="cat-mason">Mason / Raj Mistri (राज मिस्त्री)</option>
+                  <option value="cat-labour">Construction Labour / Beldar (मजदूर / बेलदार)</option>
+                  <option value="cat-steel-barbender">Steel Barbender & Saria Mistri (सरिया मिस्त्री)</option>
+                  <option value="cat-tiles-stone">Tiles, Marble & Granite Setter (टाइल मिस्त्री)</option>
+                  <option value="cat-welder">Welder & Metal Fabricator (वेल्डर)</option>
+                </optgroup>
+                <optgroup label="⚡ Engineering & Supervision">
+                  <option value="cat-solar-tech">Solar & Inverter Engineer (सोलर पैनल)</option>
+                  <option value="cat-cctv-security">CCTV & Smart Security Tech (सीसीटीवी)</option>
+                  <option value="cat-civil-engineer">Civil Site Engineer & Supervisor (सिविल इंजीनियर)</option>
+                </optgroup>
+                <optgroup label="🚚 Logistics, Transport & Heavy Machinery">
+                  <option value="cat-driver">Commercial Driver & Chauffeur (ड्राइवर)</option>
+                  <option value="cat-heavy-machinery">Heavy Machinery & JCB Operator (जेसीबी)</option>
+                  <option value="cat-packaging-logistics">Warehouse & Packaging Staff (पैकेजिंग)</option>
+                </optgroup>
+                <optgroup label="🏢 Facility & Security">
+                  <option value="cat-housekeeping">Deep Cleaning & Housekeeping (डीप क्लीनिंग)</option>
+                  <option value="cat-security-guard">Security Personnel & Guards (सुरक्षा गार्ड)</option>
+                </optgroup>
+                <optgroup label="🌿 Agriculture & Events">
+                  <option value="cat-gardener">Gardener / Mali & Landscaper (माली)</option>
+                  <option value="cat-event-stewards">Event Setup & Banquet Staff (इवेंट टीम)</option>
+                </optgroup>
               </select>
             </div>
 
@@ -296,7 +322,22 @@ export default function WorkerRegistrationPage() {
                 Specific Skills & Expertise (विशेष कौशल)
               </label>
               <div className="flex flex-wrap gap-2 pt-1">
-                {['House Wiring', 'MCB Fixing', 'Concealed Conduit', 'Inverter Battery', 'Motor Repair', 'Tile Laying'].map((s) => (
+                {[
+                  'House Wiring', 
+                  'MCB Tripping', 
+                  'Conduit Pipe', 
+                  'Inverter Battery', 
+                  'Motor Pump', 
+                  'Tile Laying', 
+                  'Brick Masonry',
+                  'Solar Rooftop',
+                  'JCB Backhoe',
+                  'Commercial Driving',
+                  'Civil Site Quality',
+                  'Deep Cleaning',
+                  'Saria Tying',
+                  'Security PSARA'
+                ].map((s) => (
                   <button
                     key={s}
                     type="button"

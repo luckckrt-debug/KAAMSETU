@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Search, 
@@ -14,27 +14,41 @@ import {
   Fan, 
   Users, 
   ShieldCheck, 
-  ArrowRight,
-  Clock,
+  ArrowRight, 
+  Clock, 
   Sparkles,
-  ChevronDown
+  Sun,
+  Truck,
+  Car,
+  Layers,
+  HardHat,
+  Shield,
+  ChevronRight
 } from 'lucide-react';
 
 interface CategoryOption {
   slug: string;
   name: string;
   nameHi: string;
-  icon: string;
+  icon: any;
+  sector: string;
 }
 
-const CATEGORIES: CategoryOption[] = [
-  { slug: 'electrician', name: 'Electrician', nameHi: 'बिजली मिस्त्री', icon: 'Zap' },
-  { slug: 'plumber', name: 'Plumber', nameHi: 'नल मिस्त्री', icon: 'Wrench' },
-  { slug: 'mason', name: 'Mason', nameHi: 'राज मिस्त्री', icon: 'Hammer' },
-  { slug: 'carpenter', name: 'Carpenter', nameHi: 'बढ़ई', icon: 'Boxes' },
-  { slug: 'painter', name: 'Painter', nameHi: 'रंग मिस्त्री', icon: 'Paintbrush' },
-  { slug: 'ac-appliance-technician', name: 'AC & Appliances', nameHi: 'एसी रिपेयर', icon: 'Fan' },
-  { slug: 'construction-labour', name: 'Labour / Beldar', nameHi: 'मजदूर', icon: 'Users' },
+const HERO_CATEGORIES: CategoryOption[] = [
+  { slug: 'electrician', name: 'Electrician', nameHi: 'बिजली मिस्त्री', icon: Zap, sector: 'Home' },
+  { slug: 'plumber', name: 'Plumber', nameHi: 'नल मिस्त्री', icon: Wrench, sector: 'Home' },
+  { slug: 'mason', name: 'Mason', nameHi: 'राज मिस्त्री', icon: Hammer, sector: 'Construction' },
+  { slug: 'solar-inverter-technician', name: 'Solar Engineer', nameHi: 'सोलर पैनल', icon: Sun, sector: 'Engineering' },
+  { slug: 'commercial-driver', name: 'Driver & Chauffeur', nameHi: 'कमर्शियल ड्राइवर', icon: Truck, sector: 'Transport' },
+  { slug: 'carpenter', name: 'Carpenter', nameHi: 'बढ़ई', icon: Boxes, sector: 'Home' },
+  { slug: 'ac-appliance-technician', name: 'AC & Appliance', nameHi: 'एसी रिपेयर', icon: Fan, sector: 'Home' },
+  { slug: 'heavy-machinery-jcb-operator', name: 'JCB & Machinery', nameHi: 'जेसीबी ऑपरेटर', icon: Car, sector: 'Machinery' },
+  { slug: 'tiles-marble-granite', name: 'Tiles & Marble', nameHi: 'टाइल मिस्त्री', icon: Layers, sector: 'Construction' },
+  { slug: 'painter', name: 'Painter', nameHi: 'रंग मिस्त्री', icon: Paintbrush, sector: 'Home' },
+  { slug: 'steel-barbender-rebar', name: 'Steel Barbender', nameHi: 'सरिया मिस्त्री', icon: HardHat, sector: 'Construction' },
+  { slug: 'construction-labour', name: 'Labour / Beldar', nameHi: 'मजदूर', icon: Users, sector: 'Construction' },
+  { slug: 'deep-cleaning-housekeeping', name: 'Deep Cleaning', nameHi: 'हाउसकीपिंग', icon: Sparkles, sector: 'Facility' },
+  { slug: 'security-guard-bouncers', name: 'Security Guard', nameHi: 'सुरक्षा गार्ड', icon: Shield, sector: 'Security' },
 ];
 
 export default function HeroSearch() {
@@ -45,7 +59,6 @@ export default function HeroSearch() {
   const [longitude, setLongitude] = useState<number>(77.3910);
   const [radiusKm, setRadiusKm] = useState<number>(15);
   const [locating, setLocating] = useState<boolean>(false);
-  const [workerCount, setWorkerCount] = useState<number>(14);
 
   // Auto detect user location via browser GPS if available
   const handleDetectLocation = () => {
@@ -108,7 +121,7 @@ export default function HeroSearch() {
             </h1>
 
             <p className="text-lg sm:text-xl text-text-secondary max-w-xl mx-auto lg:mx-0 font-medium">
-              Trusted local professionals for every job, right in your neighbourhood. 100% Aadhaar-verified, real GPS dispatch, fixed fair rates.
+              Trusted local professionals for every job, right in your neighbourhood. 100% Aadhaar-verified, real GPS dispatch, fair rates.
             </p>
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
@@ -119,14 +132,42 @@ export default function HeroSearch() {
                 <Clock className="w-5 h-5 text-cta" /> Average ETA: 25 Minutes
               </div>
             </div>
+
+            {/* Popular Quick Search Pills */}
+            <div className="pt-2 text-left">
+              <span className="text-xs font-bold text-text-muted uppercase tracking-wider block mb-2">
+                Popular Searches:
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { label: '⚡ Emergency Electrician', cat: 'electrician' },
+                  { label: '🔧 Water Leak Plumber', cat: 'plumber' },
+                  { label: '☀️ Solar Rooftop Tech', cat: 'solar-inverter-technician' },
+                  { label: '🚜 JCB Machine Operator', cat: 'heavy-machinery-jcb-operator' },
+                  { label: '🧱 Brickwork Mason', cat: 'mason' },
+                  { label: '🚗 Daily Chauffeur', cat: 'commercial-driver' },
+                ].map((item) => (
+                  <button
+                    key={item.label}
+                    type="button"
+                    onClick={() => {
+                      setSelectedCategory(item.cat);
+                    }}
+                    className="text-xs font-semibold px-3 py-1.5 rounded-full bg-white hover:bg-forest hover:text-lime text-text-primary border border-border transition-colors shadow-2xs"
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Right Column: High-conversion Search Card */}
           <div className="lg:col-span-5">
             <div className="bg-white rounded-3xl shadow-elevated border border-border p-6 sm:p-8 relative">
-              <div className="flex items-center justify-between pb-4 border-b border-border mb-6">
+              <div className="flex items-center justify-between pb-4 border-b border-border mb-5">
                 <div>
-                  <h2 className="text-lg font-bold text-forest">Find Nearby Workers</h2>
+                  <h2 className="text-lg font-black text-forest">Find Nearby Workers</h2>
                   <p className="text-xs text-text-muted">पास के कुशल कारीगर खोजें</p>
                 </div>
                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-status-successSoft text-status-success text-xs font-bold">
@@ -137,37 +178,38 @@ export default function HeroSearch() {
 
               <form onSubmit={handleSearch} className="space-y-4">
                 
-                {/* Category Selector */}
+                {/* Category Selector Grid */}
                 <div>
-                  <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-2">
-                    1. What work do you need? (काम चुनें)
-                  </label>
-                  <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
-                    {CATEGORIES.map((cat) => {
+                  <div className="flex justify-between items-center mb-1.5">
+                    <label className="text-xs font-bold text-text-primary uppercase tracking-wider">
+                      1. Choose Trade / Profession (काम चुनें)
+                    </label>
+                    <a href="/services" className="text-[11px] font-bold text-sage hover:text-forest">
+                      View all 22+ &rarr;
+                    </a>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-2 max-h-52 overflow-y-auto pr-1 scrollbar-thin">
+                    {HERO_CATEGORIES.map((cat) => {
                       const isSelected = selectedCategory === cat.slug;
+                      const Icon = cat.icon;
                       return (
                         <button
                           key={cat.slug}
                           type="button"
                           onClick={() => setSelectedCategory(cat.slug)}
-                          className={`flex items-center gap-2.5 p-2.5 rounded-xl text-left border transition-all text-xs font-semibold ${
+                          className={`flex items-center gap-2.5 p-2 rounded-xl text-left border transition-all text-xs font-semibold ${
                             isSelected
                               ? 'border-forest bg-forest text-lime shadow-xs'
                               : 'border-border bg-bg hover:border-forest/40 text-text-primary'
                           }`}
                         >
-                          <div className={`p-1.5 rounded-lg ${isSelected ? 'bg-forest-light text-lime' : 'bg-white text-forest'}`}>
-                            {cat.slug === 'electrician' && <Zap className="w-4 h-4" />}
-                            {cat.slug === 'plumber' && <Wrench className="w-4 h-4" />}
-                            {cat.slug === 'mason' && <Hammer className="w-4 h-4" />}
-                            {cat.slug === 'carpenter' && <Boxes className="w-4 h-4" />}
-                            {cat.slug === 'painter' && <Paintbrush className="w-4 h-4" />}
-                            {cat.slug === 'ac-appliance-technician' && <Fan className="w-4 h-4" />}
-                            {cat.slug === 'construction-labour' && <Users className="w-4 h-4" />}
+                          <div className={`p-1.5 rounded-lg shrink-0 ${isSelected ? 'bg-forest-light text-lime' : 'bg-white text-forest shadow-2xs'}`}>
+                            <Icon className="w-3.5 h-3.5" />
                           </div>
-                          <div>
-                            <div className="leading-tight font-bold">{cat.name}</div>
-                            <div className="text-[10px] opacity-80">{cat.nameHi}</div>
+                          <div className="overflow-hidden">
+                            <div className="leading-tight font-bold truncate">{cat.name}</div>
+                            <div className="text-[10px] opacity-75 truncate">{cat.nameHi}</div>
                           </div>
                         </button>
                       );
@@ -220,9 +262,9 @@ export default function HeroSearch() {
                     className="w-full accent-forest cursor-pointer"
                   />
                   <div className="flex justify-between text-[10px] text-text-muted">
-                    <span>3 km (Immediate)</span>
+                    <span>3 km (Locality)</span>
                     <span>15 km (Standard)</span>
-                    <span>40 km (Wider NCR)</span>
+                    <span>40 km (Wider City)</span>
                   </div>
                 </div>
 

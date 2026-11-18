@@ -143,6 +143,13 @@ export interface Category {
   iconName: string;
   description: string;
   subcategories: Subcategory[];
+  coverImage?: string;
+  sector?: string;
+  requiredTools?: string[];
+  certifications?: string[];
+  baseHourlyRate?: number;
+  baseDailyRate?: number;
+  featured?: boolean;
 }
 
 export interface Subcategory {

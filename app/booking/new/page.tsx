@@ -58,9 +58,23 @@ function NewBookingForm() {
     'cat-mason': 400,
     'cat-carpenter': 350,
     'cat-painter': 300,
-    'cat-ac-tech': 400,
-    'cat-welder': 350,
+    'cat-ac-tech': 450,
+    'cat-welder': 400,
     'cat-labour': 200,
+    'cat-tiles-stone': 400,
+    'cat-solar-tech': 500,
+    'cat-cctv-security': 400,
+    'cat-civil-engineer': 600,
+    'cat-driver': 250,
+    'cat-housekeeping': 250,
+    'cat-gardener': 200,
+    'cat-security-guard': 250,
+    'cat-pest-control': 350,
+    'cat-ro-appliance': 300,
+    'cat-heavy-machinery': 500,
+    'cat-steel-barbender': 400,
+    'cat-packaging-logistics': 200,
+    'cat-event-stewards': 250,
   };
 
   const rate = hourlyRates[serviceCategory] || 350;
@@ -181,14 +195,40 @@ function NewBookingForm() {
               onChange={(e) => setServiceCategory(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-border bg-bg text-sm font-bold text-forest focus:outline-none focus:border-forest"
             >
-              <option value="cat-electrician">Electrician (बिजली मिस्त्री - ₹350/hr)</option>
-              <option value="cat-plumber">Plumber (नल मिस्त्री - ₹300/hr)</option>
-              <option value="cat-mason">Mason (राज मिस्त्री - ₹400/hr)</option>
-              <option value="cat-carpenter">Carpenter (बढ़ई - ₹350/hr)</option>
-              <option value="cat-painter">Painter (रंग मिस्त्री - ₹300/hr)</option>
-              <option value="cat-ac-tech">AC & Appliance Technician (एसी रिपेयर - ₹400/hr)</option>
-              <option value="cat-welder">Welder & Fabricator (वेल्डर - ₹350/hr)</option>
-              <option value="cat-labour">Construction Labour / Helper (मजदूर - ₹200/hr)</option>
+              <optgroup label="🏠 Home Repair & Maintenance">
+                <option value="cat-electrician">Electrician (बिजली मिस्त्री - ₹350/hr)</option>
+                <option value="cat-plumber">Plumber & Sanitary Specialist (नल मिस्त्री - ₹300/hr)</option>
+                <option value="cat-carpenter">Carpenter & Woodworker (बढ़ई - ₹350/hr)</option>
+                <option value="cat-painter">Painter & Waterproofing (रंग मिस्त्री - ₹300/hr)</option>
+                <option value="cat-ac-tech">AC & Refrigeration Tech (एसी रिपेयर - ₹450/hr)</option>
+                <option value="cat-ro-appliance">Water Purifier & RO Tech (आरओ - ₹300/hr)</option>
+                <option value="cat-pest-control">Pest Control Specialist (पेस्ट कंट्रोल - ₹350/hr)</option>
+              </optgroup>
+              <optgroup label="🏗️ Construction & Infrastructure">
+                <option value="cat-mason">Mason / Raj Mistri (राज मिस्त्री - ₹400/hr)</option>
+                <option value="cat-labour">Construction Labour / Beldar (मजदूर - ₹200/hr)</option>
+                <option value="cat-steel-barbender">Steel Barbender & Saria Mistri (सरिया मिस्त्री - ₹400/hr)</option>
+                <option value="cat-tiles-stone">Tiles, Marble & Granite Setter (टाइल मिस्त्री - ₹400/hr)</option>
+                <option value="cat-welder">Welder & Metal Fabricator (वेल्डर - ₹400/hr)</option>
+              </optgroup>
+              <optgroup label="⚡ Engineering & Supervision">
+                <option value="cat-solar-tech">Solar & Inverter Engineer (सोलर पैनल - ₹500/hr)</option>
+                <option value="cat-cctv-security">CCTV & Smart Security Tech (सीसीटीवी - ₹400/hr)</option>
+                <option value="cat-civil-engineer">Civil Site Engineer & Lead (सिविल इंजीनियर - ₹600/hr)</option>
+              </optgroup>
+              <optgroup label="🚚 Logistics, Transport & Heavy Machinery">
+                <option value="cat-driver">Commercial Driver & Chauffeur (ड्राइवर - ₹250/hr)</option>
+                <option value="cat-heavy-machinery">Heavy Machinery & JCB Operator (जेसीबी - ₹500/hr)</option>
+                <option value="cat-packaging-logistics">Warehouse & Packaging Staff (पैकेजिंग - ₹200/hr)</option>
+              </optgroup>
+              <optgroup label="🏢 Facility & Security">
+                <option value="cat-housekeeping">Deep Cleaning & Housekeeping (डीप क्लीनिंग - ₹250/hr)</option>
+                <option value="cat-security-guard">Security Personnel & Guards (सुरक्षा गार्ड - ₹250/hr)</option>
+              </optgroup>
+              <optgroup label="🌿 Agriculture & Events">
+                <option value="cat-gardener">Gardener / Mali & Landscaper (माली - ₹200/hr)</option>
+                <option value="cat-event-stewards">Event Setup & Banquet Staff (इवेंट टीम - ₹250/hr)</option>
+              </optgroup>
             </select>
           </div>
 

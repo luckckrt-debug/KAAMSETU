@@ -165,12 +165,20 @@ function CreateTenderForm() {
                   className="w-full px-4 py-2.5 rounded-xl border border-border bg-bg text-sm font-semibold"
                 >
                   <option value="cat-mason">Mason (राज मिस्त्री)</option>
-                  <option value="cat-electrician">Electrician (बिजली)</option>
-                  <option value="cat-plumber">Plumber (नल)</option>
+                  <option value="cat-electrician">Electrician (बिजली मिस्त्री)</option>
+                  <option value="cat-plumber">Plumber (नल मिस्त्री)</option>
                   <option value="cat-carpenter">Carpenter (बढ़ई)</option>
                   <option value="cat-painter">Painter (पेंटर)</option>
-                  <option value="cat-welder">Welder (वेल्डर)</option>
-                  <option value="cat-labour">Construction Labour / Helper</option>
+                  <option value="cat-welder">Welder & Fabricator (वेल्डर)</option>
+                  <option value="cat-steel-barbender">Steel Barbender & Saria Mistri (सरिया मिस्त्री)</option>
+                  <option value="cat-tiles-stone">Tiles & Marble Specialist (टाइल मिस्त्री)</option>
+                  <option value="cat-labour">Construction Labour / Beldar</option>
+                  <option value="cat-solar-tech">Solar & Inverter Engineer (सोलर)</option>
+                  <option value="cat-civil-engineer">Civil Site Engineer / Supervisor</option>
+                  <option value="cat-heavy-machinery">Heavy Machinery / JCB Operator</option>
+                  <option value="cat-security-guard">Security Personnel & Guards</option>
+                  <option value="cat-housekeeping">Deep Cleaning & Housekeeping</option>
+                  <option value="cat-packaging-logistics">Warehouse & Packaging Workforce</option>
                 </select>
               </div>
             </div>
