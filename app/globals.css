@@ -7,8 +7,8 @@
 }
 
 body {
-  background-color: #F7F7F2;
-  color: #202820;
+  background-color: #EAF6FF;
+  color: #123B5D;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
 }
@@ -20,20 +20,20 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #F7F7F2;
+  background: #EAF6FF;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CCD4CB;
+  background: #B4D7F0;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #8E9A8F;
+  background: #2196E8;
 }
 
 /* Accessible focus ring */
 *:focus-visible {
-  outline: 2px solid #2D6547;
+  outline: 2px solid #2196E8;
   outline-offset: 2px;
 }

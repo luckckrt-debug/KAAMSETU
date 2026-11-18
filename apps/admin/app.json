@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "KaamSetu Admin",
+    "slug": "kaamsetu-admin",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "kaamsetu-admin",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0F172A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kaamsetu.admin"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0F172A"
+      },
+      "package": "com.kaamsetu.admin"
+    },
+    "plugins": [
+      "expo-router",
+      "./plugins/with-rn74-settings-patch.js"
+    ]
+  }
+}

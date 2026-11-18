@@ -17,12 +17,16 @@ import {
   HardHat,
   Search,
   Lock,
-  Radio
+  Radio,
+  Smartphone,
+  Download,
+  QrCode,
+  ExternalLink
 } from 'lucide-react';
 import { AdminMetrics } from '@/lib/types';
 
 export default function AdminBackofficePage() {
-  const [activeTab, setActiveTab] = useState<'METRICS' | 'VERIFICATION' | 'DISPUTES' | 'AUDIT'>('METRICS');
+  const [activeTab, setActiveTab] = useState<'METRICS' | 'VERIFICATION' | 'DISPUTES' | 'AUDIT' | 'APKS'>('APKS');
   const [metrics, setMetrics] = useState<AdminMetrics | null>(null);
   const [pendingWorkers, setPendingWorkers] = useState<any[]>([]);
   const [disputes, setDisputes] = useState<any[]>([]);
@@ -230,6 +234,18 @@ export default function AdminBackofficePage() {
             }`}
           >
             Security Audit Trail
+          </button>
+
+          <button
+            onClick={() => setActiveTab('APKS')}
+            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center space-x-1.5 ${
+              activeTab === 'APKS'
+                ? 'bg-amber-500 text-forest shadow-xs font-black'
+                : 'text-text-secondary hover:text-forest'
+            }`}
+          >
+            <Smartphone className="w-3.5 h-3.5" />
+            <span>Mobile Apps & Releases (3)</span>
           </button>
         </div>
 
@@ -447,6 +463,206 @@ export default function AdminBackofficePage() {
                   </span>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 5: MOBILE APKS & CENTRAL DIRECTORY */}
+        {activeTab === 'APKS' && (
+          <div className="space-y-6">
+            <div className="bg-forest text-white p-6 rounded-3xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div>
+                <span className="text-xs uppercase tracking-wider text-amber-400 font-bold bg-amber-950/60 px-3 py-1 rounded-full border border-amber-800 inline-block mb-2">
+                  Central Distribution & Sideloading
+                </span>
+                <h3 className="text-2xl font-black">All 3 Production Android APKs Ready</h3>
+                <p className="text-xs text-slate-300 mt-1 max-w-2xl">
+                  Each mobile app has been compiled into an installable release APK. They are stored locally in <code className="text-amber-400 bg-black/40 px-2 py-0.5 rounded font-mono">central-directory/apks/</code> and are directly downloadable through this portal.
+                </p>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <a
+                  href="/central-directory/index.html"
+                  target="_blank"
+                  className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-forest text-xs font-black rounded-xl transition flex items-center space-x-1.5 shadow"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" />
+                  <span>Open Central Hub</span>
+                </a>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              {/* 1. Worker App */}
+              <div className="bg-white rounded-3xl border border-border p-6 shadow-xs flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl font-bold">
+                      <HardHat className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      Release APK (64.8 MB)
+                    </span>
+                  </div>
+
+                  <h4 className="text-lg font-black text-forest">KaamSetu Worker</h4>
+                  <p className="text-xs font-mono text-text-muted">com.kaamsetu.worker</p>
+                  <p className="text-xs text-text-secondary mt-2 leading-relaxed">
+                    Worker live GPS dispatch, duty toggle, instant UPI digital wallet, and Aadhaar KYC.
+                  </p>
+
+                  <div className="mt-4 p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center space-x-3">
+                    <img 
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://expo.dev/artifacts/eas/6Zci0-hiEwLc53RGVoY4UVPl-gaA9eF2eVLPF4TRBYo.apk"
+                      alt="Worker QR"
+                      className="w-16 h-16 rounded-xl border border-border bg-white p-1"
+                    />
+                    <div>
+                      <span className="text-[10px] font-bold text-forest uppercase block">Phone QR Scan</span>
+                      <span className="text-[10px] text-text-muted block mt-0.5">Scan with phone camera to download directly</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 pt-2 border-t border-border">
+                  <a
+                    href="/apks/KaamSetu-Worker-preview.apk"
+                    download="KaamSetu-Worker-preview.apk"
+                    className="w-full py-2.5 bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center space-x-2 shadow-xs"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download Worker APK</span>
+                  </a>
+                  <a
+                    href="https://expo.dev/artifacts/eas/6Zci0-hiEwLc53RGVoY4UVPl-gaA9eF2eVLPF4TRBYo.apk"
+                    target="_blank"
+                    className="w-full py-1.5 text-center text-[11px] text-text-muted hover:text-forest block"
+                  >
+                    EAS Cloud Mirror Link ↗
+                  </a>
+                </div>
+              </div>
+
+              {/* 2. Hiring App */}
+              <div className="bg-white rounded-3xl border border-border p-6 shadow-xs flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      Release APK (64.8 MB)
+                    </span>
+                  </div>
+
+                  <h4 className="text-lg font-black text-forest">KaamSetu Hiring</h4>
+                  <p className="text-xs font-mono text-text-muted">com.kaamsetu.app</p>
+                  <p className="text-xs text-text-secondary mt-2 leading-relaxed">
+                    Customer portal for instant job posting, applicant review desk, worker ratings, and calling.
+                  </p>
+
+                  <div className="mt-4 p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center space-x-3">
+                    <img 
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk"
+                      alt="Hiring QR"
+                      className="w-16 h-16 rounded-xl border border-border bg-white p-1"
+                    />
+                    <div>
+                      <span className="text-[10px] font-bold text-forest uppercase block">Phone QR Scan</span>
+                      <span className="text-[10px] text-text-muted block mt-0.5">Scan with phone camera to download directly</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 pt-2 border-t border-border">
+                  <a
+                    href="/apks/KaamSetu-Hiring-preview.apk"
+                    download="KaamSetu-Hiring-preview.apk"
+                    className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center space-x-2 shadow-xs"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download Hiring APK</span>
+                  </a>
+                  <a
+                    href="https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk"
+                    target="_blank"
+                    className="w-full py-1.5 text-center text-[11px] text-text-muted hover:text-forest block"
+                  >
+                    EAS Cloud Mirror Link ↗
+                  </a>
+                </div>
+              </div>
+
+              {/* 3. Contractor App */}
+              <div className="bg-white rounded-3xl border border-border p-6 shadow-xs flex flex-col justify-between space-y-4">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
+                      <Building2 className="w-6 h-6" />
+                    </div>
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
+                      Release APK (64.8 MB)
+                    </span>
+                  </div>
+
+                  <h4 className="text-lg font-black text-forest">KaamSetu Contractor</h4>
+                  <p className="text-xs font-mono text-text-muted">com.kaamsetu.contractor</p>
+                  <p className="text-xs text-text-secondary mt-2 leading-relaxed">
+                    Commercial construction projects, muster roll attendance (P, HD, A, OT), and batch payouts.
+                  </p>
+
+                  <div className="mt-4 p-3 bg-slate-50 rounded-2xl border border-slate-100 flex items-center space-x-3">
+                    <img 
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=https://expo.dev/artifacts/eas/JPCBbmDl3gfGcYUuCJad-c7QV8jZ39Vt7z736lLmeq0.apk"
+                      alt="Contractor QR"
+                      className="w-16 h-16 rounded-xl border border-border bg-white p-1"
+                    />
+                    <div>
+                      <span className="text-[10px] font-bold text-forest uppercase block">Phone QR Scan</span>
+                      <span className="text-[10px] text-text-muted block mt-0.5">Scan with phone camera to download directly</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 pt-2 border-t border-border">
+                  <a
+                    href="/apks/KaamSetu-Contractor-preview.apk"
+                    download="KaamSetu-Contractor-preview.apk"
+                    className="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl transition flex items-center justify-center space-x-2 shadow-xs"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>Download Contractor APK</span>
+                  </a>
+                  <a
+                    href="https://expo.dev/artifacts/eas/JPCBbmDl3gfGcYUuCJad-c7QV8jZ39Vt7z736lLmeq0.apk"
+                    target="_blank"
+                    className="w-full py-1.5 text-center text-[11px] text-text-muted hover:text-forest block"
+                  >
+                    EAS Cloud Mirror Link ↗
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            {/* ADB Command helper */}
+            <div className="bg-slate-900 text-slate-200 p-6 rounded-3xl border border-slate-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                  Developer & Tester ADB Commands
+                </span>
+                <span className="text-[11px] text-slate-400">Auto-script: <code className="text-emerald-300">central-directory\install-all-apks-adb.bat</code></span>
+              </div>
+              <p className="text-xs text-slate-400">
+                To install all 3 applications simultaneously to a physical phone connected over USB with USB debugging enabled:
+              </p>
+              <div className="bg-black/60 p-4 rounded-2xl font-mono text-xs text-slate-300 space-y-1">
+                <p className="text-emerald-400">adb install -r central-directory\apks\KaamSetu-Worker-preview.apk</p>
+                <p className="text-blue-400">adb install -r central-directory\apks\KaamSetu-Hiring-preview.apk</p>
+                <p className="text-purple-400">adb install -r central-directory\apks\KaamSetu-Contractor-preview.apk</p>
+              </div>
             </div>
           </div>
         )}

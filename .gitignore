@@ -4,6 +4,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env*
 
 # Dependencies
 node_modules/
@@ -17,6 +18,14 @@ out/
 # Production
 build/
 dist/
+
+# Mobile builds & binaries
+*.apk
+*.aab
+public/apks/*.apk
+central-directory/apks/*.apk
+.expo/
+*.tsbuildinfo
 
 # Debug logs
 npm-debug.log*
@@ -32,3 +41,6 @@ prisma/*.db-journal
 # OS files
 .DS_Store
 Thumbs.db
+
+# Vercel
+.vercel

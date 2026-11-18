@@ -1,13 +1,24 @@
 {
   "name": "kaamsetu",
   "version": "1.0.0",
+  "packageManager": "pnpm@9.15.4",
   "private": true,
   "description": "KAAMSETU - Production-oriented Indian Workforce Marketplace Platform",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "node server.js",
     "dev:next": "next dev",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
+    "api": "node services/api/dist/index.js",
+    "worker": "pnpm --filter @kaamsetu/worker start",
+    "hiring": "pnpm --filter @kaamsetu/hiring start",
+    "contractor": "pnpm --filter @kaamsetu/contractor start",
+    "test:mobile-sync": "node scripts/test-cross-app-sync.js",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
     "prisma:migrate": "prisma migrate dev",
@@ -15,6 +26,7 @@
     "test": "node scripts/run-tests.js"
   },
   "dependencies": {
+    "@babel/runtime": "^7.25.0",
     "@prisma/client": "^5.22.0",
     "@types/leaflet": "^1.9.22",
     "bcryptjs": "^2.4.3",

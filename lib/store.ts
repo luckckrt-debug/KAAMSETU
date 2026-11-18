@@ -38,8 +38,9 @@ import { getProfessionBySlug } from './professions';
 import { calculateJobCommission } from './commission';
 import { dispatchPayout } from './payout';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_DIR = process.env.VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
 const STORE_FILE = path.join(DATA_DIR, 'kaamsetu_store.json');
+const BUNDLED_STORE_FILE = path.join(process.cwd(), 'data', 'kaamsetu_store.json');
 
 export interface DatabaseState {
   users: User[];
@@ -78,8 +79,12 @@ export interface DatabaseState {
 let memoryState: DatabaseState | null = null;
 
 function ensureDataDir() {
-  if (!fs.existsSync(DATA_DIR)) {
-    fs.mkdirSync(DATA_DIR, { recursive: true });
+  try {
+    if (!fs.existsSync(DATA_DIR)) {
+      fs.mkdirSync(DATA_DIR, { recursive: true });
+    }
+  } catch (err) {
+    // Graceful fallback for read-only or restricted environments
   }
 }
 
@@ -89,9 +94,15 @@ export function loadStore(): DatabaseState {
   ensureDataDir();
   const seed = getInitialSeedData();
 
-  if (fs.existsSync(STORE_FILE)) {
+  const fileToRead = fs.existsSync(STORE_FILE)
+    ? STORE_FILE
+    : fs.existsSync(BUNDLED_STORE_FILE)
+    ? BUNDLED_STORE_FILE
+    : null;
+
+  if (fileToRead) {
     try {
-      const content = fs.readFileSync(STORE_FILE, 'utf-8');
+      const content = fs.readFileSync(fileToRead, 'utf-8');
       memoryState = JSON.parse(content);
       
       // Ensure all expanded categories, wallets, ledger, and payout arrays are initialized
