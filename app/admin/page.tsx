@@ -16,7 +16,8 @@ import {
   RefreshCw,
   HardHat,
   Search,
-  Lock
+  Lock,
+  Radio
 } from 'lucide-react';
 import { AdminMetrics } from '@/lib/types';
 
@@ -150,12 +151,22 @@ export default function AdminBackofficePage() {
             </div>
           </div>
 
-          <button
-            onClick={fetchAdminData}
-            className="px-4 py-2.5 rounded-xl bg-forest-light text-lime text-xs font-bold flex items-center gap-2 hover:bg-forest-light/80 transition-colors w-full sm:w-auto justify-center"
-          >
-            <RefreshCw className="w-4 h-4" /> Refresh Backend Data
-          </button>
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+            <Link
+              href="/admin/operations"
+              className="px-5 py-2.5 rounded-xl bg-lime hover:bg-[#a5d259] text-forest text-xs font-black flex items-center gap-2 shadow-sm transition"
+            >
+              <Radio className="w-4 h-4 text-forest animate-pulse" />
+              <span>LIVE OPERATIONS MAP (लाइव मैप)</span>
+            </Link>
+
+            <button
+              onClick={fetchAdminData}
+              className="px-4 py-2.5 rounded-xl bg-forest-light text-lime text-xs font-bold flex items-center gap-2 hover:bg-forest-light/80 transition-colors justify-center"
+            >
+              <RefreshCw className="w-4 h-4" /> Refresh Backend Data
+            </button>
+          </div>
         </div>
 
         {message && (

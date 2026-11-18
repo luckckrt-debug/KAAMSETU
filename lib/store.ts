@@ -2237,6 +2237,114 @@ export const dbStore = {
     return workers;
   },
 
+  // Geospatial Discovery with Expanding Radius (3km -> 5km -> 10km) & Anti-Busy Filtering
+  discoverNearbyWorkers(params: {
+    latitude: number;
+    longitude: number;
+    categorySlug?: string;
+    profession?: string;
+    service?: string;
+    verifiedOnly?: boolean;
+    initialRadiusKm?: number;
+    maxRadiusKm?: number;
+  }): {
+    workers: Array<WorkerProfile & { user?: User; distanceKm: number; etaMinutes: number }>;
+    searchRadiusKm: number;
+    expanded: boolean;
+    tiersAttempted: number[];
+  } {
+    const store = loadStore();
+    const activeJobStatuses: BookingStatus[] = ['WORKER_ON_THE_WAY', 'ARRIVED', 'WORK_STARTED'];
+    const busyWorkerIds = new Set(
+      store.bookings
+        .filter(b => activeJobStatuses.includes(b.status))
+        .map(b => b.assignedWorkerProfileId)
+        .filter(Boolean)
+    );
+
+    // Filter eligible, online, available, non-busy workers
+    let candidates = store.workerProfiles.filter(w => {
+      // Must not be currently engaged in active job
+      if (busyWorkerIds.has(w.id)) return false;
+      // Must be online and available
+      if (!w.isOnline || !w.isAvailableNow) return false;
+      // Verification check
+      if (params.verifiedOnly && w.verificationStatus !== 'VERIFIED') return false;
+      return true;
+    });
+
+    // Hydrate User objects
+    candidates = candidates.map(w => {
+      const u = store.users.find(u => u.id === w.userId);
+      return { ...w, user: u };
+    });
+
+    // Category / Profession matching
+    const slug = params.categorySlug || params.profession;
+    if (slug) {
+      const prof = getProfessionBySlug(slug);
+      const targetCategory = store.categories.find(c => c.slug === slug || c.id === slug);
+
+      candidates = candidates.filter(w => {
+        if (targetCategory && w.skills?.some(s => s.categoryId === targetCategory.id || s.categoryName?.toLowerCase().includes(targetCategory.name.toLowerCase()))) {
+          return true;
+        }
+        if (prof) {
+          const matchSkill = w.skills?.some(s => 
+            s.categoryId === prof.id || 
+            prof.aliases.includes(s.categoryId) || 
+            s.categoryName?.toLowerCase().includes(prof.singular.toLowerCase()) ||
+            s.categoryName?.toLowerCase().includes(prof.name.toLowerCase())
+          );
+          if (matchSkill) return true;
+          if (
+            w.headline?.toLowerCase().includes(prof.singular.toLowerCase()) ||
+            w.headline?.toLowerCase().includes(prof.name.toLowerCase()) ||
+            w.bio?.toLowerCase().includes(prof.singular.toLowerCase())
+          ) {
+            return true;
+          }
+        }
+        return false;
+      });
+    }
+
+    // Calculate distance and filter out workers beyond their own preferred radius
+    const calculated = candidates.map(w => {
+      const dist = calculateDistanceKm(params.latitude, params.longitude, w.latitude, w.longitude);
+      const eta = calculateEstimatedEtaMinutes(dist);
+      return { ...w, distanceKm: dist, etaMinutes: eta };
+    }).filter(w => w.distanceKm <= (w.preferredRadiusKm || 25));
+
+    // Expanding radius search: 3km -> 5km -> 10km -> 25km
+    const initialRadius = params.initialRadiusKm || 3;
+    const maxRadius = params.maxRadiusKm || 25;
+    const expansionTiers = [initialRadius, 5, 10, maxRadius].filter((r, idx, arr) => arr.indexOf(r) === idx && r <= maxRadius);
+
+    let activeRadius = initialRadius;
+    const tiersAttempted: number[] = [];
+    let matchedWorkers: typeof calculated = [];
+
+    for (const radius of expansionTiers) {
+      tiersAttempted.push(radius);
+      activeRadius = radius;
+      matchedWorkers = calculated
+        .filter(w => w.distanceKm <= radius)
+        .sort((a, b) => a.distanceKm - b.distanceKm || (b.ratingAvg || 0) - (a.ratingAvg || 0));
+
+      if (matchedWorkers.length > 0) {
+        break; // Found eligible workers within this tier
+      }
+    }
+
+    return {
+      workers: matchedWorkers,
+      searchRadiusKm: activeRadius,
+      expanded: activeRadius > initialRadius,
+      tiersAttempted,
+    };
+  },
+
   getWorkerById(id: string): (WorkerProfile & { user?: User }) | null {
     const store = loadStore();
     const worker = store.workerProfiles.find(w => w.id === id || w.userId === id);

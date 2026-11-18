@@ -19,8 +19,11 @@ export type VerificationStatus =
 
 export type BookingStatus = 
   | 'REQUESTED'
+  | 'SEARCHING_WORKERS'
+  | 'WORKER_NOTIFIED'
   | 'OFFERED'
   | 'ACCEPTED'
+  | 'WORKER_ASSIGNED'
   | 'WORKER_ON_THE_WAY'
   | 'ARRIVED'
   | 'WORK_STARTED'

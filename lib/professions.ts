@@ -817,6 +817,8 @@ export const PROFESSIONS_LIST: ProfessionData[] = [
   },
 ];
 
+export const PROFESSIONS = PROFESSIONS_LIST;
+
 // Helper functions for profession queries
 export function getAllProfessions(): ProfessionData[] {
   return PROFESSIONS_LIST;

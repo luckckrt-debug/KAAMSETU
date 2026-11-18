@@ -12,8 +12,10 @@ import {
   ArrowRight,
   Zap,
   CheckCircle2,
-  DollarSign
+  DollarSign,
+  Radar
 } from 'lucide-react';
+import LiveDispatchModal from '@/components/LiveDispatchModal';
 
 export default function NewBookingPage() {
   return (
@@ -50,6 +52,7 @@ function NewBookingForm() {
   const [longitude, setLongitude] = useState(77.3910);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [isDispatchModalOpen, setIsDispatchModalOpen] = useState(false);
 
   // Base rate calculation
   const hourlyRates: Record<string, number> = {
@@ -153,6 +156,19 @@ function NewBookingForm() {
           <p className="text-xs text-text-secondary mt-1">
             Zero advance required. Pay only after work is inspected and completed.
           </p>
+
+          {/* Instant Radar Dispatch Button */}
+          <div className="mt-4 pt-3">
+            <button
+              type="button"
+              onClick={() => setIsDispatchModalOpen(true)}
+              className="w-full py-3.5 px-4 rounded-2xl bg-[#173D2B] hover:bg-[#2D6547] text-[#B7E36A] font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 border border-[#B7E36A]/30 active:scale-98"
+            >
+              <Radar className="w-4 h-4 text-[#F2A65A] animate-spin" style={{ animationDuration: '4s' }} />
+              <span>INSTANT RADAR DISPATCH & LIVE MAP (तुरंत लाइव मैप पर खोजें)</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {error && (
@@ -359,6 +375,17 @@ function NewBookingForm() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
+
+        {/* Live Dispatch Modal */}
+        <LiveDispatchModal
+          isOpen={isDispatchModalOpen}
+          onClose={() => setIsDispatchModalOpen(false)}
+          serviceCategory={serviceCategory}
+          initialAddress={`${addressLine}, ${city}`}
+          initialLat={latitude}
+          initialLng={longitude}
+          estimatedAmount={estimatedAmount}
+        />
 
       </div>
     </div>

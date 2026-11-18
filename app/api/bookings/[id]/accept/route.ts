@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbStore, loadStore } from '@/lib/store';
+import { dbStore, loadStore, saveStore } from '@/lib/store';
 import { verifySessionToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
@@ -22,10 +22,11 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 
     // Transaction-safe anti-double booking check
-    if (booking.status !== 'REQUESTED' && booking.status !== 'OFFERED') {
+    const validAcceptStates = ['REQUESTED', 'OFFERED', 'SEARCHING_WORKERS', 'WORKER_NOTIFIED'];
+    if (!validAcceptStates.includes(booking.status)) {
       return NextResponse.json({
         success: false,
-        error: `Cannot accept booking. Job is already in state: ${booking.status}`,
+        error: `Cannot accept booking. Job has already been accepted or is in state: ${booking.status}`,
       }, { status: 409 });
     }
 
@@ -35,7 +36,25 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     booking.status = 'ACCEPTED';
     booking.updatedAt = new Date().toISOString();
 
+    saveStore();
+
     const updatedBooking = dbStore.getBookingById(params.id);
+
+    // Real-time broadcast to customer room
+    if ((global as any).__kaamsetu_io) {
+      const io = (global as any).__kaamsetu_io;
+      io.to(`booking:${params.id}`).emit('booking:worker:assigned', {
+        bookingId: params.id,
+        worker: updatedBooking?.assignedWorker,
+        status: 'ACCEPTED',
+        timestamp: new Date().toISOString(),
+      });
+      io.to(`booking:${params.id}`).emit('booking:status_changed', {
+        bookingId: params.id,
+        status: 'ACCEPTED',
+        updatedAt: updatedBooking?.updatedAt,
+      });
+    }
 
     return NextResponse.json({
       success: true,

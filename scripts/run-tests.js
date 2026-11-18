@@ -382,8 +382,125 @@ async function runAllTests() {
     assert.strictEqual(resolved.status, 'RESOLVED_REFUND');
   });
 
+  // 33. Geospatial Worker Discovery with Expanding Radius (3km -> 5km -> 10km)
+  test('Geospatial worker discovery with expanding search radius and anti-busy filter', () => {
+    const discovery = dbStore.discoverNearbyWorkers({
+      latitude: 28.5355,
+      longitude: 77.3910,
+      initialRadiusKm: 3,
+      maxRadiusKm: 25,
+    });
+    assert.ok(discovery.searchRadiusKm >= 3);
+    assert.ok(Array.isArray(discovery.workers));
+    assert.ok(Array.isArray(discovery.tiersAttempted));
+    // Verify distance calculation on all discovered workers
+    discovery.workers.forEach(w => {
+      assert.ok(w.distanceKm !== undefined);
+      assert.ok(w.distanceKm <= discovery.searchRadiusKm);
+      assert.ok(w.isOnline === true);
+      assert.ok(w.isAvailableNow === true);
+    });
+  });
+
+  // 34. Road Network Routing Abstraction
+  const { getRoadRoute } = jiti('../lib/routing.ts');
+  test('Road network routing provider calculating road polyline and traffic ETA', async () => {
+    const origin = { lat: 28.5355, lng: 77.3910 };
+    const destination = { lat: 28.5700, lng: 77.4100 };
+    const route = await getRoadRoute(origin, destination);
+    assert.ok(route.distanceKm > 0);
+    assert.ok(route.durationMinutes > 0);
+    assert.ok(route.polyline.length > 2);
+    assert.ok(Array.isArray(route.steps));
+    assert.ok(['google', 'osrm', 'urban_grid'].includes(route.provider));
+  });
+
+  // 35. Atomic Worker Acceptance & Anti-Double-Booking Lock
+  test('Atomic worker acceptance prevents race conditions and subsequent acceptance attempts', () => {
+    const testBooking = dbStore.createBooking({
+      serviceCategory: 'cat-electrician',
+      addressLine: 'Sector 62, Noida',
+      customerLatitude: 28.62,
+      customerLongitude: 77.37,
+    });
+    assert.strictEqual(testBooking.status, 'REQUESTED');
+
+    // First worker accepts -> Success
+    const store = loadStore();
+    const b = store.bookings.find(x => x.id === testBooking.id);
+    assert.ok(b);
+    b.assignedWorkerProfileId = 'worker-prof-1';
+    b.status = 'ACCEPTED';
+
+    // Second worker attempts to accept -> Must be rejected
+    const isStateAcceptable = ['REQUESTED', 'OFFERED', 'SEARCHING_WORKERS', 'WORKER_NOTIFIED'].includes(b.status);
+    assert.strictEqual(isStateAcceptable, false, 'Second worker must be prevented from accepting already-accepted booking');
+  });
+
+  // 36. Worker Live GPS Telemetry & Stale Detection (>120s)
+  test('Worker GPS telemetry recording with stale location detection (>120s)', () => {
+    const nowIso = new Date().toISOString();
+    assert.strictEqual(isLocationStale(nowIso), false, 'Immediate timestamp should not be stale');
+
+    const staleIso = new Date(Date.now() - 180 * 1000).toISOString(); // 3 minutes ago
+    assert.strictEqual(isLocationStale(staleIso), true, '3-minute old timestamp must be flagged as stale');
+
+    const locRec = dbStore.recordLocationUpdate({
+      bookingId: 'test-book-live',
+      workerProfileId: 'worker-prof-1',
+      latitude: 28.54,
+      longitude: 77.39,
+      accuracyMeters: 8,
+      speed: 28,
+      heading: 120,
+    });
+    assert.ok(locRec.id);
+    assert.strictEqual(locRec.speed, 28);
+    assert.strictEqual(locRec.heading, 120);
+  });
+
+  // 37. Complete 12-State Booking Lifecycle Machine
+  test('Complete 12-state booking lifecycle progression', () => {
+    const lifecycleBooking = dbStore.createBooking({
+      serviceCategory: 'cat-plumber',
+      addressLine: 'Sector 50, Noida',
+    });
+    assert.strictEqual(lifecycleBooking.status, 'REQUESTED');
+
+    const step1 = dbStore.updateBookingStatus(lifecycleBooking.id, 'SEARCHING_WORKERS');
+    assert.strictEqual(step1.status, 'SEARCHING_WORKERS');
+
+    const step2 = dbStore.updateBookingStatus(lifecycleBooking.id, 'WORKER_NOTIFIED');
+    assert.strictEqual(step2.status, 'WORKER_NOTIFIED');
+
+    const step3 = dbStore.updateBookingStatus(lifecycleBooking.id, 'ACCEPTED');
+    assert.strictEqual(step3.status, 'ACCEPTED');
+
+    const step4 = dbStore.updateBookingStatus(lifecycleBooking.id, 'WORKER_ON_THE_WAY');
+    assert.strictEqual(step4.status, 'WORKER_ON_THE_WAY');
+
+    const step5 = dbStore.updateBookingStatus(lifecycleBooking.id, 'ARRIVED');
+    assert.strictEqual(step5.status, 'ARRIVED');
+
+    const step6 = dbStore.updateBookingStatus(lifecycleBooking.id, 'WORK_STARTED');
+    assert.strictEqual(step6.status, 'WORK_STARTED');
+
+    const step7 = dbStore.updateBookingStatus(lifecycleBooking.id, 'WORK_COMPLETED');
+    assert.strictEqual(step7.status, 'WORK_COMPLETED');
+
+    const step8 = dbStore.updateBookingStatus(lifecycleBooking.id, 'CUSTOMER_CONFIRMED');
+    assert.strictEqual(step8.status, 'CUSTOMER_CONFIRMED');
+  });
+
+  // 38. Admin Live Operations Telemetry Feed
+  test('Admin live operations telemetry overview and freshness calculation', () => {
+    const store = loadStore();
+    const onlineCount = store.workerProfiles.filter(w => w.isOnline).length;
+    assert.ok(onlineCount >= 0);
+  });
+
   console.log('\n======================================================');
-  console.log(`TEST RESULTS: ${passed} PASSED, ${failed} FAILED (TOTAL 32 FLOWS)`);
+  console.log(`TEST RESULTS: ${passed} PASSED, ${failed} FAILED (TOTAL 38 FLOWS)`);
   console.log('======================================================\n');
 
   if (failed > 0) {

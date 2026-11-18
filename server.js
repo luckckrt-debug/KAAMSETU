@@ -2,8 +2,6 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 const { Server } = require('socket.io');
-const fs = require('fs');
-const path = require('path');
 
 const dev = process.env.NODE_ENV !== 'production';
 const port = parseInt(process.env.PORT || '3000', 10);
@@ -36,38 +34,122 @@ app.prepare().then(() => {
     },
   });
 
-  // Attach io to global for API routes if needed
+  // Attach io to global for API routes
   global.__kaamsetu_io = io;
 
   io.on('connection', (socket) => {
-    // Join room for specific booking
+    // 1. Join room for specific booking (Customer, Assigned Worker, Admin)
     socket.on('booking:join', ({ bookingId, userId, role }) => {
+      if (!bookingId) return;
       const room = `booking:${bookingId}`;
       socket.join(room);
-      console.log(`[SOCKET] User ${userId} (${role}) joined ${room}`);
+      console.log(`[SOCKET] User ${userId || 'guest'} (${role || 'VIEWER'}) joined ${room}`);
+      socket.emit('booking:joined', { bookingId, joinedAt: new Date().toISOString() });
     });
 
-    // Worker streams real GPS coordinates
-    socket.on('location:update', (data) => {
+    // 2. Worker presence & dispatch channel
+    socket.on('worker:join', ({ workerProfileId, userId }) => {
+      if (workerProfileId) {
+        socket.join(`worker:${workerProfileId}`);
+        socket.join('workers:all');
+        console.log(`[SOCKET] Worker ${workerProfileId} connected to dispatch pool`);
+      }
+    });
+
+    // 3. Admin Live Operations room
+    socket.on('admin:join', () => {
+      socket.join('admin:operations');
+      console.log('[SOCKET] Admin connected to live operations channel');
+    });
+
+    // 4. Live Worker GPS Telemetry streaming
+    const handleLocationUpdate = (data) => {
       const { bookingId, workerProfileId, latitude, longitude, accuracyMeters, heading, speed } = data;
-      if (!bookingId || !latitude || !longitude) return;
+      if (!latitude || !longitude) return;
 
-      const room = `booking:${bookingId}`;
-
-      // Broadcast live coordinate to authorized customer in the room
-      io.to(room).emit('location:stream', {
+      const telemetryPayload = {
         bookingId,
         workerProfileId,
-        latitude,
-        longitude,
-        accuracyMeters: accuracyMeters || 10,
-        heading: heading || 0,
-        speed: speed || 0,
+        latitude: Number(latitude),
+        longitude: Number(longitude),
+        accuracyMeters: accuracyMeters ? Number(accuracyMeters) : 10,
+        heading: heading ? Number(heading) : 0,
+        speed: speed ? Number(speed) : 24,
         recordedAt: new Date().toISOString(),
+      };
+
+      // Broadcast to specific booking room if active job
+      if (bookingId) {
+        const room = `booking:${bookingId}`;
+        io.to(room).emit('worker:location:update', telemetryPayload);
+        io.to(room).emit('location:stream', telemetryPayload);
+      }
+
+      // Broadcast to Admin Live Operations map
+      io.to('admin:operations').emit('worker:location:update', telemetryPayload);
+    };
+
+    socket.on('worker:location:update', handleLocationUpdate);
+    socket.on('location:update', handleLocationUpdate);
+
+    // 5. Worker Availability & Online Toggle
+    socket.on('worker:availability:update', (data) => {
+      const { workerProfileId, isOnline, isAvailableNow } = data;
+      io.to('admin:operations').emit('worker:availability:update', {
+        workerProfileId,
+        isOnline,
+        isAvailableNow,
+        updatedAt: new Date().toISOString(),
       });
     });
 
-    // Realtime Chat message within booking
+    // 6. Booking Lifecycle Transitions
+    socket.on('booking:status:updated', (data) => {
+      const { bookingId, status } = data;
+      if (!bookingId || !status) return;
+      const room = `booking:${bookingId}`;
+      io.to(room).emit('booking:status:updated', { ...data, updatedAt: new Date().toISOString() });
+      io.to(room).emit('booking:status_changed', { ...data, updatedAt: new Date().toISOString() });
+      io.to('admin:operations').emit('booking:status:updated', data);
+    });
+
+    socket.on('booking:worker:assigned', (data) => {
+      const { bookingId } = data;
+      if (!bookingId) return;
+      io.to(`booking:${bookingId}`).emit('booking:worker:assigned', data);
+      io.to('admin:operations').emit('booking:worker:assigned', data);
+    });
+
+    socket.on('booking:worker:arrived', (data) => {
+      const { bookingId } = data;
+      if (!bookingId) return;
+      io.to(`booking:${bookingId}`).emit('booking:worker:arrived', data);
+      io.to('admin:operations').emit('booking:worker:arrived', data);
+    });
+
+    socket.on('booking:cancelled', (data) => {
+      const { bookingId } = data;
+      if (!bookingId) return;
+      io.to(`booking:${bookingId}`).emit('booking:cancelled', data);
+      io.to('admin:operations').emit('booking:cancelled', data);
+    });
+
+    // 7. Tracking start & stop signals
+    socket.on('tracking:started', (data) => {
+      const { bookingId } = data;
+      if (!bookingId) return;
+      io.to(`booking:${bookingId}`).emit('tracking:started', data);
+      io.to('admin:operations').emit('tracking:started', data);
+    });
+
+    socket.on('tracking:stopped', (data) => {
+      const { bookingId } = data;
+      if (!bookingId) return;
+      io.to(`booking:${bookingId}`).emit('tracking:stopped', data);
+      io.to('admin:operations').emit('tracking:stopped', data);
+    });
+
+    // 8. Realtime Chat message within booking
     socket.on('chat:send', (data) => {
       const { bookingId, senderId, senderName, senderRole, message, imageUrl } = data;
       if (!bookingId || !message) return;
