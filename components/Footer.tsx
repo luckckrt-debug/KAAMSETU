@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { HardHat, ShieldCheck, Phone, Mail, MapPin, Heart, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Phone, Mail, MapPin, Heart, ArrowRight } from 'lucide-react';
+import Logo from '@/components/Logo';
 
 export default function Footer() {
   return (
@@ -39,14 +40,7 @@ export default function Footer() {
           
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#2196E8] flex items-center justify-center text-white">
-                <HardHat className="w-6 h-6 stroke-[2.2]" />
-              </div>
-              <span className="text-2xl font-black tracking-tight text-white">
-                KAAM <span className="text-[#2196E8]">SETU</span>
-              </span>
-            </div>
+            <Logo variant="dark" size="md" />
             <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
               India&apos;s trusted digital workforce ecosystem connecting verified skilled workers, customers, contractors, and companies with real-time GPS dispatch and transparent payments.
             </p>

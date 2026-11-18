@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { 
   Menu, 
   X, 
@@ -95,19 +96,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16 sm:h-20">
           
           {/* Logo & Brand Name */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-[#123B5D] to-[#2196E8] flex items-center justify-center text-white shadow-md shadow-[#2196E8]/20 group-hover:scale-105 transition-transform">
-              <HardHat className="w-6 h-6 stroke-[2.2]" />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-2xl font-black tracking-tight text-[#123B5D] flex items-center gap-1">
-                KAAM <span className="text-[#2196E8]">SETU</span>
-              </span>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#4B6F8E] -mt-1">
-                काम सेतु • WORKFORCE
-              </span>
-            </div>
-          </Link>
+          <Logo variant="light" size="md" />
 
           {/* Desktop Navigation Links */}
           <nav className="hidden xl:flex items-center space-x-6 text-sm font-bold text-[#123B5D]">

@@ -24,6 +24,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { AdminMetrics } from '@/lib/types';
+import { LogoIcon } from '@/components/Logo';
 
 export default function AdminBackofficePage() {
   const [activeTab, setActiveTab] = useState<'METRICS' | 'VERIFICATION' | 'DISPUTES' | 'AUDIT' | 'APKS'>('APKS');
@@ -137,9 +138,7 @@ export default function AdminBackofficePage() {
         {/* Admin Header */}
         <div className="bg-forest text-white rounded-3xl p-6 sm:p-8 shadow-elevated flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-lime text-forest flex items-center justify-center font-black shadow-sm">
-              <Lock className="w-7 h-7 stroke-[2.2]" />
-            </div>
+            <LogoIcon size="lg" className="shadow-lg border-2 border-white/20" />
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-xl sm:text-2xl font-black text-white">
