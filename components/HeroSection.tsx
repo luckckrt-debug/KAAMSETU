@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { LogoIcon } from '@/components/Logo';
 import { 
   Search, 
   MapPin, 
@@ -11,20 +10,11 @@ import {
   ArrowRight, 
   ShieldCheck, 
   Clock, 
-  Zap, 
-  Wrench, 
-  Hammer, 
-  Paintbrush, 
-  Truck, 
-  Building2, 
-  Sparkles, 
-  Monitor, 
+  Star,
+  ChevronDown,
   Wrench as ToolsIcon,
   CheckCircle2,
-  Star,
-  Users,
-  HardHat,
-  ChevronDown
+  Sparkles
 } from 'lucide-react';
 
 const POPULAR_LOCATIONS = [
@@ -86,163 +76,54 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#EAF6FF] via-[#F5FAFF] to-[#EAF6FF] pt-10 pb-16 lg:pt-16 lg:pb-24 border-b border-[#D1E8F8]">
-      {/* Background radial blurs */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#2196E8]/10 rounded-full blur-3xl -z-10 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-[#60B5F5]/10 rounded-full blur-3xl -z-10 pointer-events-none" />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#EAF6FF] via-[#F5FAFF] to-[#EAF6FF] pt-12 pb-16 lg:pt-16 lg:pb-24 border-b border-[#D1E8F8]">
+      {/* Background ambient light */}
+      <div className="absolute top-0 right-1/4 w-[550px] h-[550px] bg-[#2196E8]/10 rounded-full blur-3xl -z-10 pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[450px] h-[450px] bg-[#60B5F5]/10 rounded-full blur-3xl -z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* HERO CONTENT: Left Text + Right Visual */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center mb-12">
+        {/* CENTERED HERO HEADER */}
+        <div className="max-w-4xl mx-auto text-center space-y-6 mb-10">
           
-          {/* Left Text Column */}
-          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-            
-            {/* Pill Tag */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#D1E8F8] shadow-xs text-xs font-bold text-[#123B5D]">
-              <span className="w-2 h-2 rounded-full bg-[#2196E8] animate-pulse"></span>
-              <span className="text-[#2196E8]">#1 Indian Workforce Marketplace</span>
-              <span className="text-[#4B6F8E]">• 100% Aadhaar Verified</span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#123B5D] tracking-tight leading-[1.12]">
-              Connecting Skills with <span className="text-[#2196E8]">Opportunities.</span>
-            </h1>
-
-            {/* Supporting Description */}
-            <p className="text-base sm:text-lg text-[#4B6F8E] max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed">
-              Kaam Setu connects local skilled professionals, artisans, daily wage workers, and contractors with homeowners and companies. Fair daily wages, instant GPS dispatch, and transparent escrow payments with zero middlemen.
-            </p>
-
-            {/* Primary & Secondary CTAs */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-              <Link
-                href="/register/worker"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#2196E8] hover:bg-[#1976D2] text-white text-base font-black shadow-lg shadow-[#2196E8]/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
-              >
-                <span>Find Work (काम पाएं)</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/workers"
-                className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-[#F5FAFF] text-[#123B5D] border-2 border-[#D1E8F8] hover:border-[#2196E8] text-base font-black shadow-sm transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
-              >
-                <span>Hire Workers (कारीगर खोजें)</span>
-              </Link>
-            </div>
-
-            {/* Trust Badges */}
-            <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-4 text-xs font-bold text-[#123B5D]">
-              <div className="flex items-center gap-2 bg-white px-3.5 py-2 rounded-xl border border-[#D1E8F8] shadow-xs">
-                <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>100% Aadhaar & Skill Verified</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-3.5 py-2 rounded-xl border border-[#D1E8F8] shadow-xs">
-                <Clock className="w-4 h-4 text-[#2196E8]" />
-                <span>Average Arrival: 25 Minutes</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white px-3.5 py-2 rounded-xl border border-[#D1E8F8] shadow-xs">
-                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                <span>4.8/5 Customer Satisfaction</span>
-              </div>
-            </div>
-
+          {/* Pill Tag */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#D1E8F8] shadow-xs text-xs font-bold text-[#123B5D]">
+            <span className="w-2 h-2 rounded-full bg-[#2196E8] animate-pulse"></span>
+            <span className="text-[#2196E8]">#1 Indian Workforce Marketplace</span>
+            <span className="text-[#4B6F8E]">• 100% Aadhaar Verified</span>
           </div>
 
-          {/* Right Visual Column */}
-          <div className="lg:col-span-5 relative">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-              
-              {/* Main Visual Card */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-xl border border-[#D1E8F8] relative overflow-hidden">
-                <div className="flex items-center justify-between pb-4 border-b border-[#EAF6FF] mb-4">
-                  <div className="flex items-center gap-3">
-                    <LogoIcon size="md" />
-                    <div>
-                      <h3 className="text-base font-black text-[#123B5D]">Verified Indian Workforce</h3>
-                      <p className="text-xs text-[#4B6F8E]">Active across 120+ Indian cities</p>
-                    </div>
-                  </div>
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
-                    Live Dispatch
-                  </span>
-                </div>
+          {/* Main Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#123B5D] tracking-tight leading-[1.12]">
+            Connecting Skills with <span className="text-[#2196E8]">Opportunities.</span>
+          </h1>
 
-                {/* Worker Preview Highlights */}
-                <div className="space-y-3">
-                  <div className="p-3.5 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8] flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#2196E8] text-white flex items-center justify-center font-bold text-sm">
-                        <Zap className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-[#123B5D]">Electricians & Techs</p>
-                        <p className="text-[11px] text-[#4B6F8E]">1,420+ Online • ₹350/hr</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold text-[#2196E8] bg-white px-2.5 py-1 rounded-lg border border-[#D1E8F8]">
-                      Ready
-                    </span>
-                  </div>
+          {/* Supporting Description */}
+          <p className="text-base sm:text-lg text-[#4B6F8E] max-w-2xl mx-auto font-medium leading-relaxed">
+            Kaam Setu connects local skilled professionals, artisans, daily wage workers, and contractors with homeowners and companies. Fair daily wages, instant GPS dispatch, and transparent escrow payments with zero middlemen.
+          </p>
 
-                  <div className="p-3.5 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8] flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm">
-                        <Wrench className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-[#123B5D]">Plumbing & Pipe Fitters</p>
-                        <p className="text-[11px] text-[#4B6F8E]">980+ Online • ₹300/hr</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold text-[#2196E8] bg-white px-2.5 py-1 rounded-lg border border-[#D1E8F8]">
-                      Ready
-                    </span>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8] flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-sm">
-                        <Hammer className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold text-[#123B5D]">Masons & Construction</p>
-                        <p className="text-[11px] text-[#4B6F8E]">2,150+ Online • ₹1,050/day</p>
-                      </div>
-                    </div>
-                    <span className="text-xs font-bold text-[#2196E8] bg-white px-2.5 py-1 rounded-lg border border-[#D1E8F8]">
-                      Ready
-                    </span>
-                  </div>
-                </div>
-
-                {/* Footer Micro stats */}
-                <div className="mt-4 pt-3 border-t border-[#EAF6FF] flex items-center justify-between text-xs text-[#4B6F8E]">
-                  <span className="font-semibold">⚡ Instant OTP Booking</span>
-                  <span className="font-semibold text-emerald-600">✓ 100% Escrow Protection</span>
-                </div>
-              </div>
-
-              {/* Floating Floating Stat Badge */}
-              <div className="absolute -bottom-4 -left-4 sm:-bottom-5 sm:-left-5 bg-white p-3.5 rounded-2xl border border-[#D1E8F8] shadow-lg flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black">
-                  <ShieldCheck className="w-6 h-6" />
-                </div>
-                <div>
-                  <p className="text-xs font-black text-[#123B5D]">Govt. ID Verified</p>
-                  <p className="text-[10px] text-[#4B6F8E]">Police Clearance Passed</p>
-                </div>
-              </div>
-
-            </div>
+          {/* Primary & Secondary Action CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <Link
+              href="/register/worker"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#2196E8] hover:bg-[#1976D2] text-white text-base font-black shadow-lg shadow-[#2196E8]/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+            >
+              <span>Find Work (काम पाएं)</span>
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              href="/workers"
+              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-white hover:bg-[#F5FAFF] text-[#123B5D] border-2 border-[#D1E8F8] hover:border-[#2196E8] text-base font-black shadow-sm transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+            >
+              <span>Hire Workers (कारीगर खोजें)</span>
+            </Link>
           </div>
 
         </div>
 
-        {/* SECTION C: QUICK SEARCH PANEL */}
-        <div id="quick-search" className="bg-white rounded-3xl shadow-xl border-2 border-[#D1E8F8] p-6 sm:p-8">
+        {/* SECTION C: OPTIMIZED QUICK SEARCH PANEL */}
+        <div id="quick-search" className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl border-2 border-[#D1E8F8] p-6 sm:p-8">
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-[#EAF6FF] mb-6">
             <div>
@@ -368,6 +249,26 @@ export default function HeroSection() {
             ))}
           </div>
 
+        </div>
+
+        {/* TRUST RIBBON UNDER QUICK SEARCH */}
+        <div className="max-w-4xl mx-auto mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-bold text-[#123B5D]">
+          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>100% Aadhaar & Police Verified</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
+            <Clock className="w-4 h-4 text-[#2196E8]" />
+            <span>25-Min Live GPS Arrival</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
+            <CheckCircle2 className="w-4 h-4 text-[#2196E8]" />
+            <span>100% Escrow Protection</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
+            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+            <span>4.8/5 (15k+ Completed Jobs)</span>
+          </div>
         </div>
 
       </div>
