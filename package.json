@@ -1,0 +1,44 @@
+{
+  "name": "kaamsetu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KAAMSETU - Production-oriented Indian Workforce Marketplace Platform",
+  "scripts": {
+    "dev": "node server.js",
+    "dev:next": "next dev",
+    "build": "next build",
+    "start": "NODE_ENV=production node server.js",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "node scripts/seed.js",
+    "test": "node scripts/run-tests.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.468.0",
+    "next": "^14.2.20",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20.17.9",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.7.2"
+  },
+  "optionalDependencies": {
+    "@next/swc-wasm-nodejs": "^14.2.33"
+  }
+}
