@@ -1,5 +1,6 @@
 import React from 'react';
 import HeroSearch from '@/components/HeroSearch';
+import ExploreProfessions from '@/components/ExploreProfessions';
 import PopularCategories from '@/components/PopularCategories';
 import NearbyWorkersList from '@/components/NearbyWorkersList';
 import UrgentBookingSection from '@/components/UrgentBookingSection';
@@ -32,6 +33,9 @@ export default function HomePage() {
       
       {/* 1 & 2. Hero Section & Search Services */}
       <HeroSearch />
+
+      {/* Explore Professions Discovery Section */}
+      <ExploreProfessions />
 
       {/* 3. Popular Service Categories */}
       <PopularCategories />
