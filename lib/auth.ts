@@ -1,10 +1,26 @@
 // KAAMSETU - Authentication, Session & RBAC Module
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 import { User, UserRole } from './types';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'kaamsetu_super_secure_jwt_secret_dev_2026_change_in_production';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
+
+/**
+ * Hash a password securely with salt rounds = 10
+ */
+export function hashPassword(password: string): string {
+  return bcrypt.hashSync(password, 10);
+}
+
+/**
+ * Compare plain text password against hashed password
+ */
+export function comparePassword(password: string, hash: string): boolean {
+  if (!password || !hash) return false;
+  return bcrypt.compareSync(password, hash);
+}
 
 export interface TokenPayload {
   userId: string;

@@ -510,13 +510,6 @@ export default function PopularCategories() {
                       </span>
                     </div>
 
-                    {/* Verified worker counter */}
-                    <div className="absolute bottom-3 right-3">
-                      <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-forest text-lime">
-                        {cat.workerCount}
-                      </span>
-                    </div>
-
                     {/* Category Title on Image */}
                     <div className="absolute bottom-3 left-3 text-white">
                       <h3 className="text-base font-black leading-tight drop-shadow-sm">

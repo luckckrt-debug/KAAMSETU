@@ -77,6 +77,8 @@ export interface User {
   id: string;
   phoneNumber: string;
   phoneVerified: boolean;
+  passwordHash?: string;
+  status?: 'ACTIVE' | 'BLOCKED' | 'SUSPENDED';
   email?: string;
   fullName: string;
   avatarUrl?: string;
@@ -573,3 +575,162 @@ export interface AdminMetrics {
   pendingPayoutsAmount: number;
   disputesOpen: number;
 }
+
+// ==========================================
+// CONTRACTOR PROJECTS & DAILY PAYOUT MODULES
+// ==========================================
+
+export type PayoutSchedule = 'DAILY' | 'WEEKLY' | 'MILESTONE' | 'COMPLETION';
+
+export interface ProjectWorkerRequirement {
+  id: string;
+  projectId: string;
+  trade: string;
+  skillLevel: 'UNSKILLED' | 'SEMI_SKILLED' | 'SKILLED' | 'EXPERT';
+  requiredCount: number;
+  acceptedCount: number;
+  experienceYears: number;
+  dailyWage: number;
+  workDescription?: string;
+  shift?: 'DAY' | 'NIGHT' | 'ROTATIONAL';
+  additionalNotes?: string;
+}
+
+export interface Project {
+  id: string;
+  contractorProfileId: string;
+  contractorName?: string;
+  contractorPhone?: string;
+  title: string;
+  description: string;
+  projectType: string;
+  locationAddress: string;
+  workLocation?: string;
+  city: string;
+  state: string;
+  pincode?: string;
+  siteLatitude?: number;
+  siteLongitude?: number;
+  startDate: string;
+  endDate?: string;
+  durationDays?: number;
+  shiftTiming: string;
+  workHoursPerDay: number;
+  workConditions?: string;
+  accommodationDetails?: string;
+  foodDetails?: string;
+  toolsEquipmentInfo?: string;
+  safetyRequirements?: string;
+  facilities?: {
+    foodProvided?: boolean;
+    transportProvided?: boolean;
+    safetyGearProvided?: boolean;
+  };
+  contactCoordinationDetails?: string;
+  requirements: ProjectWorkerRequirement[];
+  payoutSchedule: PayoutSchedule;
+  attendanceVerification: string;
+  paymentDueDate?: string;
+  paymentTerms: string;
+  estimatedBudget: number;
+  status: 'OPEN' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+  applicationsCount?: number;
+  totalWorkersRequired?: number;
+  totalWorkersAccepted?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ProjectApplicationStatus = 
+  | 'APPLIED'
+  | 'UNDER_REVIEW'
+  | 'SHORTLISTED'
+  | 'ACCEPTED'
+  | 'REJECTED'
+  | 'WITHDRAWN';
+
+export interface ProjectApplication {
+  id: string;
+  projectId: string;
+  projectTitle?: string;
+  requirementId?: string;
+  trade: string;
+  workerProfileId: string;
+  workerName: string;
+  workerPhone?: string;
+  workerRating?: number;
+  workerSkills?: string[];
+  workerExperienceYears?: number;
+  proposedDailyRate: number;
+  availabilityDate: string;
+  coverNote?: string;
+  status: ProjectApplicationStatus;
+  appliedAt: string;
+  reviewedAt?: string;
+  rejectionReason?: string;
+}
+
+export interface ProjectAssignment {
+  id: string;
+  projectId: string;
+  workerProfileId: string;
+  contractorProfileId: string;
+  trade: string;
+  agreedDailyRate: number;
+  status: 'ACTIVE' | 'COMPLETED' | 'TERMINATED';
+  assignedAt: string;
+  completedAt?: string;
+}
+
+export type AttendanceStatus = 'PRESENT' | 'ABSENT' | 'HALF_DAY' | 'OVERTIME';
+export type WorkVerificationStatus = 'PENDING_VERIFICATION' | 'VERIFIED' | 'DISPUTED';
+
+export interface AttendanceRecord {
+  id: string;
+  projectId: string;
+  workerProfileId: string;
+  workerName?: string;
+  contractorProfileId: string;
+  date: string;
+  status: AttendanceStatus;
+  hoursWorked: number;
+  dailyRate: number;
+  grossAmount: number;
+  platformFee: number;
+  netAmount: number;
+  verificationStatus: WorkVerificationStatus;
+  verifiedAt?: string;
+  paymentStatus: 'UNPAID' | 'ELIGIBLE_FOR_PAYOUT' | 'PROCESSING' | 'PAID' | 'FAILED';
+  payoutBatchId?: string;
+  payoutTransactionId?: string;
+  createdAt: string;
+}
+
+export interface PayrollBatch {
+  id: string;
+  projectId: string;
+  contractorProfileId: string;
+  batchDate: string;
+  payoutSchedule: PayoutSchedule;
+  totalWorkers: number;
+  grossPayroll: number;
+  platformFeeTotal: number;
+  netPayoutTotal: number;
+  status: 'INITIATED' | 'PROCESSING' | 'SUCCESS' | 'FAILED' | 'PARTIAL';
+  transactionReference: string;
+  providerPaymentId?: string;
+  processedAt?: string;
+  failureReason?: string;
+  workerBreakdown: Array<{
+    workerProfileId: string;
+    workerName: string;
+    attendanceId: string;
+    grossAmount: number;
+    platformFee: number;
+    netAmount: number;
+    status: 'SUCCESS' | 'FAILED';
+    transactionId?: string;
+  }>;
+  createdAt: string;
+}
+

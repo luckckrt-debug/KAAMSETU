@@ -133,6 +133,36 @@ export async function GET(req: NextRequest) {
         }
         break;
 
+      case 'projects':
+      case 'project_applications':
+      case 'attendance_records':
+      case 'payroll_batches':
+      case 'payout_transactions': {
+        try {
+          const db = await getMongoDb();
+          if (db) {
+            const raw = await db.collection(collection).find({}).sort({ createdAt: -1 }).limit(100).toArray();
+            items = raw.map((doc: any) => {
+              const { _id, ...rest } = doc;
+              return {
+                id: doc.id || _id?.toString(),
+                ...rest,
+                displayName: doc.title || doc.batchNumber || doc.workerName || doc.trade || doc.id,
+                displayPhone: doc.contractorId || doc.workerId || 'N/A',
+                displayRole: doc.status || doc.payoutSchedule || doc.paymentStatus || collection,
+              };
+            });
+          }
+        } catch (e) {
+          console.warn(`[Admin Data] Error fetching from Atlas collection ${collection}:`, e);
+          items = (store as any)[collection] || [];
+        }
+        if (search) {
+          items = items.filter((item: any) => JSON.stringify(item).toLowerCase().includes(search));
+        }
+        break;
+      }
+
       default:
         // Generic collection fallback
         items = (store as any)[collection] || [];
@@ -149,6 +179,9 @@ export async function GET(req: NextRequest) {
       users: store.users.length,
       bookings: store.bookings.length,
       tenders: store.tenders.length,
+      projects: 0,
+      payroll_batches: 0,
+      payout_transactions: 0,
       disputes: store.disputes.length,
       auditLogs: store.auditLogs.length,
     };
@@ -160,11 +193,14 @@ export async function GET(req: NextRequest) {
         mongoConnected = true;
 
         // Fetch actual live MongoDB Atlas counts
-        const [wCount, uCount, bCount, tCount, dCount, aCount] = await Promise.all([
+        const [wCount, uCount, bCount, tCount, pCount, payCount, txCount, dCount, aCount] = await Promise.all([
           db.collection('workerProfiles').countDocuments(),
           db.collection('users').countDocuments(),
           db.collection('bookings').countDocuments(),
           db.collection('tenders').countDocuments(),
+          db.collection('projects').countDocuments(),
+          db.collection('payroll_batches').countDocuments(),
+          db.collection('payout_transactions').countDocuments(),
           db.collection('disputes').countDocuments(),
           db.collection('auditLogs').countDocuments(),
         ]);
@@ -173,6 +209,9 @@ export async function GET(req: NextRequest) {
         collectionCounts.users = uCount;
         collectionCounts.bookings = bCount;
         collectionCounts.tenders = tCount;
+        collectionCounts.projects = pCount;
+        collectionCounts.payroll_batches = payCount;
+        collectionCounts.payout_transactions = txCount;
         collectionCounts.disputes = dCount;
         collectionCounts.auditLogs = aCount;
       }

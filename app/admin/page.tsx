@@ -40,7 +40,7 @@ export default function AdminBackofficePage() {
   const [message, setMessage] = useState('');
 
   // Live MongoDB Atlas Manager State
-  const [dataCollection, setDataCollection] = useState<'workerProfiles' | 'users' | 'bookings' | 'tenders' | 'disputes'>('workerProfiles');
+  const [dataCollection, setDataCollection] = useState<'workerProfiles' | 'users' | 'bookings' | 'tenders' | 'projects' | 'payroll_batches' | 'disputes'>('workerProfiles');
   const [dataSearch, setDataSearch] = useState('');
   const [dataItems, setDataItems] = useState<any[]>([]);
   const [collectionCounts, setCollectionCounts] = useState<Record<string, number>>({});
@@ -798,12 +798,14 @@ export default function AdminBackofficePage() {
               </div>
 
               {/* Real-Time Collection Document Counters */}
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
+              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 pt-2">
                 {[
                   { id: 'workerProfiles', label: 'Workers (श्रमिक)', count: collectionCounts.workerProfiles ?? 0, icon: HardHat },
                   { id: 'users', label: 'Users (उपयोगकर्ता)', count: collectionCounts.users ?? 0, icon: Users },
                   { id: 'bookings', label: 'Bookings (बुकिंग्स)', count: collectionCounts.bookings ?? 0, icon: Briefcase },
-                  { id: 'tenders', label: 'Tenders (टेंडर्स)', count: collectionCounts.tenders ?? 0, icon: Building2 },
+                  { id: 'projects', label: 'Projects (प्रोजेक्ट्स)', count: collectionCounts.projects ?? 0, icon: Building2 },
+                  { id: 'payroll_batches', label: 'Payroll (पेरोल)', count: collectionCounts.payroll_batches ?? 0, icon: CreditCard },
+                  { id: 'tenders', label: 'Tenders (टेंडर्स)', count: collectionCounts.tenders ?? 0, icon: Briefcase },
                   { id: 'disputes', label: 'Disputes (विवाद)', count: collectionCounts.disputes ?? 0, icon: AlertTriangle },
                 ].map((col) => {
                   const Icon = col.icon;
@@ -907,6 +909,8 @@ export default function AdminBackofficePage() {
                           ) : (
                             <div className="w-12 h-12 rounded-2xl bg-forest/10 text-forest flex items-center justify-center font-bold text-xs">
                               {dataCollection === 'bookings' && <Briefcase className="w-5 h-5" />}
+                              {dataCollection === 'projects' && <Building2 className="w-5 h-5" />}
+                              {dataCollection === 'payroll_batches' && <CreditCard className="w-5 h-5" />}
                               {dataCollection === 'tenders' && <Building2 className="w-5 h-5" />}
                               {dataCollection === 'disputes' && <AlertTriangle className="w-5 h-5" />}
                               {dataCollection === 'users' && <Users className="w-5 h-5" />}
