@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { loadStore, saveStore } from '@/lib/store';
 import { deleteMongoDocument, upsertMongoDocument } from '@/lib/mongodb';

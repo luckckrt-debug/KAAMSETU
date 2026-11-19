@@ -734,3 +734,83 @@ export interface PayrollBatch {
   createdAt: string;
 }
 
+// ==========================================
+// CENTRAL ADMIN CONTROL ROOM TYPES
+// ==========================================
+
+export type AdminRoleType = 
+  | 'SUPER_ADMIN' 
+  | 'OPERATIONS_ADMIN' 
+  | 'KYC_ADMIN' 
+  | 'FINANCE_ADMIN' 
+  | 'SUPPORT_ADMIN';
+
+export interface PlatformFeeLedgerEntry {
+  id: string;
+  bookingId?: string;
+  jobId?: string;
+  customerId?: string;
+  customerName?: string;
+  workerId?: string;
+  workerName?: string;
+  baseWorkerCharge: number;
+  platformFee: number; // ₹99
+  totalCustomerPayment: number;
+  paymentStatus: 'PAID' | 'PENDING' | 'FAILED' | 'REFUNDED';
+  settlementStatus: 'SETTLED' | 'PENDING' | 'REFUNDED' | 'FAILED';
+  refundAmount?: number;
+  providerTransactionRef?: string;
+  createdAt: string;
+  settledAt?: string;
+}
+
+export interface AdminAuditLog {
+  id: string;
+  adminId: string;
+  adminName: string;
+  adminRole: string;
+  action: string;
+  targetUser?: string;
+  targetRecord?: string;
+  targetCollection?: string;
+  previousValue?: any;
+  updatedValue?: any;
+  reason?: string;
+  ipAddress?: string;
+  timestamp: string;
+  status: 'SUCCESS' | 'FAILED';
+}
+
+export interface SystemSettingsConfig {
+  id: string;
+  platformName: string;
+  platformFee: number; // default 99
+  serviceFeeEnabled: boolean;
+  maintenanceMode: boolean;
+  kycRequiredForBookings: boolean;
+  payoutProvider: 'CASHFREE' | 'RAZORPAY_X' | 'MANUAL';
+  supportPhone: string;
+  supportEmail: string;
+  autoDispatchEnabled: boolean;
+  updatedAt: string;
+  updatedByAdminId?: string;
+}
+
+export interface UniversalSearchResultItem {
+  id: string;
+  userId: string;
+  fullName: string;
+  phoneNumber: string;
+  email?: string;
+  roles: UserRole[];
+  status: 'ACTIVE' | 'BLOCKED' | 'SUSPENDED';
+  kycStatus?: VerificationStatus;
+  profileId?: string;
+  city?: string;
+  rating?: number;
+  completedJobsCount?: number;
+  walletBalance?: number;
+  createdAt: string;
+}
+
+

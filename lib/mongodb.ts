@@ -118,3 +118,107 @@ export async function upsertMongoDocument(
     return false;
   }
 }
+
+/**
+ * Record an immutable audit log entry in MongoDB Atlas auditLogs collection
+ */
+export async function recordAdminAuditLog(entry: {
+  adminId: string;
+  adminName: string;
+  adminRole: string;
+  action: string;
+  targetUser?: string;
+  targetRecord?: string;
+  targetCollection?: string;
+  previousValue?: any;
+  updatedValue?: any;
+  reason?: string;
+  ipAddress?: string;
+  status?: 'SUCCESS' | 'FAILED';
+}): Promise<boolean> {
+  try {
+    const db = await getMongoDb();
+    if (!db) return false;
+    const col = db.collection('auditLogs');
+    const doc = {
+      id: `audit-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+      ...entry,
+      status: entry.status || 'SUCCESS',
+      timestamp: new Date().toISOString(),
+    };
+    await col.insertOne(doc);
+    return true;
+  } catch (e) {
+    console.error('[Audit Log Error]:', e);
+    return false;
+  }
+}
+
+/**
+ * Retrieve system settings from MongoDB Atlas
+ */
+export async function getSystemSettings(): Promise<any> {
+  const defaultSettings = {
+    id: 'system-settings-main',
+    platformName: 'KAAMSETU',
+    platformFee: 99,
+    serviceFeeEnabled: true,
+    maintenanceMode: false,
+    kycRequiredForBookings: true,
+    payoutProvider: 'MANUAL',
+    supportPhone: '+91-8887642828',
+    supportEmail: 'support@kaamsetu.in',
+    autoDispatchEnabled: true,
+    updatedAt: new Date().toISOString(),
+  };
+
+  try {
+    const db = await getMongoDb();
+    if (!db) return defaultSettings;
+    const col = db.collection('system_settings');
+    const existing = await col.findOne({ id: 'system-settings-main' });
+    if (!existing) {
+      await col.insertOne(defaultSettings);
+      return defaultSettings;
+    }
+    return existing;
+  } catch (e) {
+    return defaultSettings;
+  }
+}
+
+/**
+ * Update system settings in MongoDB Atlas
+ */
+export async function updateSystemSettings(newSettings: any, adminUser?: { id: string; name: string; role: string }): Promise<any> {
+  try {
+    const db = await getMongoDb();
+    if (!db) return null;
+    const col = db.collection('system_settings');
+    const updated = {
+      ...newSettings,
+      id: 'system-settings-main',
+      updatedAt: new Date().toISOString(),
+      updatedByAdminId: adminUser?.id,
+    };
+    await col.replaceOne({ id: 'system-settings-main' }, updated, { upsert: true });
+
+    if (adminUser) {
+      await recordAdminAuditLog({
+        adminId: adminUser.id,
+        adminName: adminUser.name,
+        adminRole: adminUser.role,
+        action: 'UPDATE_SYSTEM_SETTINGS',
+        targetCollection: 'system_settings',
+        updatedValue: newSettings,
+        reason: 'Super Admin updated platform configuration',
+      });
+    }
+
+    return updated;
+  } catch (e) {
+    console.error('[System Settings Update Error]:', e);
+    return null;
+  }
+}
+
