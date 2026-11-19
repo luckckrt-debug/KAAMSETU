@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/store';
+import { verifySessionToken } from '@/lib/auth';
 import { 
   calculateDistanceKm, 
   calculateEstimatedEtaMinutes, 
@@ -16,13 +17,48 @@ export async function GET(req: NextRequest, { params }: { params: { bookingId: s
       return NextResponse.json({ success: false, error: 'Booking not found' }, { status: 404 });
     }
 
+    // 1. Location Privacy & Authorization Check
+    const token = req.cookies.get('kaamsetu_session')?.value;
+    if (token) {
+      const payload = verifySessionToken(token);
+      if (payload) {
+        const isCustomer = booking.customer?.id === payload.userId || booking.customerProfileId === payload.userId;
+        const isWorker = booking.assignedWorker?.userId === payload.userId || booking.assignedWorkerProfileId === payload.userId;
+        const isAdmin = payload.roles.includes('SUPER_ADMIN') || payload.roles.includes('ADMIN');
+
+        // If authenticated user is neither customer, worker nor admin
+        if (!isCustomer && !isWorker && !isAdmin) {
+          return NextResponse.json({ 
+            success: false, 
+            error: 'Unauthorized: You do not have permission to access tracking data for this booking.' 
+          }, { status: 403 });
+        }
+      }
+    }
+
+    // 2. Active Job Status Check:
+    // Location sharing only permitted during active job phases (ACCEPTED, WORKER_ON_THE_WAY, ARRIVED, WORK_IN_PROGRESS)
+    const isJobActive = ['ACCEPTED', 'WORKER_ON_THE_WAY', 'ARRIVED', 'WORK_IN_PROGRESS'].includes(booking.status);
+    const isWorkerEnRoute = booking.status === 'WORKER_ON_THE_WAY';
+
+    // If job is completed or cancelled, stop sharing location permanently
+    if (!isJobActive) {
+      return NextResponse.json({
+        success: true,
+        booking,
+        trackingActive: false,
+        liveLocationAvailable: false,
+        message: `Job is ${booking.status.toLowerCase()}. Location sharing has stopped automatically.`,
+      });
+    }
+
     const latestLocation = dbStore.getLatestLocation(params.bookingId);
 
     if (!latestLocation) {
       return NextResponse.json({
         success: true,
         booking,
-        trackingActive: booking.status === 'WORKER_ON_THE_WAY',
+        trackingActive: isWorkerEnRoute,
         liveLocationAvailable: false,
         message: 'Live location unavailable. Worker has not started route yet.',
       });
@@ -42,7 +78,7 @@ export async function GET(req: NextRequest, { params }: { params: { bookingId: s
     return NextResponse.json({
       success: true,
       booking,
-      trackingActive: booking.status === 'WORKER_ON_THE_WAY',
+      trackingActive: isWorkerEnRoute,
       liveLocationAvailable: true,
       currentLocation: latestLocation,
       customerLocation: {
