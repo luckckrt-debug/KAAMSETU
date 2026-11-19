@@ -14,7 +14,9 @@ import {
   ChevronDown,
   Wrench as ToolsIcon,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Zap,
+  Users
 } from 'lucide-react';
 
 const POPULAR_LOCATIONS = [
@@ -76,45 +78,45 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#EAF6FF] via-[#F5FAFF] to-[#EAF6FF] pt-12 pb-16 lg:pt-16 lg:pb-24 border-b border-[#D1E8F8]">
-      {/* Background ambient light */}
-      <div className="absolute top-0 right-1/4 w-[550px] h-[550px] bg-[#2196E8]/10 rounded-full blur-3xl -z-10 pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[450px] h-[450px] bg-[#60B5F5]/10 rounded-full blur-3xl -z-10 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pt-20 lg:pb-28 overflow-hidden">
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* CENTERED HERO HEADER */}
-        <div className="max-w-4xl mx-auto text-center space-y-6 mb-10">
+        <div className="max-w-4xl mx-auto text-center space-y-6 mb-12 sm:mb-14">
           
-          {/* Pill Tag */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#D1E8F8] shadow-xs text-xs font-bold text-[#123B5D]">
-            <span className="w-2 h-2 rounded-full bg-[#2196E8] animate-pulse"></span>
-            <span className="text-[#2196E8]">#1 Indian Workforce Marketplace</span>
+          {/* Trust Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-[#D1E8F8] shadow-xs text-xs font-bold text-[#153451] transition-all hover:bg-white">
+            <span className="w-2 h-2 rounded-full bg-[#2583D5] animate-pulse"></span>
+            <span className="text-[#2583D5]">#1 Indian Workforce Marketplace</span>
             <span className="text-[#4B6F8E]">• 100% Aadhaar Verified</span>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#123B5D] tracking-tight leading-[1.12]">
-            Connecting Skills with <span className="text-[#2196E8]">Opportunities.</span>
+          {/* Headline */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#153451] tracking-tight leading-[1.12]">
+            Right People. Right Place. <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2583D5] via-[#19639E] to-[#123B5D]">
+              Right Work.
+            </span>
           </h1>
 
-          {/* Supporting Description */}
-          <p className="text-base sm:text-lg text-[#4B6F8E] max-w-2xl mx-auto font-medium leading-relaxed">
-            Kaam Setu connects local skilled professionals, artisans, daily wage workers, and contractors with homeowners and companies. Fair daily wages, instant GPS dispatch, and transparent escrow payments with zero middlemen.
+          {/* Supporting Text */}
+          <p className="text-base sm:text-lg lg:text-xl text-[#4B6F8E] max-w-2xl mx-auto font-medium leading-relaxed">
+            Connecting India&apos;s skilled workforce with trusted job opportunities and customers. A simpler way to find work, hire professionals, and grow together.
           </p>
 
-          {/* Primary & Secondary Action CTAs */}
+          {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/register/worker"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-[#2196E8] hover:bg-[#1976D2] text-white text-base font-black shadow-lg shadow-[#2196E8]/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-[#2583D5] hover:bg-[#1E70B8] text-white text-base font-black shadow-lg shadow-[#2583D5]/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group"
             >
               <span>Find Work (काम पाएं)</span>
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/workers"
-              className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-white hover:bg-[#F5FAFF] text-[#123B5D] border-2 border-[#D1E8F8] hover:border-[#2196E8] text-base font-black shadow-sm transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/90 hover:bg-white text-[#153451] border border-[#D1E8F8] hover:border-[#2583D5] text-base font-black shadow-sm transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
             >
               <span>Hire Workers (कारीगर खोजें)</span>
             </Link>
@@ -122,20 +124,21 @@ export default function HeroSection() {
 
         </div>
 
-        {/* SECTION C: OPTIMIZED QUICK SEARCH PANEL */}
-        <div id="quick-search" className="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl border-2 border-[#D1E8F8] p-6 sm:p-8">
+        {/* SECTION C: FLOATING GLASSMORPHIC SEARCH PANEL */}
+        <div id="quick-search" className="max-w-5xl mx-auto glass-panel rounded-3xl p-6 sm:p-8 transition-all">
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-[#EAF6FF] mb-6">
             <div>
-              <span className="text-xs font-black uppercase tracking-wider text-[#2196E8] bg-[#EAF6FF] px-3 py-1 rounded-full border border-[#D1E8F8] inline-block mb-1.5">
+              <span className="text-xs font-black uppercase tracking-wider text-[#2583D5] bg-[#EAF6FF] px-3.5 py-1 rounded-full border border-[#D1E8F8] inline-block mb-1.5">
                 QUICK SEARCH PANEL
               </span>
-              <h2 className="text-2xl font-black text-[#123B5D]">
+              <h2 className="text-2xl font-black text-[#153451]">
                 Find Skilled Workers in Your Area
               </h2>
             </div>
-            <span className="text-xs text-[#4B6F8E] font-medium">
-              Over <strong className="text-[#123B5D]">15,000+</strong> verified professionals ready to dispatch
+            <span className="text-xs text-[#4B6F8E] font-medium flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Over <strong className="text-[#153451]">15,000+</strong> verified professionals ready to dispatch
             </span>
           </div>
 
@@ -144,8 +147,8 @@ export default function HeroSection() {
               
               {/* 1. Job Title / Skill */}
               <div className="md:col-span-4 space-y-1.5">
-                <label className="text-xs font-bold text-[#123B5D] uppercase tracking-wider flex items-center gap-1.5">
-                  <Search className="w-3.5 h-3.5 text-[#2196E8]" />
+                <label className="text-xs font-bold text-[#153451] uppercase tracking-wider flex items-center gap-1.5">
+                  <Search className="w-3.5 h-3.5 text-[#2583D5]" />
                   Job Title or Skill
                 </label>
                 <div className="relative">
@@ -154,7 +157,7 @@ export default function HeroSection() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="e.g. Electrician, Plumber, Painter..."
-                    className="w-full px-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-sm text-[#123B5D] font-medium placeholder-[#7697B3] focus:outline-none focus:border-[#2196E8] focus:bg-white transition"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D1E8F8] bg-white/90 text-sm text-[#153451] font-medium placeholder-[#7697B3] focus:outline-none focus:border-[#2583D5] focus:bg-white focus:ring-2 focus:ring-[#2583D5]/20 transition"
                   />
                 </div>
               </div>
@@ -162,14 +165,14 @@ export default function HeroSection() {
               {/* 2. Location Selector */}
               <div className="md:col-span-3 space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-[#123B5D] uppercase tracking-wider flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#2196E8]" />
+                  <label className="text-xs font-bold text-[#153451] uppercase tracking-wider flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[#2583D5]" />
                     Location
                   </label>
                   <button
                     type="button"
                     onClick={handleDetectGPS}
-                    className="text-[11px] font-bold text-[#2196E8] hover:underline flex items-center gap-0.5"
+                    className="text-[11px] font-bold text-[#2583D5] hover:underline flex items-center gap-0.5"
                   >
                     <Crosshair className={`w-3 h-3 ${locating ? 'animate-spin' : ''}`} />
                     {locating ? 'GPS...' : 'Use GPS'}
@@ -179,7 +182,7 @@ export default function HeroSection() {
                   <select
                     value={selectedLocation}
                     onChange={(e) => setSelectedLocation(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-sm text-[#123B5D] font-medium focus:outline-none focus:border-[#2196E8] focus:bg-white transition appearance-none cursor-pointer"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D1E8F8] bg-white/90 text-sm text-[#153451] font-medium focus:outline-none focus:border-[#2583D5] focus:bg-white focus:ring-2 focus:ring-[#2583D5]/20 transition appearance-none cursor-pointer"
                   >
                     {POPULAR_LOCATIONS.map((loc) => (
                       <option key={loc} value={loc}>{loc}</option>
@@ -191,15 +194,15 @@ export default function HeroSection() {
 
               {/* 3. Category Selector */}
               <div className="md:col-span-3 space-y-1.5">
-                <label className="text-xs font-bold text-[#123B5D] uppercase tracking-wider flex items-center gap-1.5">
-                  <ToolsIcon className="w-3.5 h-3.5 text-[#2196E8]" />
+                <label className="text-xs font-bold text-[#153451] uppercase tracking-wider flex items-center gap-1.5">
+                  <ToolsIcon className="w-3.5 h-3.5 text-[#2583D5]" />
                   Category
                 </label>
                 <div className="relative">
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-sm text-[#123B5D] font-medium focus:outline-none focus:border-[#2196E8] focus:bg-white transition appearance-none cursor-pointer"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D1E8F8] bg-white/90 text-sm text-[#153451] font-medium focus:outline-none focus:border-[#2583D5] focus:bg-white focus:ring-2 focus:ring-[#2583D5]/20 transition appearance-none cursor-pointer"
                   >
                     <option value="">All Categories (सभी श्रेणियां)</option>
                     {CATEGORIES_LIST.map((c) => (
@@ -214,7 +217,7 @@ export default function HeroSection() {
               <div className="md:col-span-2 flex items-end">
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-[#2196E8] hover:bg-[#1976D2] text-white font-black text-sm shadow-md shadow-[#2196E8]/20 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-black text-sm shadow-md shadow-[#2583D5]/20 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
                 >
                   <Search className="w-4 h-4 stroke-[2.5]" />
                   <span>Search</span>
@@ -225,15 +228,16 @@ export default function HeroSection() {
           </form>
 
           {/* Quick Category Tags */}
-          <div className="mt-4 pt-4 border-t border-[#EAF6FF] flex flex-wrap items-center gap-2 text-xs">
-            <span className="font-bold text-[#4B6F8E]">Trending Trades:</span>
+          <div className="mt-5 pt-4 border-t border-[#EAF6FF] flex flex-wrap items-center gap-2 text-xs">
+            <span className="font-bold text-[#4B6F8E]">Popular Trades:</span>
             {[
               { label: '⚡ Electrician', slug: 'electrician' },
               { label: '🔧 Plumber', slug: 'plumber' },
               { label: '🪵 Carpenter', slug: 'carpenter' },
               { label: '🎨 Painter', slug: 'painter' },
               { label: '📦 Delivery', slug: 'delivery' },
-              { label: '🧱 Mason', slug: 'construction' }
+              { label: '🧱 Mason', slug: 'construction' },
+              { label: '🧹 Housekeeping', slug: 'housekeeping' }
             ].map(pill => (
               <button
                 key={pill.slug}
@@ -242,7 +246,7 @@ export default function HeroSection() {
                   setSelectedCategory(pill.slug);
                   router.push(`/workers?category=${pill.slug}`);
                 }}
-                className="px-3 py-1 rounded-full bg-[#EAF6FF] hover:bg-[#2196E8] hover:text-white text-[#123B5D] font-semibold border border-[#D1E8F8] transition"
+                className="px-3.5 py-1.5 rounded-full bg-white/90 hover:bg-[#2583D5] hover:text-white text-[#153451] font-semibold border border-[#D1E8F8] transition-all hover:scale-105 shadow-xs"
               >
                 {pill.label}
               </button>
@@ -252,20 +256,20 @@ export default function HeroSection() {
         </div>
 
         {/* TRUST RIBBON UNDER QUICK SEARCH */}
-        <div className="max-w-4xl mx-auto mt-8 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-bold text-[#123B5D]">
-          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
+        <div className="max-w-4xl mx-auto mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-bold text-[#153451]">
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
             <span>100% Aadhaar & Police Verified</span>
           </div>
-          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
-            <Clock className="w-4 h-4 text-[#2196E8]" />
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
+            <Clock className="w-4 h-4 text-[#2583D5]" />
             <span>25-Min Live GPS Arrival</span>
           </div>
-          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
-            <CheckCircle2 className="w-4 h-4 text-[#2196E8]" />
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
+            <CheckCircle2 className="w-4 h-4 text-[#2583D5]" />
             <span>100% Escrow Protection</span>
           </div>
-          <div className="flex items-center gap-2 bg-white px-4 py-2.5 rounded-xl border border-[#D1E8F8] shadow-xs">
+          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
             <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
             <span>4.8/5 (15k+ Completed Jobs)</span>
           </div>

@@ -133,18 +133,18 @@ export const MAIN_CATEGORIES: CategoryItem[] = [
 
 export default function CategoriesSection() {
   return (
-    <section className="py-16 sm:py-24 bg-[#EAF6FF] border-b border-[#D1E8F8]">
+    <section className="py-20 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <span className="text-xs font-black uppercase tracking-wider text-[#2196E8] bg-white px-3.5 py-1 rounded-full border border-[#D1E8F8] inline-block shadow-xs">
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <span className="text-xs font-black uppercase tracking-wider text-[#2583D5] bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#D1E8F8] inline-block shadow-xs">
             POPULAR WORKFORCE SECTORS • श्रेणियां
           </span>
-          <h2 className="text-3xl sm:text-4xl font-black text-[#123B5D] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#153451] tracking-tight">
             Explore Workforce Categories
           </h2>
-          <p className="text-sm sm:text-base text-[#4B6F8E] font-medium leading-relaxed">
+          <p className="text-base sm:text-lg text-[#4B6F8E] font-medium leading-relaxed">
             Find skilled, background-checked Indian professionals across 9 core industry disciplines with transparent pricing and live availability.
           </p>
         </div>
@@ -156,15 +156,15 @@ export default function CategoriesSection() {
             return (
               <div
                 key={cat.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-[#D1E8F8] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between group"
               >
                 <div>
                   {/* Card Header: Icon + Badge */}
                   <div className="flex items-start justify-between mb-5">
-                    <div className="w-14 h-14 rounded-2xl bg-[#EAF6FF] text-[#2196E8] flex items-center justify-center text-2xl group-hover:bg-[#2196E8] group-hover:text-white transition-colors duration-300 shadow-sm">
-                      <Icon className="w-7 h-7 stroke-[2]" />
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#EAF6FF] to-[#D9EEFF] text-[#2583D5] flex items-center justify-center text-2xl group-hover:from-[#2583D5] group-hover:to-[#19639E] group-hover:text-white transition-all duration-300 shadow-sm border border-white/80">
+                      <Icon className="w-7 h-7 stroke-[2.2]" />
                     </div>
-                    <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full flex items-center gap-1">
+                    <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50/90 border border-emerald-200/80 px-2.5 py-1 rounded-full flex items-center gap-1 shadow-2xs">
                       <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                       {cat.workerCount}
                     </span>
@@ -172,13 +172,13 @@ export default function CategoriesSection() {
 
                   {/* Title & Description */}
                   <div className="mb-3">
-                    <h3 className="text-xl font-black text-[#123B5D] group-hover:text-[#2196E8] transition-colors">
+                    <h3 className="text-xl font-black text-[#153451] group-hover:text-[#2583D5] transition-colors">
                       {cat.name}
                     </h3>
                     <p className="text-xs font-semibold text-[#7697B3] mt-0.5">{cat.nameHi}</p>
                   </div>
 
-                  <p className="text-xs text-[#4B6F8E] leading-relaxed mb-5">
+                  <p className="text-xs sm:text-sm text-[#4B6F8E] leading-relaxed mb-5 font-normal">
                     {cat.description}
                   </p>
 
@@ -187,7 +187,7 @@ export default function CategoriesSection() {
                     {cat.popularServices.map((service, idx) => (
                       <span
                         key={idx}
-                        className="text-[11px] font-semibold text-[#123B5D] bg-[#F5FAFF] border border-[#D1E8F8] px-2.5 py-0.5 rounded-lg"
+                        className="text-[11px] font-semibold text-[#153451] bg-[#F5FAFF] border border-[#D1E8F8] px-2.5 py-0.5 rounded-lg"
                       >
                         {service}
                       </span>
@@ -198,13 +198,13 @@ export default function CategoriesSection() {
                 {/* Footer: Rate + Button */}
                 <div className="pt-4 border-t border-[#EAF6FF] flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] text-[#7697B3] font-bold block uppercase">Starting from</span>
-                    <span className="text-base font-black text-[#123B5D]">{cat.avgRate}</span>
+                    <span className="text-[10px] text-[#7697B3] font-bold block uppercase tracking-wider">Starting from</span>
+                    <span className="text-base font-black text-[#153451]">{cat.avgRate}</span>
                   </div>
 
                   <Link
                     href={`/workers?category=${cat.slug}`}
-                    className="px-4 py-2 rounded-xl bg-[#EAF6FF] group-hover:bg-[#2196E8] text-[#123B5D] group-hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 border border-[#D1E8F8] group-hover:border-[#2196E8]"
+                    className="px-4 py-2 rounded-xl bg-white/90 group-hover:bg-[#2583D5] text-[#153451] group-hover:text-white text-xs font-bold transition-all flex items-center gap-1.5 border border-[#D1E8F8] group-hover:border-[#2583D5] shadow-xs group-hover:shadow-md"
                   >
                     <span>View Workers</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
@@ -217,26 +217,26 @@ export default function CategoriesSection() {
         </div>
 
         {/* Bottom Banner */}
-        <div className="mt-12 bg-white rounded-3xl p-6 sm:p-8 border border-[#D1E8F8] shadow-sm flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-14 glass-panel rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#EAF6FF] text-[#2196E8] flex items-center justify-center font-black text-xl shrink-0">
+            <div className="w-12 h-12 rounded-2xl bg-[#EAF6FF] text-[#2583D5] flex items-center justify-center font-black text-xl shrink-0 border border-[#D1E8F8]">
               ⚡
             </div>
             <div>
-              <h4 className="text-lg font-black text-[#123B5D]">Need a Specialized Trade or Bulk Workforce?</h4>
-              <p className="text-xs text-[#4B6F8E] mt-0.5">Explore 22+ verified industrial trades, commercial construction crews, and contractor tenders.</p>
+              <h4 className="text-lg font-black text-[#153451]">Need a Specialized Trade or Bulk Crew?</h4>
+              <p className="text-xs sm:text-sm text-[#4B6F8E] mt-0.5">Explore 22+ verified industrial trades, commercial construction crews, and contractor tenders.</p>
             </div>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/services"
-              className="px-5 py-2.5 rounded-xl border border-[#D1E8F8] text-xs font-bold text-[#123B5D] hover:bg-[#F5FAFF] transition"
+              className="px-5 py-2.5 rounded-xl border border-[#D1E8F8] text-xs font-bold text-[#153451] bg-white/90 hover:bg-white hover:border-[#2583D5] transition"
             >
               All 22+ Professions
             </Link>
             <Link
               href="/contractor"
-              className="px-5 py-2.5 rounded-xl bg-[#2196E8] hover:bg-[#1976D2] text-white text-xs font-bold shadow-md shadow-[#2196E8]/20 transition"
+              className="px-5 py-2.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white text-xs font-bold shadow-md shadow-[#2583D5]/20 transition"
             >
               Bulk Workforce Hiring
             </Link>

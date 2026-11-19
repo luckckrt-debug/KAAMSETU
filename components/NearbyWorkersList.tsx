@@ -58,26 +58,26 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
       id: 'worker-prof-2',
       userId: 'user-worker-2',
       headline: 'Master Plumber & Water Pump Specialist',
-      bio: 'Expert in CPVC/UPVC concealed pipe fittings, grohe/jaquar bathroom installations, motor repair, and overhead tank pipelines.',
+      bio: 'Expert in high-pressure CPVC/PPR pipeline fittings, underground leakage detection, overhead water tank automated controllers, and sanitary fixtures.',
       yearsExperience: 6,
       hourlyRate: 300,
       dailyRate: 850,
       ratingAvg: 4.8,
       ratingCount: 62,
-      completedJobsCount: 89,
+      completedJobsCount: 78,
       isOnline: true,
       isAvailableNow: true,
       emergencyAvailable: true,
       verificationStatus: 'VERIFIED' as const,
-      locality: 'Sector 18 & Central Noida',
+      locality: 'Indirapuram & Noida Sec 62',
       city: 'Noida',
       distanceKm: 3.4,
       etaMinutes: 24,
-      toolsAvailable: ['Pipe Threader', 'Wrench Set', 'Pressure Pump'],
+      toolsAvailable: ['Pipe Threader', 'Heavy Wrenches', 'Rotary Hammer'],
       user: {
         id: 'user-worker-2',
-        fullName: 'Murtaza Ali',
-        phoneNumber: '9812345678',
+        fullName: 'Md. Tariq Khan',
+        phoneNumber: '9811223344',
         avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
         language: 'hi',
         roles: ['WORKER'],
@@ -85,205 +85,181 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
       skills: [{ id: 's2', workerProfileId: '2', categoryId: 'cat-plumber', categoryName: 'Plumber', experienceYears: 6, isPrimary: true }],
     },
     {
-      id: 'worker-prof-4',
-      userId: 'user-worker-4',
-      headline: 'HVAC Split AC Specialist & Appliance Technician',
-      bio: 'Trained technician for Daikin, Voltas, LG, and Blue Star ACs. Gas charging (R32/R410), PCB board repair, jet chemical wash.',
-      yearsExperience: 5,
-      hourlyRate: 350,
-      dailyRate: 900,
-      ratingAvg: 4.7,
-      ratingCount: 48,
-      completedJobsCount: 71,
-      isOnline: true,
-      isAvailableNow: true,
-      emergencyAvailable: true,
-      verificationStatus: 'VERIFIED' as const,
-      locality: 'Dwarka Sector 10',
-      city: 'Delhi',
-      distanceKm: 4.8,
-      etaMinutes: 30,
-      toolsAvailable: ['Vacuum Pump', 'Manifold Gauge', 'Jet Pump'],
-      user: {
-        id: 'user-worker-4',
-        fullName: 'Dinesh Yadav',
-        phoneNumber: '9711223344',
-        avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80',
-        language: 'hi',
-        roles: ['WORKER'],
-      },
-      skills: [{ id: 's4', workerProfileId: '4', categoryId: 'cat-ac-tech', categoryName: 'AC Technician', experienceYears: 5, isPrimary: true }],
-    },
-    {
-      id: 'worker-prof-5',
-      userId: 'user-worker-5',
-      headline: 'NISE Suryamitra Certified Rooftop Solar PV & Inverter Engineer',
-      bio: 'Expert in rooftop solar panel installations (3kW to 50kW), net metering, microinverters, and high-efficiency lithium battery setups.',
-      yearsExperience: 7,
-      hourlyRate: 500,
-      dailyRate: 1400,
-      ratingAvg: 4.9,
-      ratingCount: 56,
-      completedJobsCount: 78,
-      isOnline: true,
-      isAvailableNow: true,
-      emergencyAvailable: true,
-      verificationStatus: 'VERIFIED' as const,
-      locality: 'Sector 62 Institutional',
-      city: 'Noida',
-      distanceKm: 2.8,
-      etaMinutes: 20,
-      toolsAvailable: ['DC Clamp Meter', 'Solar Crimping Tool', 'MC4 Spanner'],
-      user: {
-        id: 'user-worker-5',
-        fullName: 'Arjun Verma',
-        phoneNumber: '9871112233',
-        avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80',
-        language: 'hi',
-        roles: ['WORKER'],
-      },
-      skills: [{ id: 's5', workerProfileId: '5', categoryId: 'cat-solar-tech', categoryName: 'Solar Engineer', experienceYears: 7, isPrimary: true }],
-    },
-    {
-      id: 'worker-prof-6',
-      userId: 'user-worker-6',
-      headline: 'Licensed Heavy Excavator & JCB 3DX Backhoe Operator',
-      bio: 'Over 10 years experience operating JCB 3DX, Tata Hitachi tracked excavators, and hydra cranes on high-rise foundation and trenching projects.',
+      id: 'worker-prof-3',
+      userId: 'user-worker-3',
+      headline: 'Senior Mason & Structural Brickwork Lead',
+      bio: 'Specialized in 9-inch brick bonding, AAC block masonry, plaster work, granite/marble slab cutting, and concrete reinforcement.',
       yearsExperience: 10,
-      hourlyRate: 500,
-      dailyRate: 1500,
-      ratingAvg: 4.8,
-      ratingCount: 74,
-      completedJobsCount: 92,
+      hourlyRate: 350,
+      dailyRate: 1050,
+      ratingAvg: 4.9,
+      ratingCount: 110,
+      completedJobsCount: 145,
       isOnline: true,
       isAvailableNow: true,
       emergencyAvailable: false,
       verificationStatus: 'VERIFIED' as const,
-      locality: 'IMT Manesar',
+      locality: 'DLF Phase 3 & Sikanderpur',
       city: 'Gurugram',
-      distanceKm: 5.2,
-      etaMinutes: 35,
-      toolsAvailable: ['Heavy Diagnostic Scanner', 'Laser Receiver', 'Safety Harness'],
+      distanceKm: 4.2,
+      etaMinutes: 30,
+      toolsAvailable: ['Laser Level', 'Marble Cutter', 'Vibrator'],
       user: {
-        id: 'user-worker-6',
-        fullName: 'Gurpreet Singh',
-        phoneNumber: '9810009988',
-        avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80',
+        id: 'user-worker-3',
+        fullName: 'Satish Kumar',
+        phoneNumber: '9899001122',
+        avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
         language: 'hi',
-        roles: ['WORKER'],
+        roles: ['WORKER', 'TEAM_LEADER'],
       },
-      skills: [{ id: 's6', workerProfileId: '6', categoryId: 'cat-heavy-machinery', categoryName: 'JCB Operator', experienceYears: 10, isPrimary: true }],
+      skills: [{ id: 's3', workerProfileId: '3', categoryId: 'cat-mason', categoryName: 'Mason', experienceYears: 10, isPrimary: true }],
     },
     {
-      id: 'worker-prof-7',
-      userId: 'user-worker-7',
-      headline: 'Senior Civil Site Engineer & Structural Quality Supervisor',
-      bio: 'B.Tech Civil Engineer with 9 years site experience in structural QA/QC, RCC concrete casting, BBS reinforcement checking, and sub-contractor billing.',
-      yearsExperience: 9,
-      hourlyRate: 600,
-      dailyRate: 1800,
-      ratingAvg: 5.0,
-      ratingCount: 42,
-      completedJobsCount: 58,
+      id: 'worker-prof-4',
+      userId: 'user-worker-4',
+      headline: 'Architectural Carpenter & Modular Interior Craftsman',
+      bio: 'Master of modular kitchen installation, hydraulic hinge alignment, custom wardrobe fabrication, veneer finish, and heavy door locks.',
+      yearsExperience: 7,
+      hourlyRate: 400,
+      dailyRate: 1000,
+      ratingAvg: 4.9,
+      ratingCount: 54,
+      completedJobsCount: 68,
       isOnline: true,
       isAvailableNow: false,
       emergencyAvailable: false,
       verificationStatus: 'VERIFIED' as const,
-      locality: 'Lajpat Nagar & South Delhi',
+      locality: 'Rohini & Pitampura',
       city: 'Delhi',
-      distanceKm: 3.9,
-      etaMinutes: 26,
-      toolsAvailable: ['Digital Auto Level', 'Rebound Hammer', 'Concrete Slump Cone'],
+      distanceKm: 5.0,
+      etaMinutes: 35,
+      toolsAvailable: ['Circular Saw', 'Router', 'Precision Square'],
       user: {
-        id: 'user-worker-7',
-        fullName: 'Deepak Rawat',
-        phoneNumber: '9818884433',
-        avatarUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80',
-        language: 'en',
-        roles: ['WORKER', 'TEAM_LEADER'],
+        id: 'user-worker-4',
+        fullName: 'Gurpreet Singh',
+        phoneNumber: '9810998877',
+        avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80',
+        language: 'pa',
+        roles: ['WORKER'],
       },
-      skills: [{ id: 's7', workerProfileId: '7', categoryId: 'cat-civil-engineer', categoryName: 'Civil Site Engineer', experienceYears: 9, isPrimary: true }],
+      skills: [{ id: 's4', workerProfileId: '4', categoryId: 'cat-carpenter', categoryName: 'Carpenter', experienceYears: 7, isPrimary: true }],
     },
     {
-      id: 'worker-prof-9',
-      userId: 'user-worker-9',
-      headline: 'Verified Commercial Chauffeur & Logistics Fleet Driver',
-      bio: 'Clean driving record of 11 years. Verified police clearance, well-versed with Delhi NCR highways, automatic/manual luxury cars, and commercial goods trucks.',
-      yearsExperience: 11,
+      id: 'worker-prof-5',
+      userId: 'user-worker-5',
+      headline: 'Professional Wall Painter, Texture & Waterproofing Expert',
+      bio: 'Certified painter experienced with Asian Paints Royale, Berger airless spray painting, PU polish, and terrace waterproofing membrane.',
+      yearsExperience: 5,
       hourlyRate: 250,
       dailyRate: 850,
-      ratingAvg: 4.9,
-      ratingCount: 95,
-      completedJobsCount: 130,
+      ratingAvg: 4.7,
+      ratingCount: 42,
+      completedJobsCount: 50,
+      isOnline: true,
+      isAvailableNow: true,
+      emergencyAvailable: false,
+      verificationStatus: 'VERIFIED' as const,
+      locality: 'Raj Nagar & Kavi Nagar',
+      city: 'Ghaziabad',
+      distanceKm: 6.1,
+      etaMinutes: 40,
+      toolsAvailable: ['Airless Paint Sprayer', 'Sanding Machine', 'Moisture Meter'],
+      user: {
+        id: 'user-worker-5',
+        fullName: 'Vinod Chauhan',
+        phoneNumber: '9871122334',
+        avatarUrl: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80',
+        language: 'hi',
+        roles: ['WORKER'],
+      },
+      skills: [{ id: 's5', workerProfileId: '5', categoryId: 'cat-painter', categoryName: 'Painter', experienceYears: 5, isPrimary: true }],
+    },
+    {
+      id: 'worker-prof-6',
+      userId: 'user-worker-6',
+      headline: 'Commercial Hyperlocal Dispatch & Goods Vehicle Delivery Lead',
+      bio: 'Punctual commercial delivery lead with own Tata Ace and two-wheelers. Safe driver, route optimization expert, and commercial cargo handling experience.',
+      yearsExperience: 4,
+      hourlyRate: 200,
+      dailyRate: 750,
+      ratingAvg: 4.8,
+      ratingCount: 76,
+      completedJobsCount: 190,
       isOnline: true,
       isAvailableNow: true,
       emergencyAvailable: true,
       verificationStatus: 'VERIFIED' as const,
-      locality: 'Mahipalpur & Airport Area',
+      locality: 'Patparganj Industrial Area',
       city: 'Delhi',
-      distanceKm: 4.1,
-      etaMinutes: 28,
-      toolsAvailable: ['Commercial Transport Badge', 'Emergency Toolset', 'GPS Smartphone'],
+      distanceKm: 1.8,
+      etaMinutes: 15,
+      toolsAvailable: ['Loading Straps', 'Trolley', 'Commercial Driving License'],
       user: {
-        id: 'user-worker-9',
-        fullName: 'Satnam Singh',
-        phoneNumber: '9872233445',
-        avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=80',
+        id: 'user-worker-6',
+        fullName: 'Deepak Yadav',
+        phoneNumber: '9891234567',
+        avatarUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80',
         language: 'hi',
         roles: ['WORKER'],
       },
-      skills: [{ id: 's9', workerProfileId: '9', categoryId: 'cat-driver', categoryName: 'Commercial Driver', experienceYears: 11, isPrimary: true }],
-    },
+      skills: [{ id: 's6', workerProfileId: '6', categoryId: 'cat-delivery', categoryName: 'Delivery', experienceYears: 4, isPrimary: true }],
+    }
   ];
 
+  const filteredWorkers = workers.filter(w => {
+    if (selectedFilter === 'VERIFIED') return w.verificationStatus === 'VERIFIED';
+    if (selectedFilter === 'AVAILABLE_NOW') return w.isAvailableNow;
+    return true;
+  });
+
   return (
-    <section className="py-16 sm:py-20 bg-bg">
+    <section className="py-20 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header with Filters */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest/5 text-forest text-xs font-bold uppercase tracking-wider mb-2">
-              <Zap className="w-3.5 h-3.5 text-cta" />
-              <span>Real-time Dispatch • तुरंत उपलब्धता</span>
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md text-[#2583D5] text-xs font-bold uppercase tracking-wider mb-3 border border-[#D1E8F8]">
+              <Zap className="w-3.5 h-3.5 text-[#2583D5]" />
+              <span>Real-Time Dispatch • तुरंत उपलब्धता</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-forest tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#153451] tracking-tight">
               Nearby Verified Professionals
             </h2>
-            <p className="text-sm sm:text-base text-text-secondary mt-1">
-              Top-rated local tradesmen currently active in your service radius.
+            <p className="text-base sm:text-lg text-[#4B6F8E] mt-2 font-medium">
+              Top-rated local tradesmen currently active and ready for dispatch in your area.
             </p>
           </div>
 
           {/* Quick Filter Tabs */}
-          <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-border">
+          <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-md p-1.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
             <button
               onClick={() => setSelectedFilter('ALL')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 selectedFilter === 'ALL'
-                  ? 'bg-forest text-lime shadow-xs'
-                  : 'text-text-secondary hover:text-forest'
+                  ? 'bg-[#2583D5] text-white shadow-sm'
+                  : 'text-[#4B6F8E] hover:text-[#153451]'
               }`}
             >
               All Workers
             </button>
             <button
               onClick={() => setSelectedFilter('AVAILABLE_NOW')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
                 selectedFilter === 'AVAILABLE_NOW'
-                  ? 'bg-forest text-lime shadow-xs'
-                  : 'text-text-secondary hover:text-forest'
+                  ? 'bg-[#2583D5] text-white shadow-sm'
+                  : 'text-[#4B6F8E] hover:text-[#153451]'
               }`}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
               Available Now
             </button>
             <button
               onClick={() => setSelectedFilter('VERIFIED')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 selectedFilter === 'VERIFIED'
-                  ? 'bg-forest text-lime shadow-xs'
-                  : 'text-text-secondary hover:text-forest'
+                  ? 'bg-[#2583D5] text-white shadow-sm'
+                  : 'text-[#4B6F8E] hover:text-[#153451]'
               }`}
             >
               Verified KYC
@@ -292,11 +268,11 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
         </div>
 
         {/* Worker Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {workers.map((worker) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {filteredWorkers.map((worker) => (
             <div
               key={worker.id}
-              className="bg-white rounded-2xl border border-border p-6 shadow-xs hover:shadow-elevated transition-all flex flex-col justify-between"
+              className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between group"
             >
               {/* Top Profile Strip */}
               <div>
@@ -305,14 +281,14 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
                     <img
                       src={worker.user?.avatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}
                       alt={worker.user?.fullName}
-                      className="w-14 h-14 rounded-xl object-cover border border-border"
+                      className="w-14 h-14 rounded-2xl object-cover border-2 border-white shadow-sm"
                     />
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h3 className="font-bold text-forest text-base leading-snug">{worker.user?.fullName}</h3>
-                        <span title="Aadhaar & Trade Verified"><ShieldCheck className="w-4 h-4 text-status-success" /></span>
+                        <h3 className="font-black text-[#153451] text-base leading-snug group-hover:text-[#2583D5] transition-colors">{worker.user?.fullName}</h3>
+                        <span title="Aadhaar & Trade Verified"><ShieldCheck className="w-4 h-4 text-emerald-500" /></span>
                       </div>
-                      <span className="inline-block text-xs font-bold text-sage bg-sage-soft px-2 py-0.5 rounded-md mt-0.5">
+                      <span className="inline-block text-xs font-bold text-[#2583D5] bg-[#EAF6FF] px-2.5 py-0.5 rounded-md mt-1 border border-[#D1E8F8]">
                         {worker.skills?.[0]?.categoryName || 'Skilled Professional'}
                       </span>
                     </div>
@@ -320,52 +296,52 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
 
                   {/* Online Badge */}
                   {worker.isAvailableNow && (
-                    <span className="shrink-0 flex items-center gap-1 text-[11px] font-bold text-status-success bg-status-successSoft px-2 py-0.5 rounded-full">
-                      <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-ping"></span>
+                    <span className="shrink-0 flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                       Online
                     </span>
                   )}
                 </div>
 
-                <p className="text-xs text-text-secondary line-clamp-2 leading-relaxed mb-4">
+                <p className="text-xs sm:text-sm text-[#4B6F8E] line-clamp-2 leading-relaxed mb-4">
                   {worker.headline || worker.bio}
                 </p>
 
                 {/* Badges: Rating, Distance, ETA */}
-                <div className="grid grid-cols-3 gap-2 py-2.5 px-3 bg-bg rounded-xl border border-border text-center text-xs mb-4">
+                <div className="grid grid-cols-3 gap-2 py-3 px-3 bg-[#F5FAFF] rounded-2xl border border-[#D1E8F8] text-center text-xs mb-4">
                   <div>
-                    <span className="text-[10px] text-text-muted block font-semibold">Rating</span>
-                    <span className="font-black text-forest flex items-center justify-center gap-0.5">
+                    <span className="text-[10px] text-[#7697B3] block font-semibold">Rating</span>
+                    <span className="font-black text-[#153451] flex items-center justify-center gap-0.5">
                       <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                      {worker.ratingAvg} <span className="text-[10px] text-text-muted font-normal">({worker.ratingCount})</span>
+                      {worker.ratingAvg} <span className="text-[10px] text-[#7697B3] font-normal">({worker.ratingCount})</span>
                     </span>
                   </div>
-                  <div className="border-x border-border">
-                    <span className="text-[10px] text-text-muted block font-semibold">Distance</span>
-                    <span className="font-bold text-forest flex items-center justify-center gap-0.5">
-                      <MapPin className="w-3 h-3 text-sage" />
+                  <div className="border-x border-[#D1E8F8]">
+                    <span className="text-[10px] text-[#7697B3] block font-semibold">Distance</span>
+                    <span className="font-bold text-[#153451] flex items-center justify-center gap-0.5">
+                      <MapPin className="w-3 h-3 text-[#2583D5]" />
                       {worker.distanceKm ? `${worker.distanceKm} km` : 'Near you'}
                     </span>
                   </div>
                   <div>
-                    <span className="text-[10px] text-text-muted block font-semibold">Est. ETA</span>
-                    <span className="font-bold text-forest flex items-center justify-center gap-0.5">
-                      <Clock className="w-3 h-3 text-cta" />
-                      {worker.etaMinutes ? `${worker.etaMinutes} mins` : '30 mins'}
+                    <span className="text-[10px] text-[#7697B3] block font-semibold">Est. ETA</span>
+                    <span className="font-bold text-[#153451] flex items-center justify-center gap-0.5">
+                      <Clock className="w-3 h-3 text-[#2583D5]" />
+                      {worker.etaMinutes ? `${worker.etaMinutes} mins` : '25 mins'}
                     </span>
                   </div>
                 </div>
 
                 {/* Experience & Tools */}
-                <div className="flex flex-wrap gap-1.5 mb-5 text-[11px] text-text-muted font-medium">
-                  <span className="bg-white border border-border px-2 py-0.5 rounded-md text-text-primary font-semibold">
+                <div className="flex flex-wrap gap-1.5 mb-5 text-[11px] text-[#4B6F8E] font-medium">
+                  <span className="bg-white border border-[#D1E8F8] px-2.5 py-0.5 rounded-lg text-[#153451] font-semibold">
                     {worker.yearsExperience}+ Yrs Exp
                   </span>
-                  <span className="bg-white border border-border px-2 py-0.5 rounded-md text-text-primary font-semibold">
+                  <span className="bg-white border border-[#D1E8F8] px-2.5 py-0.5 rounded-lg text-[#153451] font-semibold">
                     {worker.completedJobsCount} Jobs Done
                   </span>
                   {worker.toolsAvailable?.slice(0, 1).map((tool, idx) => (
-                    <span key={idx} className="bg-white border border-border px-2 py-0.5 rounded-md truncate max-w-[120px]">
+                    <span key={idx} className="bg-white border border-[#D1E8F8] px-2.5 py-0.5 rounded-lg truncate max-w-[120px]">
                       🔧 {tool}
                     </span>
                   ))}
@@ -373,13 +349,13 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
               </div>
 
               {/* Bottom Rate & Book Action */}
-              <div className="pt-3 border-t border-border flex items-center justify-between">
+              <div className="pt-4 border-t border-[#EAF6FF] flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-text-muted uppercase font-bold block">Rate / पारिश्रमिक</span>
-                  <span className="text-base font-black text-forest">
-                    ₹{worker.hourlyRate}<span className="text-xs font-normal text-text-muted">/hr</span>
+                  <span className="text-[10px] text-[#7697B3] uppercase font-bold block tracking-wider">Rate / पारिश्रमिक</span>
+                  <span className="text-lg font-black text-[#153451]">
+                    ₹{worker.hourlyRate}<span className="text-xs font-normal text-[#7697B3]">/hr</span>
                   </span>
-                  <span className="text-[11px] text-text-muted ml-1">
+                  <span className="text-[11px] text-[#7697B3] ml-1">
                     (₹{worker.dailyRate}/day)
                   </span>
                 </div>
@@ -387,14 +363,14 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/workers/${worker.id}`}
-                    className="p-2.5 rounded-xl border border-border hover:border-forest text-text-primary text-xs font-bold transition-colors"
+                    className="px-3.5 py-2 rounded-xl border border-[#D1E8F8] hover:border-[#2583D5] text-[#153451] text-xs font-bold transition-all bg-white/80 hover:bg-white"
                     title="View Profile"
                   >
                     Profile
                   </Link>
                   <Link
                     href={`/booking/new?workerId=${worker.id}&category=${worker.skills?.[0]?.categoryId || 'cat-electrician'}`}
-                    className="px-4 py-2.5 rounded-xl bg-forest hover:bg-forest-light text-lime font-bold text-xs tracking-wide shadow-xs transition-all flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-bold text-xs tracking-wide shadow-sm shadow-[#2583D5]/20 transition-all flex items-center gap-1.5"
                   >
                     <span>Book Now</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -406,13 +382,13 @@ export default function NearbyWorkersList({ initialWorkers }: NearbyWorkersProps
         </div>
 
         {/* View All CTA */}
-        <div className="text-center mt-10">
+        <div className="text-center mt-12">
           <Link
             href="/workers"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-border hover:border-forest text-forest font-bold text-sm shadow-xs transition-all"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-white/90 hover:bg-white border border-[#D1E8F8] hover:border-[#2583D5] text-[#153451] font-black text-sm shadow-xs transition-all hover:scale-105"
           >
-            <span>Explore All 5,000+ Verified Workers Nearby (सभी कारीगर देखें)</span>
-            <ArrowRight className="w-4 h-4 text-cta" />
+            <span>Explore All 15,000+ Verified Workers Nearby (सभी कारीगर देखें)</span>
+            <ArrowRight className="w-4 h-4 text-[#2583D5]" />
           </Link>
         </div>
 

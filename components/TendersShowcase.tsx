@@ -38,7 +38,7 @@ export default function TendersShowcase({ initialTenders }: TendersShowcaseProps
       accommodationProvided: true,
       foodProvided: false,
       transportProvided: true,
-      applicationDeadline: '2026-02-28T23:59:59.000Z',
+      applicationDeadline: '2026-03-01T23:59:59.000Z',
       status: 'PUBLISHED',
       applicationsCount: 4,
       createdAt: '2026-02-10T10:00:00.000Z',
@@ -78,27 +78,27 @@ export default function TendersShowcase({ initialTenders }: TendersShowcaseProps
   ];
 
   return (
-    <section className="py-16 sm:py-24 bg-white border-b border-border">
+    <section className="py-20 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 sm:mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-forest/5 text-forest text-xs font-bold uppercase tracking-wider mb-2">
-              <Briefcase className="w-3.5 h-3.5 text-cta" />
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/80 backdrop-blur-md text-[#2583D5] text-xs font-bold uppercase tracking-wider mb-3 border border-[#D1E8F8]">
+              <Briefcase className="w-3.5 h-3.5 text-[#2583D5]" />
               <span>Commercial Marketplace • सक्रिय कार्य ठेके</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-forest tracking-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#153451] tracking-tight">
               Active Workforce Tenders
             </h2>
-            <p className="text-base text-text-secondary mt-1">
+            <p className="text-base sm:text-lg text-[#4B6F8E] mt-2 font-medium">
               Prime contractors and companies hiring verified teams, trade crews, and skilled professionals.
             </p>
           </div>
 
           <Link
             href="/tenders"
-            className="inline-flex items-center gap-2 text-sm font-bold text-sage hover:text-forest transition-colors group"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#2583D5] hover:text-[#1E70B8] transition-colors group"
           >
             <span>Browse All Tenders (सभी टेंडर देखें)</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -110,82 +110,75 @@ export default function TendersShowcase({ initialTenders }: TendersShowcaseProps
           {tenders.map((tender) => (
             <div
               key={tender.id}
-              className="bg-bg rounded-3xl border border-border hover:border-forest/40 p-6 sm:p-8 hover:shadow-card transition-all flex flex-col justify-between"
+              className="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between group"
             >
               <div>
                 {/* Meta Top */}
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
-                  <span className="text-xs font-bold text-forest bg-white px-3 py-1 rounded-full border border-border flex items-center gap-1.5">
-                    <Building className="w-3.5 h-3.5 text-sage" /> {tender.projectName}
+                  <span className="text-xs font-bold text-[#153451] bg-[#F5FAFF] px-3.5 py-1 rounded-full border border-[#D1E8F8] flex items-center gap-1.5">
+                    <Building className="w-3.5 h-3.5 text-[#2583D5]" /> {tender.projectName}
                   </span>
-                  <span className="text-xs font-bold text-status-success bg-status-successSoft px-2.5 py-1 rounded-full flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-status-success animate-pulse"></span>
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     Applications Open
                   </span>
                 </div>
 
-                <h3 className="text-xl font-black text-forest mb-2 hover:text-cta transition-colors">
+                <h3 className="text-xl font-black text-[#153451] mb-2 group-hover:text-[#2583D5] transition-colors">
                   <Link href={`/tenders/${tender.id}`}>{tender.title}</Link>
                 </h3>
 
-                <p className="text-xs sm:text-sm text-text-secondary line-clamp-2 leading-relaxed mb-5">
+                <p className="text-xs sm:text-sm text-[#4B6F8E] line-clamp-2 leading-relaxed mb-6 font-normal">
                   {tender.description}
                 </p>
 
                 {/* Requirements Pills */}
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-6 text-xs font-medium">
-                  <div className="bg-white p-2.5 rounded-xl border border-border">
-                    <span className="text-[10px] text-text-muted block font-semibold">Headcount Needed</span>
-                    <span className="font-bold text-forest flex items-center gap-1 mt-0.5">
-                      <Users className="w-3.5 h-3.5 text-sage" /> {tender.workerCountRequired} Workers
+                  <div className="bg-white/80 p-3 rounded-2xl border border-[#D1E8F8]">
+                    <span className="text-[10px] text-[#7697B3] block font-semibold">Headcount Needed</span>
+                    <span className="font-bold text-[#153451] flex items-center gap-1 mt-0.5">
+                      <Users className="w-3.5 h-3.5 text-[#2583D5]" /> {tender.workerCountRequired} Workers
                     </span>
                   </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-border">
-                    <span className="text-[10px] text-text-muted block font-semibold">Daily Wage</span>
-                    <span className="font-black text-forest mt-0.5 block">
-                      ₹{tender.perWorkerRate}<span className="text-[10px] font-normal text-text-muted">/day</span>
+                  <div className="bg-white/80 p-3 rounded-2xl border border-[#D1E8F8]">
+                    <span className="text-[10px] text-[#7697B3] block font-semibold">Daily Wage</span>
+                    <span className="font-black text-[#153451] mt-0.5 block">
+                      ₹{tender.perWorkerRate}<span className="text-[10px] font-normal text-[#7697B3]">/day</span>
                     </span>
                   </div>
-                  <div className="bg-white p-2.5 rounded-xl border border-border col-span-2 sm:col-span-1">
-                    <span className="text-[10px] text-text-muted block font-semibold">Total Budget</span>
-                    <span className="font-black text-cta mt-0.5 block">
-                      ₹{tender.totalBudget.toLocaleString('en-IN')}
+                  <div className="bg-white/80 p-3 rounded-2xl border border-[#D1E8F8] col-span-2 sm:col-span-1">
+                    <span className="text-[10px] text-[#7697B3] block font-semibold">Total Budget</span>
+                    <span className="font-black text-emerald-600 mt-0.5 block">
+                      ₹{(tender.totalBudget / 100000).toFixed(1)} Lakhs
                     </span>
                   </div>
                 </div>
 
-                {/* Location & Perks */}
-                <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-text-secondary pb-4 mb-4 border-b border-border">
-                  <span className="flex items-center gap-1 text-text-primary font-semibold">
-                    <MapPin className="w-3.5 h-3.5 text-sage" /> {tender.city}, {tender.state}
+                {/* Location & Dates */}
+                <div className="flex flex-wrap items-center gap-4 text-xs text-[#4B6F8E] mb-6">
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#2583D5]" /> {tender.city}, {tender.state}
                   </span>
-                  {tender.accommodationProvided && (
-                    <span className="flex items-center gap-1 text-status-success font-semibold">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Free Stay Provided
-                    </span>
-                  )}
-                  {tender.transportProvided && (
-                    <span className="flex items-center gap-1 text-status-success font-semibold">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Site Transport
-                    </span>
-                  )}
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5 text-[#2583D5]" /> {tender.workingHours}
+                  </span>
                 </div>
               </div>
 
-              {/* Action */}
-              <div className="flex items-center justify-between pt-2">
-                <span className="text-[11px] text-text-muted font-medium flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" /> Closing {new Date(tender.applicationDeadline).toLocaleDateString('en-IN')}
+              {/* Bottom CTA */}
+              <div className="pt-4 border-t border-[#EAF6FF] flex items-center justify-between">
+                <span className="text-xs text-[#7697B3]">
+                  {tender.applicationsCount} teams applied so far
                 </span>
-
                 <Link
                   href={`/tenders/${tender.id}`}
-                  className="px-5 py-2.5 rounded-xl bg-forest hover:bg-forest-light text-lime font-bold text-xs tracking-wide shadow-xs transition-all flex items-center gap-1.5"
+                  className="px-5 py-2.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 hover:scale-[1.02]"
                 >
-                  <span>Apply Now (आवेदन करें)</span>
+                  <span>View Tender Details</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+
             </div>
           ))}
         </div>

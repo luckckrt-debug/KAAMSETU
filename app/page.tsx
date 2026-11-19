@@ -1,4 +1,5 @@
 import React from 'react';
+import AtmosphericBackground from '@/components/AtmosphericBackground';
 import HeroSection from '@/components/HeroSection';
 import CategoriesSection from '@/components/CategoriesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
@@ -20,90 +21,84 @@ export default function HomePage() {
   const tenders = dbStore.getTenders().slice(0, 2);
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#EAF6FF] text-[#123B5D]">
+    <div className="relative flex flex-col min-h-screen text-[#153451] selection:bg-[#2583D5] selection:text-white">
       
-      {/* SECTION B & C: Hero Section ("Connecting Skills with Opportunities") & Quick Search Panel */}
+      {/* ATMOSPHERIC BACKGROUND: Soft flowing ambient lighting & lightweight drifting particles */}
+      <AtmosphericBackground />
+
+      {/* PANEL 1: Hero & Floating Search Panel */}
       <HeroSection />
 
-      {/* SECTION D: Categories Section (9 Core Structured Category Cards) */}
+      {/* PANEL 2: Popular Categories (9 Core Structured Category Cards) */}
       <CategoriesSection />
 
-      {/* SECTION E: How Kaam Setu Works (3 Simple Steps) */}
+      {/* PANEL 3: How KaamSetu Works (01 – Register, 02 – Find Work/Workers, 03 – Connect & Complete) */}
       <HowItWorksSection />
 
-      {/* Real-time Nearby Verified Workers (Real Database & GPS Dispatch) */}
+      {/* PANEL 4: Nearby Workers (Real Database & GPS Telemetry Grid) */}
       <NearbyWorkersList initialWorkers={workers} />
 
-      {/* Urgent 15-Minute Booking Dispatch */}
+      {/* PANEL 5: Emergency Services (Soft Blue Accent Gradient, 25-Min Dispatch) */}
       <UrgentBookingSection />
 
-      {/* Why Trust KaamSetu */}
-      <WhyTrustSection />
-
-      {/* Bulk Workforce Hiring for Contractors */}
+      {/* PANEL 6: Contractor & Bulk Workforce (Crew Cost Estimator & Tenders) */}
       <BulkHiringSection />
-
-      {/* Commercial Workforce Tenders Showcase */}
       <TendersShowcase initialTenders={tenders} />
 
-      {/* Dual Partner Registration CTA */}
-      <section className="py-16 bg-[#123B5D] text-white">
+      {/* DUAL PARTNER REGISTRATION CTA STRIP */}
+      <section className="py-20 sm:py-24 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             {/* Worker CTA Card */}
-            <div className="bg-[#1D4F78]/60 rounded-3xl p-8 border border-white/10 flex flex-col justify-between space-y-6">
+            <div className="rounded-3xl p-8 sm:p-10 bg-gradient-to-br from-[#123B5D] to-[#1D4F78] text-white shadow-xl border border-white/15 flex flex-col justify-between space-y-6">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#2196E8] text-white flex items-center justify-center font-bold mb-4 shadow-md">
-                  <HardHat className="w-6 h-6 stroke-[2.2]" />
+                <div className="w-14 h-14 rounded-2xl bg-[#2583D5] text-white flex items-center justify-center font-bold mb-5 shadow-md shadow-[#2583D5]/30">
+                  <HardHat className="w-7 h-7 stroke-[2.2]" />
                 </div>
-                <h3 className="text-2xl font-black text-white">
+                <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   Join as a Verified Skilled Worker
                 </h3>
-                <p className="text-sm text-slate-200 mt-2 leading-relaxed font-medium">
+                <p className="text-sm sm:text-base text-slate-200 mt-2.5 leading-relaxed font-normal">
                   Electricians, plumbers, masons, carpenters, technicians: get daily local jobs, weekly bonuses, direct UPI wallet payouts, and zero chowk waiting.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs text-[#60B5F5] font-semibold">
-                  <span>✓ Daily Direct Payouts</span>
-                  <span>•</span>
-                  <span>✓ 100% Free Registration</span>
-                  <span>•</span>
-                  <span>✓ Accidental Insurance</span>
+                <div className="mt-5 flex flex-wrap gap-2 text-xs text-[#93C5FD] font-semibold">
+                  <span className="bg-white/10 px-2.5 py-1 rounded-lg">✓ Daily Direct Payouts</span>
+                  <span className="bg-white/10 px-2.5 py-1 rounded-lg">✓ 100% Free Registration</span>
+                  <span className="bg-white/10 px-2.5 py-1 rounded-lg">✓ Accidental Insurance</span>
                 </div>
               </div>
 
               <Link
                 href="/register/worker"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-[#2196E8] hover:bg-[#1976D2] text-white font-bold text-sm text-center tracking-wide transition-all shadow-md"
+                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-bold text-sm text-center tracking-wide transition-all shadow-lg shadow-[#2583D5]/25 hover:scale-[1.02]"
               >
                 Start Worker Registration (श्रमिक पंजीकरण)
               </Link>
             </div>
 
             {/* Contractor CTA Card */}
-            <div className="bg-[#1D4F78]/60 rounded-3xl p-8 border border-white/10 flex flex-col justify-between space-y-6">
+            <div className="rounded-3xl p-8 sm:p-10 bg-gradient-to-br from-[#123B5D] to-[#1D4F78] text-white shadow-xl border border-white/15 flex flex-col justify-between space-y-6">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-white text-[#123B5D] flex items-center justify-center font-bold mb-4 shadow-md">
-                  <Building2 className="w-6 h-6 stroke-[2.2]" />
+                <div className="w-14 h-14 rounded-2xl bg-white text-[#123B5D] flex items-center justify-center font-bold mb-5 shadow-md">
+                  <Building2 className="w-7 h-7 stroke-[2.2]" />
                 </div>
-                <h3 className="text-2xl font-black text-white">
+                <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
                   Register as Contractor / Tender Owner
                 </h3>
-                <p className="text-sm text-slate-200 mt-2 leading-relaxed font-medium">
+                <p className="text-sm sm:text-base text-slate-200 mt-2.5 leading-relaxed font-normal">
                   Publish commercial workforce tenders, hire structured crews of 10 to 100+ workers, and manage site attendance digitally.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2 text-xs text-[#60B5F5] font-semibold">
-                  <span>✓ Verified Trade Crews</span>
-                  <span>•</span>
-                  <span>✓ Digital Muster Roll</span>
-                  <span>•</span>
-                  <span>✓ GST Compliant</span>
+                <div className="mt-5 flex flex-wrap gap-2 text-xs text-[#93C5FD] font-semibold">
+                  <span className="bg-white/10 px-2.5 py-1 rounded-lg">✓ Verified Trade Crews</span>
+                  <span className="bg-white/10 px-2.5 py-1 rounded-lg">✓ Digital Muster Roll</span>
+                  <span className="bg-white/10 px-2.5 py-1 rounded-lg">✓ GST Compliant</span>
                 </div>
               </div>
 
               <Link
                 href="/contractor"
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-[#F5FAFF] text-[#123B5D] font-bold text-sm text-center tracking-wide transition-all shadow-md"
+                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-white hover:bg-[#F5FAFF] text-[#123B5D] font-bold text-sm text-center tracking-wide transition-all shadow-lg hover:scale-[1.02]"
               >
                 Register as Contractor (ठेकेदार पंजीकरण)
               </Link>
@@ -113,11 +108,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Us & Contact Us Sections (Anchors #about-us and #contact-us) */}
-      <AboutContactSection />
+      {/* PANEL 7: Trust & Why KaamSetu */}
+      <WhyTrustSection />
 
-      {/* Testimonials & FAQs */}
+      {/* PANEL 8: Testimonials & Community Impact */}
       <TestimonialsFAQ />
+
+      {/* PANEL 9: About Us & Contact Us (Footer in layout.tsx completes Panel 9) */}
+      <AboutContactSection />
 
     </div>
   );

@@ -8,16 +8,13 @@ import {
   X, 
   User as UserIcon, 
   ShieldCheck, 
-  Briefcase, 
-  HardHat, 
-  MapPin, 
+  Phone, 
   LogOut,
   ChevronDown,
-  Phone,
-  Search,
-  Sparkles,
   ArrowRight,
-  UserPlus
+  Briefcase,
+  HardHat,
+  Search
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -68,13 +65,13 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#D1E8F8] shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-[#D1E8F8]/70 shadow-[0_4px_25px_rgba(37,131,213,0.06)] transition-all">
       {/* Top Micro-Banner: Trust & Helpline */}
       <div className="bg-[#123B5D] text-white text-xs py-1.5 px-4 hidden md:flex justify-between items-center border-b border-[#1D4F78]">
         <div className="flex items-center space-x-4 max-w-7xl mx-auto w-full justify-between">
           <div className="flex items-center space-x-3">
-            <span className="flex items-center gap-1.5 text-[#2196E8] font-bold">
-              <ShieldCheck className="w-3.5 h-3.5" /> 100% Aadhaar & Skill Verified Indian Workforce
+            <span className="flex items-center gap-1.5 text-[#60B5F5] font-bold">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#2196E8]" /> 100% Aadhaar & Skill Verified Indian Workforce
             </span>
             <span className="text-[#4B6F8E]">|</span>
             <span className="text-slate-300">Right People. Right Place. Right Work.</span>
@@ -99,26 +96,26 @@ export default function Navbar() {
           <Logo variant="light" size="md" />
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center space-x-6 text-sm font-bold text-[#123B5D]">
-            <Link href="/" className="hover:text-[#2196E8] transition-colors py-2">
+          <nav className="hidden xl:flex items-center space-x-6 text-sm font-bold text-[#153451]">
+            <Link href="/" className="hover:text-[#2583D5] transition-colors py-2">
               Home
             </Link>
-            <Link href="/register/worker" className="hover:text-[#2196E8] transition-colors py-2 flex items-center gap-1">
-              Find Work / Jobs
-              <span className="bg-[#EAF6FF] text-[#2196E8] text-[10px] px-1.5 py-0.5 rounded-full border border-[#D1E8F8]">
+            <Link href="/register/worker" className="hover:text-[#2583D5] transition-colors py-2 flex items-center gap-1">
+              Find Work
+              <span className="bg-[#EAF6FF] text-[#2583D5] text-[10px] px-1.5 py-0.5 rounded-full border border-[#D1E8F8]">
                 New
               </span>
             </Link>
-            <Link href="/workers" className="hover:text-[#2196E8] transition-colors py-2 flex items-center gap-1">
+            <Link href="/workers" className="hover:text-[#2583D5] transition-colors py-2 flex items-center gap-1">
               Find Workers
             </Link>
-            <a href="#how-it-works" className="hover:text-[#2196E8] transition-colors py-2">
+            <a href="#how-it-works" className="hover:text-[#2583D5] transition-colors py-2">
               How It Works
             </a>
-            <a href="#about-us" className="hover:text-[#2196E8] transition-colors py-2">
+            <a href="#about-us" className="hover:text-[#2583D5] transition-colors py-2">
               About Us
             </a>
-            <a href="#contact-us" className="hover:text-[#2196E8] transition-colors py-2">
+            <a href="#contact-us" className="hover:text-[#2583D5] transition-colors py-2">
               Contact Us
             </a>
           </nav>
@@ -129,13 +126,13 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdown(!userDropdown)}
-                  className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#F5FAFF] border border-[#D1E8F8] hover:border-[#2196E8] transition-all text-sm font-medium"
+                  className="flex items-center gap-2.5 px-3.5 py-2 rounded-xl bg-white/80 border border-[#D1E8F8] hover:border-[#2583D5] transition-all text-sm font-medium shadow-xs"
                 >
-                  <div className="w-7 h-7 rounded-full bg-[#123B5D] text-white flex items-center justify-center font-bold text-xs">
+                  <div className="w-7 h-7 rounded-full bg-[#153451] text-white flex items-center justify-center font-bold text-xs">
                     {user.fullName.charAt(0).toUpperCase()}
                   </div>
                   <div className="text-left">
-                    <p className="text-xs font-bold text-[#123B5D] leading-tight truncate max-w-[120px]">{user.fullName}</p>
+                    <p className="text-xs font-bold text-[#153451] leading-tight truncate max-w-[120px]">{user.fullName}</p>
                     <p className="text-[10px] text-[#4B6F8E] uppercase font-bold tracking-wider">{user.activeRole}</p>
                   </div>
                   <ChevronDown className="w-4 h-4 text-[#4B6F8E]" />
@@ -146,9 +143,9 @@ export default function Navbar() {
                     <Link
                       href={getDashboardLink()}
                       onClick={() => setUserDropdown(false)}
-                      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#123B5D] hover:bg-[#EAF6FF] font-semibold"
+                      className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-[#153451] hover:bg-[#EAF6FF] font-semibold"
                     >
-                      <UserIcon className="w-4 h-4 text-[#2196E8]" /> Dashboard
+                      <UserIcon className="w-4 h-4 text-[#2583D5]" /> Dashboard
                     </Link>
                     <button
                       onClick={handleLogout}
@@ -163,7 +160,7 @@ export default function Navbar() {
               <div className="flex items-center space-x-2.5">
                 <Link
                   href="/login"
-                  className="px-4 py-2.5 rounded-xl border border-[#D1E8F8] text-sm font-bold text-[#123B5D] hover:bg-[#F5FAFF] hover:border-[#2196E8] transition-all"
+                  className="px-4 py-2.5 rounded-xl border border-[#D1E8F8] text-sm font-bold text-[#153451] hover:bg-white hover:border-[#2583D5] transition-all"
                 >
                   Login
                 </Link>
@@ -171,37 +168,37 @@ export default function Navbar() {
                 <div className="relative">
                   <button
                     onClick={() => setRegisterDropdown(!registerDropdown)}
-                    className="px-5 py-2.5 rounded-xl bg-[#2196E8] hover:bg-[#1976D2] text-white text-sm font-bold shadow-md shadow-[#2196E8]/20 transition-all flex items-center gap-1.5 hover:shadow-lg"
+                    className="px-5 py-2.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white text-sm font-bold shadow-md shadow-[#2583D5]/20 transition-all flex items-center gap-1.5 hover:scale-[1.02]"
                   >
                     <span>Register</span>
                     <ChevronDown className="w-4 h-4" />
                   </button>
 
                   {registerDropdown && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-[#D1E8F8] p-2 z-50">
+                    <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl border border-[#D1E8F8] p-2 z-50">
                       <Link
                         href="/register/customer"
                         onClick={() => setRegisterDropdown(false)}
                         className="block p-3 rounded-xl hover:bg-[#EAF6FF] transition group"
                       >
-                        <p className="text-xs font-black text-[#123B5D] group-hover:text-[#2196E8]">Hire Workers</p>
-                        <p className="text-[11px] text-[#4B6F8E]">Book skilled help or labour</p>
+                        <p className="text-xs font-black text-[#153451] group-hover:text-[#2583D5]">Hire Workers (ग्राहक)</p>
+                        <p className="text-[11px] text-[#4B6F8E]">Book skilled help or local labour</p>
                       </Link>
                       <Link
                         href="/register/worker"
                         onClick={() => setRegisterDropdown(false)}
                         className="block p-3 rounded-xl hover:bg-[#EAF6FF] transition group"
                       >
-                        <p className="text-xs font-black text-[#123B5D] group-hover:text-[#2196E8]">Find Work / Join as Worker</p>
+                        <p className="text-xs font-black text-[#153451] group-hover:text-[#2583D5]">Find Work (श्रमिक पंजीकरण)</p>
                         <p className="text-[11px] text-[#4B6F8E]">Get daily jobs & direct payouts</p>
                       </Link>
                       <Link
                         href="/contractor"
                         onClick={() => setRegisterDropdown(false)}
-                        className="block p-3 rounded-xl hover:bg-[#EAF6FF] transition group border-t border-[#D1E8F8] mt-1"
+                        className="block p-3 rounded-xl hover:bg-[#EAF6FF] transition group"
                       >
-                        <p className="text-xs font-black text-[#123B5D] group-hover:text-[#2196E8]">Contractor / Tenders</p>
-                        <p className="text-[11px] text-[#4B6F8E]">Commercial bulk hiring</p>
+                        <p className="text-xs font-black text-[#153451] group-hover:text-[#2583D5]">Contractor / Tenders (ठेकेदार)</p>
+                        <p className="text-[11px] text-[#4B6F8E]">Bulk crew hiring & tender bids</p>
                       </Link>
                     </div>
                   )}
@@ -210,27 +207,18 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Menu Hamburger */}
-          <div className="flex xl:hidden items-center space-x-2">
-            {user ? (
-              <Link
-                href={getDashboardLink()}
-                className="w-9 h-9 rounded-full bg-[#123B5D] text-white flex items-center justify-center font-bold text-xs shadow-sm"
-              >
-                {user.fullName.charAt(0).toUpperCase()}
-              </Link>
-            ) : (
-              <Link
-                href="/login"
-                className="px-3 py-1.5 text-xs font-bold text-[#123B5D] border border-[#D1E8F8] rounded-xl bg-white"
-              >
-                Login
-              </Link>
-            )}
+          {/* Mobile Hamburger Button */}
+          <div className="xl:hidden flex items-center gap-2">
+            <Link
+              href="/login"
+              className="px-3 py-1.5 rounded-lg border border-[#D1E8F8] text-xs font-bold text-[#153451] bg-white/70"
+            >
+              Login
+            </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-xl text-[#123B5D] bg-[#F5FAFF] border border-[#D1E8F8] hover:bg-[#EAF6FF] transition-colors"
-              aria-label="Toggle Navigation Menu"
+              className="p-2 rounded-xl text-[#153451] hover:bg-[#EAF6FF] focus:outline-none transition-colors border border-[#D1E8F8]"
+              aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -239,94 +227,72 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="xl:hidden border-t border-[#D1E8F8] bg-white px-5 pt-4 pb-6 space-y-4 shadow-xl animate-in slide-in-from-top-4 duration-200">
-          <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#D1E8F8]">
-            <Link
-              href="/register/customer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-3.5 rounded-2xl bg-[#2196E8] text-white font-bold text-center text-sm shadow-md"
-            >
-              Hire Workers<br />
-              <span className="text-[11px] font-normal opacity-90">काम करवाना है</span>
-            </Link>
-            <Link
-              href="/register/worker"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-3.5 rounded-2xl bg-[#123B5D] text-white font-bold text-center text-sm shadow-md"
-            >
-              Find Work<br />
-              <span className="text-[11px] font-normal text-[#60B5F5]">काम चाहिए</span>
-            </Link>
-          </div>
-
-          <div className="flex flex-col space-y-1 font-semibold text-sm text-[#123B5D]">
+        <div className="xl:hidden bg-white/95 backdrop-blur-2xl border-b border-[#D1E8F8] px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top-4 duration-200">
+          <nav className="flex flex-col space-y-1 text-sm font-bold text-[#153451]">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2.5 rounded-xl hover:bg-[#EAF6FF]"
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
               Home
             </Link>
             <Link
               href="/register/worker"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2.5 rounded-xl hover:bg-[#EAF6FF] flex items-center justify-between"
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition flex items-center justify-between"
             >
               <span>Find Work / Jobs (काम पाएं)</span>
-              <span className="text-xs text-[#2196E8] font-bold">Earn Daily</span>
+              <span className="text-[10px] font-bold text-[#2583D5] bg-[#EAF6FF] px-2 py-0.5 rounded-full border border-[#D1E8F8]">
+                New
+              </span>
             </Link>
             <Link
               href="/workers"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2.5 rounded-xl hover:bg-[#EAF6FF] flex items-center justify-between"
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
-              <span>Find Workers (श्रमिक खोजें)</span>
-              <span className="text-xs text-emerald-600 font-bold">Live GPS</span>
+              Find Workers (कारीगर खोजें)
             </Link>
             <a
               href="#how-it-works"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2.5 rounded-xl hover:bg-[#EAF6FF]"
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
-              How It Works (कैसे काम करता है)
+              How It Works
             </a>
             <a
               href="#about-us"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2.5 rounded-xl hover:bg-[#EAF6FF]"
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
-              About Us (हमारे बारे में)
+              About Us
             </a>
             <a
               href="#contact-us"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2.5 rounded-xl hover:bg-[#EAF6FF]"
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
-              Contact Us (संपर्क करें)
+              Contact Us
             </a>
-            {user && (
-              <Link
-                href={getDashboardLink()}
-                onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2.5 rounded-xl text-[#2196E8] bg-[#EAF6FF] font-bold flex items-center justify-between"
-              >
-                <span>My Dashboard ({user.activeRole})</span>
-                <ChevronDown className="w-4 h-4 -rotate-90" />
-              </Link>
-            )}
-          </div>
+          </nav>
 
-          <div className="pt-3 border-t border-[#D1E8F8] flex justify-between items-center text-xs text-[#4B6F8E]">
-            <span className="flex items-center gap-1">
-              <Phone className="w-3.5 h-3.5 text-[#2196E8]" /> 1800-KAAMSETU
-            </span>
-            {user && (
-              <button onClick={handleLogout} className="text-red-600 font-bold">
-                Logout
-              </button>
-            )}
+          <div className="pt-3 border-t border-[#D1E8F8] flex flex-col gap-2">
+            <Link
+              href="/register/worker"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full py-3 rounded-xl bg-[#2583D5] text-white font-bold text-center text-sm shadow-md"
+            >
+              Join as Worker (श्रमिक बनें)
+            </Link>
+            <Link
+              href="/register/customer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full py-3 rounded-xl bg-[#F5FAFF] border border-[#D1E8F8] text-[#153451] font-bold text-center text-sm"
+            >
+              Hire a Worker (कारीगर बुक करें)
+            </Link>
           </div>
         </div>
       )}
