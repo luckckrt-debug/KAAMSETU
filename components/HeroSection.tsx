@@ -85,13 +85,6 @@ export default function HeroSection() {
         {/* CENTERED HERO HEADER */}
         <div className="max-w-4xl mx-auto text-center space-y-6 mb-12 sm:mb-14">
           
-          {/* Trust Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-md border border-[#D1E8F8] shadow-xs text-xs font-bold text-[#153451] transition-all hover:bg-white">
-            <span className="w-2 h-2 rounded-full bg-[#2583D5] animate-pulse"></span>
-            <span className="text-[#2583D5]">#1 Indian Workforce Marketplace</span>
-            <span className="text-[#4B6F8E]">• 100% Aadhaar Verified</span>
-          </div>
-
           {/* Headline */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#153451] tracking-tight leading-[1.12]">
             Right People. Right Place. <br />
