@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import { WorkerEarningSummary, WalletLedgerEntry, Withdrawal, PayoutAccount } from '@/lib/types';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
 export default function WorkerEarningsPage() {
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'TRANSACTIONS' | 'JOBS' | 'WITHDRAWALS' | 'ACCOUNTS'>('OVERVIEW');
@@ -239,7 +240,11 @@ export default function WorkerEarningsPage() {
   const commissionPayable = wallet?.commissionPayable || 0;
 
   return (
-    <div className="py-6 px-3 sm:px-6 lg:px-8 bg-[#F7F7F2] min-h-screen">
+    <DashboardLayout
+      role="WORKER"
+      title="Worker Earnings & Digital Wallet"
+      subtitle="दैनिक व मासिक पारिश्रमिक • UPI डिजिटल वॉलेट व तत्काल बैंक निकासी"
+    >
       <div className="max-w-5xl mx-auto space-y-5">
         
         {/* Top Header */}
@@ -963,6 +968,6 @@ export default function WorkerEarningsPage() {
         </div>
       )}
 
-    </div>
+    </DashboardLayout>
   );
 }

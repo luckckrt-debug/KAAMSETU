@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { io, Socket } from 'socket.io-client';
 import { Booking } from '@/lib/types';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
 export default function WorkerDashboardPage() {
   const router = useRouter();
@@ -189,8 +190,12 @@ export default function WorkerDashboardPage() {
   }
 
   return (
-    <div className="py-6 px-4 sm:px-6 lg:px-8 bg-[#F7F7F2] min-h-screen">
-      <div className="max-w-4xl mx-auto space-y-5">
+    <DashboardLayout
+      role="WORKER"
+      title="Worker Operations Dashboard"
+      subtitle="कुशल श्रमिक कार्यस्थल • लाइव ऑर्डर्स व टेलीमेट्री"
+    >
+      <div className="max-w-5xl mx-auto space-y-5">
         
         {/* Top Worker Profile & Online Switch Card */}
         <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#D4DED5] shadow-md">
@@ -481,6 +486,6 @@ export default function WorkerDashboardPage() {
         </div>
       )}
 
-    </div>
+    </DashboardLayout>
   );
 }

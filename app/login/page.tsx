@@ -68,7 +68,7 @@ export default function LoginPage() {
         // Redirect to registration
         router.push(`/register/customer?phone=${phoneNumber}`);
       } else {
-        router.push(data.redirectUrl || '/customer/dashboard');
+        router.push(data.redirectUrl || '/hiring/dashboard');
       }
     } catch (err: any) {
       setError(err.message || 'Verification error');
@@ -136,29 +136,32 @@ export default function LoginPage() {
             {/* Quick Demo Login Pre-fills */}
             <div className="pt-4 border-t border-border">
               <span className="text-[10px] text-text-muted uppercase font-bold block mb-2 text-center">
-                Quick Demo Logins (Click to pre-fill)
+                Quick Role Demo Logins (Click to pre-fill)
               </span>
               <div className="grid grid-cols-3 gap-2 text-[11px]">
                 <button
                   type="button"
                   onClick={() => setPhoneNumber('9876543210')}
-                  className="p-1.5 bg-bg border border-border rounded-lg text-forest font-bold hover:border-forest"
+                  className="p-2 bg-bg border border-border rounded-xl text-forest font-bold hover:border-forest flex flex-col items-center gap-0.5 text-center transition"
                 >
-                  ⚡ Worker
+                  <span className="text-sm">👷</span>
+                  <span>Worker</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setPhoneNumber('9911223344')}
-                  className="p-1.5 bg-bg border border-border rounded-lg text-forest font-bold hover:border-forest"
+                  className="p-2 bg-bg border border-border rounded-xl text-forest font-bold hover:border-forest flex flex-col items-center gap-0.5 text-center transition"
                 >
-                  👤 Customer
+                  <span className="text-sm">🏢</span>
+                  <span>Hiring Partner</span>
                 </button>
                 <button
                   type="button"
-                  onClick={() => setPhoneNumber('9999999999')}
-                  className="p-1.5 bg-bg border border-border rounded-lg text-forest font-bold hover:border-forest"
+                  onClick={() => setPhoneNumber('9811002233')}
+                  className="p-2 bg-bg border border-border rounded-xl text-forest font-bold hover:border-forest flex flex-col items-center gap-0.5 text-center transition"
                 >
-                  🛡️ Admin
+                  <span className="text-sm">🏗️</span>
+                  <span>Contractor</span>
                 </button>
               </div>
             </div>

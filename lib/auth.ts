@@ -138,21 +138,47 @@ export function verifySessionToken(token: string): TokenPayload | null {
 }
 
 /**
+ * Normalize and check user roles
+ */
+export function normalizeRole(role: string): 'WORKER' | 'CONTRACTOR' | 'HIRING_PARTNER' | 'ADMIN' {
+  const r = (role || '').toUpperCase();
+  if (r === 'WORKER' || r === 'TEAM_LEADER') return 'WORKER';
+  if (r === 'CONTRACTOR' || r === 'TENDER_OWNER') return 'CONTRACTOR';
+  if (r === 'ADMIN' || r === 'SUPER_ADMIN') return 'ADMIN';
+  return 'HIRING_PARTNER'; // CUSTOMER / HIRING_PARTNER
+}
+
+export function isWorker(role: string): boolean {
+  return normalizeRole(role) === 'WORKER';
+}
+
+export function isContractor(role: string): boolean {
+  return normalizeRole(role) === 'CONTRACTOR';
+}
+
+export function isHiringPartner(role: string): boolean {
+  return normalizeRole(role) === 'HIRING_PARTNER';
+}
+
+export function isAdmin(role: string): boolean {
+  return normalizeRole(role) === 'ADMIN';
+}
+
+/**
  * Get authorized landing dashboard route based on user role
  */
-export function getRoleDashboardPath(role: UserRole): string {
-  switch (role) {
+export function getRoleDashboardPath(role: UserRole | string): string {
+  const normalized = normalizeRole(role);
+  switch (normalized) {
     case 'WORKER':
       return '/worker/dashboard';
-    case 'CUSTOMER':
-      return '/customer/dashboard';
+    case 'HIRING_PARTNER':
+      return '/hiring/dashboard';
     case 'CONTRACTOR':
-    case 'TENDER_OWNER':
       return '/contractor/dashboard';
     case 'ADMIN':
-    case 'SUPER_ADMIN':
       return '/admin';
     default:
-      return '/customer/dashboard';
+      return '/hiring/dashboard';
   }
 }

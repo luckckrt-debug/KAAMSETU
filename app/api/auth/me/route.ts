@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifySessionToken } from '@/lib/auth';
+import { verifySessionToken, getRoleDashboardPath, normalizeRole } from '@/lib/auth';
 import { dbStore } from '@/lib/store';
 
 export async function GET(req: NextRequest) {
@@ -19,10 +19,14 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ authenticated: false }, { status: 200 });
     }
 
+    const role = payload.activeRole || user.roles[0] || 'CUSTOMER';
+
     return NextResponse.json({
       authenticated: true,
       user,
-      activeRole: payload.activeRole,
+      activeRole: role,
+      normalizedRole: normalizeRole(role),
+      dashboardUrl: getRoleDashboardPath(role),
     });
   } catch (error: any) {
     return NextResponse.json({ authenticated: false }, { status: 200 });

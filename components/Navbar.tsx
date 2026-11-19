@@ -50,18 +50,11 @@ export default function Navbar() {
 
   const getDashboardLink = () => {
     if (!user) return '/login';
-    switch (user.activeRole) {
-      case 'WORKER':
-        return '/worker/dashboard';
-      case 'CONTRACTOR':
-      case 'TENDER_OWNER':
-        return '/contractor/dashboard';
-      case 'ADMIN':
-      case 'SUPER_ADMIN':
-        return '/admin';
-      default:
-        return '/customer/dashboard';
-    }
+    const role = (user.activeRole || '').toUpperCase();
+    if (role === 'WORKER') return '/worker/dashboard';
+    if (role === 'CONTRACTOR' || role === 'TENDER_OWNER') return '/contractor/dashboard';
+    if (role === 'ADMIN' || role === 'SUPER_ADMIN') return '/admin';
+    return '/hiring/dashboard';
   };
 
   return (

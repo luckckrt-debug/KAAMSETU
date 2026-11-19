@@ -15,6 +15,7 @@ import {
   XCircle
 } from 'lucide-react';
 import { Tender, TenderApplication } from '@/lib/types';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
 export default function ContractorDashboardPage() {
   const [tenders, setTenders] = useState<Tender[]>([]);
@@ -92,8 +93,21 @@ export default function ContractorDashboardPage() {
   }
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 bg-bg min-h-screen">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <DashboardLayout
+      role="CONTRACTOR"
+      title="Contractor Operations Dashboard"
+      subtitle="निर्माण परियोजनाएं, मस्टर रोल उपस्थिति व टेंडर प्रबंधन"
+      actions={
+        <Link
+          href="/contractor/post-work"
+          className="px-4 py-2.5 rounded-xl bg-forest hover:bg-forest-light text-lime font-black text-xs uppercase tracking-wider shadow-md transition flex items-center gap-1.5"
+        >
+          <PlusCircle className="w-4 h-4" />
+          <span>+ Post Project / Tender</span>
+        </Link>
+      }
+    >
+      <div className="max-w-7xl mx-auto space-y-6">
         
         {/* Top Company Card */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-border shadow-elevated flex flex-col sm:flex-row sm:items-center justify-between gap-6">
@@ -285,6 +299,6 @@ export default function ContractorDashboardPage() {
         </div>
 
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

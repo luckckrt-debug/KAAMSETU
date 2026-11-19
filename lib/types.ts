@@ -2,6 +2,7 @@
 
 export type UserRole = 
   | 'CUSTOMER'
+  | 'HIRING_PARTNER'
   | 'WORKER'
   | 'CONTRACTOR'
   | 'TENDER_OWNER'

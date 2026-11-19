@@ -25,6 +25,7 @@ import {
 import { io, Socket } from 'socket.io-client';
 import { Booking } from '@/lib/types';
 import { MapMarker } from '@/components/InteractiveMap';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
 const InteractiveMap = dynamic(() => import('@/components/InteractiveMap'), {
   ssr: false,
@@ -419,8 +420,12 @@ export default function WorkerActiveJobPage() {
   } : undefined;
 
   return (
-    <div className="py-6 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#EAF6FF]/60 via-[#F5FAFF] to-[#EAF6FF]/40 min-h-screen">
-      <div className="max-w-3xl mx-auto space-y-5">
+    <DashboardLayout
+      role="WORKER"
+      title="Live GPS Job Tracking"
+      subtitle="सक्रिय काम व रियल-टाइम रूट नेविगेशन"
+    >
+      <div className="max-w-4xl mx-auto space-y-5">
         
         {/* Header Navigation */}
         <div className="flex items-center justify-between">
@@ -719,6 +724,6 @@ export default function WorkerActiveJobPage() {
         </div>
 
       </div>
-    </div>
+    </DashboardLayout>
   );
 }

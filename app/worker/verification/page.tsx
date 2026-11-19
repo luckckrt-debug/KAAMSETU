@@ -11,6 +11,7 @@ import {
   Clock, 
   FileText 
 } from 'lucide-react';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
 export default function WorkerVerificationPage() {
   const [worker, setWorker] = useState<any>(null);
@@ -85,8 +86,12 @@ export default function WorkerVerificationPage() {
   const status = worker?.verificationStatus || 'VERIFIED';
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 bg-bg min-h-screen">
-      <div className="max-w-3xl mx-auto space-y-6">
+    <DashboardLayout
+      role="WORKER"
+      title="Documents & Aadhaar KYC"
+      subtitle="सरकारी पहचान प्रमाण, ट्रेड सर्टिफिकेट व पुलिस वेरिफिकेशन"
+    >
+      <div className="max-w-4xl mx-auto space-y-6">
         
         {/* Navigation */}
         <div className="flex items-center justify-between">
@@ -200,6 +205,6 @@ export default function WorkerVerificationPage() {
         </div>
 
       </div>
-    </div>
+    </DashboardLayout>
   );
 }
