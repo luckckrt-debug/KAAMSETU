@@ -34,7 +34,8 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # Database & Storage
-data/
+/data/
+/services/api/data/
 prisma/*.db
 prisma/*.db-journal
 

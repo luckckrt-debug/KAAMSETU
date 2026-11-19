@@ -37,6 +37,7 @@ import { calculateDistanceKm, calculateEstimatedEtaMinutes } from './geo';
 import { getProfessionBySlug } from './professions';
 import { calculateJobCommission } from './commission';
 import { dispatchPayout } from './payout';
+import { deleteMongoDocument, upsertMongoDocument } from './mongodb';
 
 const DATA_DIR = process.env.VERCEL ? path.join('/tmp', 'data') : path.join(process.cwd(), 'data');
 const STORE_FILE = path.join(DATA_DIR, 'kaamsetu_store.json');
@@ -3852,5 +3853,80 @@ export const dbStore = {
   getAuditLogs() {
     const store = loadStore();
     return store.auditLogs;
+  },
+
+  // Instant MongoDB Atlas Record Deletions
+  async deleteWorker(workerProfileId: string, adminUserId = 'admin') {
+    const store = loadStore();
+    const worker = store.workerProfiles.find(w => w.id === workerProfileId || w.userId === workerProfileId);
+    const targetId = worker ? worker.id : workerProfileId;
+    const userId = worker?.userId;
+
+    store.workerProfiles = store.workerProfiles.filter(w => w.id !== targetId && w.userId !== targetId);
+    store.bookingLocations = store.bookingLocations.filter(bl => bl.workerProfileId !== targetId);
+    store.wallets = store.wallets.filter(wl => wl.workerProfileId !== targetId);
+    saveStore();
+
+    const atlasRes = await deleteMongoDocument('workerProfiles', targetId);
+    if (userId) {
+      store.users = store.users.filter(u => u.id !== userId);
+      await deleteMongoDocument('users', userId);
+    }
+    await deleteMongoDocument('wallets', targetId);
+
+    this.logAdminAction(adminUserId, 'INSTANT_DELETE_WORKER', 'WorkerProfile', targetId, 'Worker deleted permanently from MongoDB Atlas.');
+    return { success: true, deletedCount: atlasRes.deletedCount };
+  },
+
+  async deleteUser(userId: string, adminUserId = 'admin') {
+    const store = loadStore();
+    store.users = store.users.filter(u => u.id !== userId);
+    store.customerProfiles = store.customerProfiles.filter(c => c.userId !== userId);
+    store.workerProfiles = store.workerProfiles.filter(w => w.userId !== userId);
+    store.contractorProfiles = store.contractorProfiles.filter(cp => cp.userId !== userId);
+    saveStore();
+
+    const atlasRes = await deleteMongoDocument('users', userId);
+    await deleteMongoDocument('workerProfiles', userId);
+    await deleteMongoDocument('customerProfiles', userId);
+
+    this.logAdminAction(adminUserId, 'INSTANT_DELETE_USER', 'User', userId, 'User deleted permanently from MongoDB Atlas.');
+    return { success: true, deletedCount: atlasRes.deletedCount };
+  },
+
+  async deleteBooking(bookingId: string, adminUserId = 'admin') {
+    const store = loadStore();
+    store.bookings = store.bookings.filter(b => b.id !== bookingId);
+    store.bookingLocations = store.bookingLocations.filter(bl => bl.bookingId !== bookingId);
+    saveStore();
+
+    const atlasRes = await deleteMongoDocument('bookings', bookingId);
+    await deleteMongoDocument('bookingLocations', bookingId);
+
+    this.logAdminAction(adminUserId, 'INSTANT_DELETE_BOOKING', 'Booking', bookingId, 'Booking deleted permanently from MongoDB Atlas.');
+    return { success: true, deletedCount: atlasRes.deletedCount };
+  },
+
+  async deleteTender(tenderId: string, adminUserId = 'admin') {
+    const store = loadStore();
+    store.tenders = store.tenders.filter(t => t.id !== tenderId);
+    store.tenderApplications = store.tenderApplications.filter(ta => ta.tenderId !== tenderId);
+    saveStore();
+
+    const atlasRes = await deleteMongoDocument('tenders', tenderId);
+    await deleteMongoDocument('tenderApplications', tenderId);
+
+    this.logAdminAction(adminUserId, 'INSTANT_DELETE_TENDER', 'Tender', tenderId, 'Tender deleted permanently from MongoDB Atlas.');
+    return { success: true, deletedCount: atlasRes.deletedCount };
+  },
+
+  async deleteDispute(disputeId: string, adminUserId = 'admin') {
+    const store = loadStore();
+    store.disputes = store.disputes.filter(d => d.id !== disputeId);
+    saveStore();
+
+    const atlasRes = await deleteMongoDocument('disputes', disputeId);
+    this.logAdminAction(adminUserId, 'INSTANT_DELETE_DISPUTE', 'JobDispute', disputeId, 'Dispute deleted permanently from MongoDB Atlas.');
+    return { success: true, deletedCount: atlasRes.deletedCount };
   },
 };
