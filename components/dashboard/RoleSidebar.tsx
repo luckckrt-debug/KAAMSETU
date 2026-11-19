@@ -28,7 +28,10 @@ import {
   ShieldCheck,
   Bell,
   HelpCircle,
-  ExternalLink
+  ExternalLink,
+  MapPin,
+  Zap,
+  Navigation
 } from 'lucide-react';
 
 export type DashboardRole = 'WORKER' | 'HIRING_PARTNER' | 'CONTRACTOR';
@@ -55,16 +58,15 @@ export const WORKER_NAV: NavItem[] = [
 ];
 
 export const HIRING_PARTNER_NAV: NavItem[] = [
-  { name: 'Home', nameHi: 'डैशबोर्ड', href: '/hiring/dashboard', icon: Home },
-  { name: 'Hiring Requirements', nameHi: 'भर्ती आवश्यकताएं', href: '/hiring/requirements', icon: Briefcase },
-  { name: 'Post Vacancy', nameHi: 'नई भर्ती पोस्ट करें', href: '/hiring/post-vacancy', icon: PlusCircle, badge: 'New' },
-  { name: 'Applicants', nameHi: 'आवेदक', href: '/hiring/applicants', icon: Users },
-  { name: 'Shortlisted', nameHi: 'शॉर्टलिस्टेड', href: '/hiring/shortlisted', icon: UserCheck },
-  { name: 'Selected Candidates', nameHi: 'चयनित उम्मीदवार', href: '/hiring/selected', icon: CheckCircle2 },
-  { name: 'Recruitment Projects', nameHi: 'भर्ती प्रोजेक्ट्स', href: '/hiring/projects', icon: FolderKanban },
-  { name: 'Analytics', nameHi: 'भर्ती आंकड़े', href: '/hiring/analytics', icon: TrendingUp },
-  { name: 'Profile', nameHi: 'कंपनी प्रोफाइल', href: '/hiring/profile', icon: User },
-  { name: 'Settings', nameHi: 'सेटिंग्स व मदद', href: '/hiring/settings', icon: Settings },
+  { name: 'Book a Worker', nameHi: 'होम / बुकिंग', href: '/hiring/dashboard', icon: Home, badge: 'Live' },
+  { name: 'Nearby Workers', nameHi: 'आस-पास के कारीगर', href: '/hiring/nearby', icon: MapPin, badge: 'Radar' },
+  { name: 'Instant Request', nameHi: 'तत्काल सेवा अनुरोध', href: '/hiring/book', icon: Zap },
+  { name: 'Active Bookings', nameHi: 'सक्रिय काम व GPS', href: '/hiring/bookings', icon: Clock },
+  { name: 'Booking History', nameHi: 'पिछली सेवाएं व रसीदें', href: '/hiring/history', icon: CheckCircle2 },
+  { name: 'Payments & Escrow', nameHi: 'सुरक्षित भुगतान', href: '/hiring/payments', icon: CreditCard },
+  { name: 'Saved Addresses', nameHi: 'सहेजे गए पते', href: '/hiring/addresses', icon: Building2 },
+  { name: 'Customer Profile', nameHi: 'मेरी प्रोफाइल', href: '/hiring/profile', icon: User },
+  { name: 'Help & Safety', nameHi: '24x7 सुरक्षा व सहायता', href: '/hiring/settings', icon: ShieldCheck },
 ];
 
 export const CONTRACTOR_NAV: NavItem[] = [
@@ -99,12 +101,12 @@ export default function RoleSidebar({ role, user, onCloseMobile }: RoleSidebarPr
 
   if (role === 'HIRING_PARTNER') {
     navItems = HIRING_PARTNER_NAV;
-    roleTitle = 'Hiring Partner';
-    roleSubtitle = 'भर्ती व कर्मचारी चयन पोर्टल';
-    roleBadgeClass = 'bg-blue-50 text-blue-800 border-blue-200';
+    roleTitle = 'Customer / Client';
+    roleSubtitle = 'ऑन-डिमांड कारीगर बुकिंग व लाइव ट्रैकिंग';
+    roleBadgeClass = 'bg-[#EAF6FF] text-[#2583D5] border-[#D1E8F8]';
     activeItemClass = 'bg-[#2583D5] text-white shadow-md shadow-[#2583D5]/20 font-bold';
     inactiveItemClass = 'text-[#153451] hover:bg-[#EAF6FF] hover:text-[#2583D5]';
-    roleIcon = Users;
+    roleIcon = MapPin;
   } else if (role === 'CONTRACTOR') {
     navItems = CONTRACTOR_NAV;
     roleTitle = 'Contractor Hub';

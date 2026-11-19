@@ -152,8 +152,8 @@ export default function LoginPage() {
                   onClick={() => setPhoneNumber('9911223344')}
                   className="p-2 bg-bg border border-border rounded-xl text-forest font-bold hover:border-forest flex flex-col items-center gap-0.5 text-center transition"
                 >
-                  <span className="text-sm">🏢</span>
-                  <span>Hiring Partner</span>
+                  <span className="text-sm">📍</span>
+                  <span>Customer (Book)</span>
                 </button>
                 <button
                   type="button"

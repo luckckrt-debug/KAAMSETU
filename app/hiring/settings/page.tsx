@@ -10,13 +10,16 @@ import {
   ShieldCheck, 
   LogOut, 
   CheckCircle2,
-  Lock
+  Lock,
+  AlertTriangle,
+  Radio
 } from 'lucide-react';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
-export default function HiringSettingsPage() {
-  const [notifyOnApply, setNotifyOnApply] = useState(true);
-  const [dailyDigest, setDailyDigest] = useState(true);
+export default function CustomerSettingsPage() {
+  const [liveGpsSms, setLiveGpsSms] = useState(true);
+  const [workerArrivalAlerts, setWorkerArrivalAlerts] = useState(true);
+  const [promotions, setPromotions] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const handleSave = () => {
@@ -36,100 +39,116 @@ export default function HiringSettingsPage() {
   return (
     <DashboardLayout
       role="HIRING_PARTNER"
-      title="Hiring Partner Settings & Support"
-      subtitle="भर्ती सूचना प्राथमिकताएं व समर्पित कॉर्पोरेट अकाउंट मैनेजर"
+      title="Customer Settings & Safety Support"
+      subtitle="लाइव ट्रैकिंग सूचनाएं, 24x7 ग्राहक सहायता व सुरक्षा हेल्पडेस्क"
     >
       <div className="max-w-4xl mx-auto space-y-6">
 
         {saved && (
           <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-bold flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-            <span>Preferences saved!</span>
+            <span>Settings updated successfully!</span>
           </div>
         )}
 
-        <div className="bg-white rounded-3xl p-6 border border-[#D9EEFF] shadow-xs space-y-5">
-          <h3 className="font-black text-[#153451] text-base border-b border-[#D9EEFF] pb-3">
-            Recruitment Notification Preferences
-          </h3>
+        {/* 1. Notification Preferences */}
+        <div className="bg-white rounded-3xl p-6 border border-[#D1E8F8] shadow-sm space-y-5">
+          <div className="flex items-center gap-2 border-b border-[#EAF6FF] pb-3">
+            <Bell className="w-4 h-4 text-[#2583D5]" />
+            <h3 className="font-black text-[#153451] text-base">
+              Service & Live Tracking Alerts
+            </h3>
+          </div>
 
           <div className="space-y-4 text-xs">
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-bold text-[#153451]">Instant Candidate Application Alerts</p>
-                <p className="text-[#4B6F8E]">Receive notification as soon as a verified worker applies to your vacancy</p>
+                <p className="font-bold text-[#153451]">Live GPS Arrival & Route Tracking SMS</p>
+                <p className="text-[#7697B3]">Receive instant SMS with live map link when worker starts moving</p>
               </div>
               <input
                 type="checkbox"
-                checked={notifyOnApply}
-                onChange={(e) => setNotifyOnApply(e.target.checked)}
-                className="w-5 h-5 accent-[#2583D5] cursor-pointer"
+                checked={liveGpsSms}
+                onChange={(e) => setLiveGpsSms(e.target.checked)}
+                className="w-4 h-4 accent-[#2583D5]"
               />
             </div>
 
             <div className="flex items-center justify-between">
               <div>
-                <p className="font-bold text-[#153451]">Daily Candidate Pipeline Digest</p>
-                <p className="text-[#4B6F8E]">Summary email of shortlisted candidates and vacancy statuses</p>
+                <p className="font-bold text-[#153451]">Worker Doorstep Arrival Call & Push</p>
+                <p className="text-[#7697B3]">Get an automated ring when professional is 200m away</p>
               </div>
               <input
                 type="checkbox"
-                checked={dailyDigest}
-                onChange={(e) => setDailyDigest(e.target.checked)}
-                className="w-5 h-5 accent-[#2583D5] cursor-pointer"
+                checked={workerArrivalAlerts}
+                onChange={(e) => setWorkerArrivalAlerts(e.target.checked)}
+                className="w-4 h-4 accent-[#2583D5]"
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-bold text-[#153451]">Service Discounts & Trade Deals</p>
+                <p className="text-[#7697B3]">Receive occasional seasonal discounts for home maintenance</p>
+              </div>
+              <input
+                type="checkbox"
+                checked={promotions}
+                onChange={(e) => setPromotions(e.target.checked)}
+                className="w-4 h-4 accent-[#2583D5]"
               />
             </div>
           </div>
 
-          <div className="pt-2">
+          <div className="pt-2 border-t border-[#EAF6FF]">
             <button
               onClick={handleSave}
-              className="px-5 py-2 rounded-xl bg-[#2583D5] text-white text-xs font-bold hover:bg-[#1E70B8] transition"
+              className="px-5 py-2.5 rounded-xl bg-[#2583D5] text-white text-xs font-bold hover:bg-[#1E70B8] transition"
             >
               Save Preferences
             </button>
           </div>
         </div>
 
-        {/* Corporate Support Desk */}
-        <div className="bg-white rounded-3xl p-6 border border-[#D9EEFF] shadow-xs space-y-4">
-          <h3 className="font-black text-[#153451] text-base border-b border-[#D9EEFF] pb-3 flex items-center gap-2">
-            <HelpCircle className="w-5 h-5 text-[#2583D5]" />
-            <span>Corporate Hiring Dedicated Desk</span>
-          </h3>
+        {/* 2. 24x7 Customer Helpline & Emergency Support */}
+        <div className="bg-white rounded-3xl p-6 border border-[#D1E8F8] shadow-sm space-y-4">
+          <div className="flex items-center gap-2 border-b border-[#EAF6FF] pb-3">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <h3 className="font-black text-[#153451] text-base">
+              KaamSetu Trust & 24x7 Safety Helpdesk
+            </h3>
+          </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-[#F8FCFF] border border-[#D9EEFF] flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#2583D5]/10 text-[#2583D5] flex items-center justify-center font-bold">
-                <Phone className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[#4B6F8E] block">Key Account Manager</span>
-                <strong className="text-sm text-[#153451]">+91 9811002233</strong>
-              </div>
+            <div className="p-4 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8] space-y-2">
+              <span className="text-[#7697B3] font-bold uppercase block">Customer Support Toll-Free</span>
+              <p className="text-base font-black text-[#2583D5] flex items-center gap-1.5">
+                <Phone className="w-4 h-4" /> 1800-208-KAAM (5226)
+              </p>
+              <p className="text-[11px] text-[#7697B3]">Available 24 hours, 7 days a week in Hindi & English</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#F8FCFF] border border-[#D9EEFF] flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#2583D5]/10 text-[#2583D5] flex items-center justify-center font-bold">
-                <Mail className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[#4B6F8E] block">Corporate Support</span>
-                <strong className="text-sm text-[#153451]">hiring@kaamsetu.in</strong>
-              </div>
+            <div className="p-4 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8] space-y-2">
+              <span className="text-[#7697B3] font-bold uppercase block">Emergency SOS Safety Desk</span>
+              <p className="text-base font-black text-red-600 flex items-center gap-1.5">
+                <AlertTriangle className="w-4 h-4" /> +91 9999-911-738
+              </p>
+              <p className="text-[11px] text-[#7697B3]">Priority incident escalation & dispute resolution team</p>
             </div>
           </div>
         </div>
 
-        {/* Logout */}
-        <div className="p-5 rounded-3xl bg-red-50 border border-red-200 flex items-center justify-between">
+        {/* 3. Account Actions */}
+        <div className="bg-white rounded-3xl p-6 border border-[#D1E8F8] shadow-sm flex items-center justify-between">
           <div>
-            <h4 className="text-xs font-bold text-red-900">Sign Out of Hiring Workspace</h4>
-            <p className="text-[11px] text-red-700">End active session on this device.</p>
+            <h4 className="text-xs font-bold text-[#153451]">Sign Out of KaamSetu</h4>
+            <p className="text-[11px] text-[#7697B3]">Log out from this browser session</p>
           </div>
+
           <button
             onClick={handleLogout}
-            className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition flex items-center gap-1.5"
+            className="px-5 py-2.5 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 text-xs font-bold transition flex items-center gap-1.5"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span>Log Out</span>
