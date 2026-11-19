@@ -248,26 +248,6 @@ export default function HeroSection() {
 
         </div>
 
-        {/* TRUST RIBBON UNDER QUICK SEARCH */}
-        <div className="max-w-4xl mx-auto mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs font-bold text-[#153451]">
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>100% Aadhaar & Police Verified</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
-            <Clock className="w-4 h-4 text-[#2583D5]" />
-            <span>25-Min Live GPS Arrival</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
-            <CheckCircle2 className="w-4 h-4 text-[#2583D5]" />
-            <span>100% Escrow Protection</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-[#D1E8F8] shadow-xs">
-            <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-            <span>4.8/5 (15k+ Completed Jobs)</span>
-          </div>
-        </div>
-
       </div>
     </section>
   );

@@ -159,15 +159,11 @@ export default function CategoriesSection() {
                 className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between group"
               >
                 <div>
-                  {/* Card Header: Icon + Badge */}
+                  {/* Card Header: Icon */}
                   <div className="flex items-start justify-between mb-5">
                     <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#EAF6FF] to-[#D9EEFF] text-[#2583D5] flex items-center justify-center text-2xl group-hover:from-[#2583D5] group-hover:to-[#19639E] group-hover:text-white transition-all duration-300 shadow-sm border border-white/80">
                       <Icon className="w-7 h-7 stroke-[2.2]" />
                     </div>
-                    <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50/90 border border-emerald-200/80 px-2.5 py-1 rounded-full flex items-center gap-1 shadow-2xs">
-                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                      {cat.workerCount}
-                    </span>
                   </div>
 
                   {/* Title & Description */}
