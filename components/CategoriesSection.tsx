@@ -206,14 +206,9 @@ export default function CategoriesSection() {
 
         {/* Bottom Banner */}
         <div className="mt-14 glass-panel rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl bg-[#EAF6FF] text-[#2583D5] flex items-center justify-center font-black text-xl shrink-0 border border-[#D1E8F8]">
-              ⚡
-            </div>
-            <div>
-              <h4 className="text-lg font-black text-[#153451]">Need a Specialized Trade or Bulk Crew?</h4>
-              <p className="text-xs sm:text-sm text-[#4B6F8E] mt-0.5">Explore 22+ verified industrial trades, commercial construction crews, and contractor tenders.</p>
-            </div>
+          <div>
+            <h4 className="text-lg font-black text-[#153451]">Need a Specialized Trade or Bulk Crew?</h4>
+            <p className="text-xs sm:text-sm text-[#4B6F8E] mt-0.5">Explore 22+ verified industrial trades, commercial construction crews, and contractor tenders.</p>
           </div>
           <div className="flex items-center gap-3 shrink-0">
             <Link

@@ -9,6 +9,9 @@ import {
   ConfirmationResult,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   User as FirebaseUser
@@ -133,4 +136,47 @@ export async function getFirebaseIdToken(): Promise<string | null> {
   const currentUser = auth.currentUser;
   if (!currentUser) return null;
   return await currentUser.getIdToken(true);
+}
+
+/**
+ * Send passwordless Email Sign-In Link (Email-Link Authentication)
+ */
+export async function sendFirebaseEmailLink(
+  email: string,
+  extraParams?: { role?: string; returnUrl?: string }
+): Promise<void> {
+  const origin = typeof window !== 'undefined' ? window.location.origin : 'https://kaamsetu-gamma.vercel.app';
+  const query = new URLSearchParams();
+  if (extraParams?.role) query.set('role', extraParams.role);
+  if (extraParams?.returnUrl) query.set('returnUrl', extraParams.returnUrl);
+  const qStr = query.toString();
+  const continueUrl = `${origin}/auth/verify-email-link${qStr ? `?${qStr}` : ''}`;
+
+  const actionCodeSettings = {
+    url: continueUrl,
+    handleCodeInApp: true,
+  };
+
+  await sendSignInLinkToEmail(auth, email.trim(), actionCodeSettings);
+
+  if (typeof window !== 'undefined') {
+    window.localStorage.setItem('emailForSignIn', email.trim());
+    if (extraParams?.role) {
+      window.localStorage.setItem('preferredRole', extraParams.role);
+    }
+  }
+}
+
+/**
+ * Check if the current URL is a Firebase Email Sign-In Link
+ */
+export function checkIsEmailSignInLink(url: string): boolean {
+  return isSignInWithEmailLink(auth, url);
+}
+
+/**
+ * Complete Email Link Sign In using current link and email
+ */
+export async function completeEmailSignIn(email: string, link: string) {
+  return await signInWithEmailLink(auth, email.trim(), link);
 }

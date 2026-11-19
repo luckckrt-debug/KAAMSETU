@@ -15,22 +15,28 @@ import {
   Building2,
   User,
   KeyRound,
-  RefreshCw
+  RefreshCw,
+  Mail
 } from 'lucide-react';
 import { 
   setupRecaptcha, 
   sendFirebasePhoneOtp, 
   verifyFirebaseOtp, 
-  signInWithGoogle 
+  signInWithGoogle,
+  sendFirebaseEmailLink
 } from '@/lib/firebase';
 import { ConfirmationResult } from 'firebase/auth';
 
 export default function LoginPage() {
   const router = useRouter();
 
-  const [authMode, setAuthMode] = useState<'PASSWORD' | 'FIREBASE_OTP'>('PASSWORD');
+  const [authMode, setAuthMode] = useState<'PASSWORD' | 'FIREBASE_OTP' | 'EMAIL_LINK'>('PASSWORD');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
+  
+  // Firebase Email Link state
+  const [emailForLink, setEmailForLink] = useState('');
+  const [emailLinkSent, setEmailLinkSent] = useState(false);
   
   // Firebase Phone OTP states
   const [confirmationResult, setConfirmationResult] = useState<ConfirmationResult | null>(null);
@@ -235,6 +241,30 @@ export default function LoginPage() {
     }
   };
 
+  // Firebase Passwordless Email Link Sender
+  const handleSendEmailLink = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setStatusMsg('');
+    if (!emailForLink.trim() || !emailForLink.includes('@')) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await sendFirebaseEmailLink(emailForLink.trim(), { returnUrl: '/hiring/dashboard' });
+      setEmailLinkSent(true);
+      setStatusMsg(`✅ One-click sign-in link sent to ${emailForLink}! Please check your email to log in.`);
+    } catch (err: any) {
+      console.error('[Firebase Email Link Error]:', err);
+      setError(err.message || 'Failed to send email sign-in link.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Demo user fast-fill
   const selectDemoUser = (phone: string, pass: string) => {
     setPhoneNumber(phone);
@@ -300,7 +330,7 @@ export default function LoginPage() {
         </div>
 
         {/* Auth Mode Toggle Tabs */}
-        <div className="grid grid-cols-2 p-1 bg-[#F5FAFF] rounded-2xl border border-[#D1E8F8] text-xs font-bold text-center">
+        <div className="grid grid-cols-3 p-1 bg-[#F5FAFF] rounded-2xl border border-[#D1E8F8] text-xs font-bold text-center">
           <button
             type="button"
             onClick={() => { setAuthMode('PASSWORD'); setError(''); setStatusMsg(''); }}
@@ -310,7 +340,7 @@ export default function LoginPage() {
                 : 'text-[#7697B3] hover:text-[#153451]'
             }`}
           >
-            Password Login
+            Password
           </button>
           <button
             type="button"
@@ -321,7 +351,18 @@ export default function LoginPage() {
                 : 'text-[#7697B3] hover:text-[#153451]'
             }`}
           >
-            Firebase SMS OTP
+            SMS OTP
+          </button>
+          <button
+            type="button"
+            onClick={() => { setAuthMode('EMAIL_LINK'); setError(''); setStatusMsg(''); }}
+            className={`py-2 rounded-xl transition ${
+              authMode === 'EMAIL_LINK'
+                ? 'bg-white text-[#2583D5] shadow-xs'
+                : 'text-[#7697B3] hover:text-[#153451]'
+            }`}
+          >
+            Email Link
           </button>
         </div>
 
@@ -504,6 +545,49 @@ export default function LoginPage() {
               </form>
             )}
           </div>
+        )}
+
+        {/* 3. FIREBASE PASSWORDLESS EMAIL LINK LOGIN FORM */}
+        {authMode === 'EMAIL_LINK' && (
+          <form onSubmit={handleSendEmailLink} className="space-y-4">
+            <div>
+              <label className="text-[11px] font-bold text-[#153451] uppercase tracking-wider block mb-1">
+                Email Address (ईमेल पता)
+              </label>
+              <div className="relative">
+                <Mail className="w-4 h-4 text-[#7697B3] absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="email"
+                  required
+                  value={emailForLink}
+                  onChange={(e) => setEmailForLink(e.target.value)}
+                  placeholder="name@example.com"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
+                />
+              </div>
+              <p className="text-[10px] text-[#7697B3] mt-1.5 leading-relaxed">
+                We will email you a secure, passwordless sign-in link via Firebase. Click the link in your email to instantly enter your dashboard.
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading || !emailForLink.trim() || !emailForLink.includes('@')}
+              className="w-full py-3.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-black text-xs uppercase tracking-wider shadow-md transition flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
+            >
+              {loading ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span>SENDING SIGN-IN LINK...</span>
+                </>
+              ) : (
+                <>
+                  <span>SEND 1-CLICK LOGIN LINK (ईमेल लिंक भेजें)</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </form>
         )}
 
         {/* Quick Demo Credentials Pre-fills */}

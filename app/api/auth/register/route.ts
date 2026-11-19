@@ -44,11 +44,16 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    if (!password || String(password).length < 6) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'Password must be at least 6 characters long.' 
-      }, { status: 400 });
+    // Password is only validated if provided (supports passwordless Customer registration & email-link auth)
+    let passwordHash: string | undefined = undefined;
+    if (password && String(password).trim().length > 0) {
+      if (String(password).length < 6) {
+        return NextResponse.json({ 
+          success: false, 
+          error: 'Password must be at least 6 characters long.' 
+        }, { status: 400 });
+      }
+      passwordHash = hashPassword(String(password));
     }
 
     // Normalize role
@@ -78,8 +83,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    // 3. Hash password securely
-    const passwordHash = hashPassword(String(password));
+    // 3. User ID and timestamp
     const userId = `user-${assignedRole.toLowerCase()}-${Date.now()}`;
     const nowIso = new Date().toISOString();
 
@@ -226,13 +230,36 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({
+    // 7. Generate session token for seamless authentication
+    const token = signSessionToken({
+      userId,
+      phoneNumber: cleanPhone,
+      fullName: fullName.trim(),
+      roles: [assignedRole],
+      activeRole: assignedRole,
+    });
+
+    const redirectPath = getRoleDashboardPath(assignedRole);
+
+    const response = NextResponse.json({
       success: true,
-      message: 'Account registered successfully! Please log in with your mobile number and password.',
+      message: 'Account registered successfully! Welcome to KaamSetu.',
       userId,
       role: assignedRole,
-      redirectUrl: '/login',
+      redirectUrl: redirectPath,
+      token,
     });
+
+    // Set secure session cookie
+    response.cookies.set('kaamsetu_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60,
+    });
+
+    return response;
   } catch (error: any) {
     console.error('[Register API Error]:', error);
     return NextResponse.json({ 
