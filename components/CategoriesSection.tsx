@@ -152,20 +152,12 @@ export default function CategoriesSection() {
         {/* 9 Category Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {MAIN_CATEGORIES.map((cat) => {
-            const Icon = cat.icon;
             return (
               <div
                 key={cat.id}
                 className="glass-card rounded-3xl p-6 sm:p-7 flex flex-col justify-between group"
               >
                 <div>
-                  {/* Card Header: Icon */}
-                  <div className="flex items-start justify-between mb-5">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#EAF6FF] to-[#D9EEFF] text-[#2583D5] flex items-center justify-center text-2xl group-hover:from-[#2583D5] group-hover:to-[#19639E] group-hover:text-white transition-all duration-300 shadow-sm border border-white/80">
-                      <Icon className="w-7 h-7 stroke-[2.2]" />
-                    </div>
-                  </div>
-
                   {/* Title & Description */}
                   <div className="mb-3">
                     <h3 className="text-xl font-black text-[#153451] group-hover:text-[#2583D5] transition-colors">
