@@ -463,7 +463,7 @@ export default function OpenStreetTracker({
 
         {/* ACTIVE WORKER POPUP MODAL (Bottom Overlay) */}
         {activeWorkerPopup && (
-          <div className="absolute bottom-4 left-4 right-4 sm:left-6 sm:max-w-md z-[500] bg-white rounded-2xl p-4 border border-[#D1E8F8] shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-200">
+          <div className="absolute bottom-20 sm:bottom-4 left-3 right-3 sm:left-6 sm:max-w-md z-[500] bg-white rounded-2xl p-4 border border-[#D1E8F8] shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-200">
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-center gap-3">
                 <img

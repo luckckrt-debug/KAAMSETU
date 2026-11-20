@@ -200,14 +200,26 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Auth / Hamburger Button */}
           <div className="xl:hidden flex items-center gap-2">
-            <Link
-              href="/login"
-              className="px-3 py-1.5 rounded-lg border border-[#D1E8F8] text-xs font-bold text-[#153451] bg-white/70"
-            >
-              Login
-            </Link>
+            {user ? (
+              <Link
+                href={getDashboardLink()}
+                className="px-2.5 py-1.5 rounded-xl bg-[#EAF6FF] border border-[#D1E8F8] text-xs font-bold text-[#2583D5] flex items-center gap-1.5 shadow-2xs"
+              >
+                <div className="w-5 h-5 rounded-full bg-[#153451] text-white flex items-center justify-center font-bold text-[10px]">
+                  {user.fullName.charAt(0).toUpperCase()}
+                </div>
+                <span className="truncate max-w-[80px]">{user.fullName.split(' ')[0]}</span>
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="px-3 py-1.5 rounded-xl border border-[#D1E8F8] text-xs font-bold text-[#153451] bg-white/80"
+              >
+                Login
+              </Link>
+            )}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-[#153451] hover:bg-[#EAF6FF] focus:outline-none transition-colors border border-[#D1E8F8]"
@@ -223,23 +235,34 @@ export default function Navbar() {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="xl:hidden bg-white/95 backdrop-blur-2xl border-b border-[#D1E8F8] px-4 pt-3 pb-6 space-y-3 shadow-xl animate-in slide-in-from-top-4 duration-200">
+          {user && (
+            <div className="p-3 rounded-2xl bg-[#EAF6FF]/70 border border-[#D1E8F8] flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-[#153451] text-white flex items-center justify-center font-bold text-xs">
+                  {user.fullName.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <p className="text-xs font-black text-[#153451] leading-tight">{user.fullName}</p>
+                  <p className="text-[10px] text-[#2583D5] uppercase font-bold">{user.activeRole}</p>
+                </div>
+              </div>
+              <Link
+                href={getDashboardLink()}
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3 py-1.5 rounded-xl bg-[#2583D5] text-white text-xs font-bold"
+              >
+                Dashboard
+              </Link>
+            </div>
+          )}
+
           <nav className="flex flex-col space-y-1 text-sm font-bold text-[#153451]">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
               className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
-              Home
-            </Link>
-            <Link
-              href="/register/worker"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition flex items-center justify-between"
-            >
-              <span>Find Work / Jobs (काम पाएं)</span>
-              <span className="text-[10px] font-bold text-[#2583D5] bg-[#EAF6FF] px-2 py-0.5 rounded-full border border-[#D1E8F8]">
-                New
-              </span>
+              Home (मुख्य पृष्ठ)
             </Link>
             <Link
               href="/workers"
@@ -247,6 +270,21 @@ export default function Navbar() {
               className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
               Find Workers (कारीगर खोजें)
+            </Link>
+            <Link
+              href="/register"
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
+            >
+              Register (पंजीकरण)
+            </Link>
+            <Link
+              href={getDashboardLink()}
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition flex items-center justify-between text-[#2583D5]"
+            >
+              <span>My Workspace Dashboard (डैशबोर्ड)</span>
+              {user && <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />}
             </Link>
             <a
               href="#how-it-works"
@@ -272,20 +310,35 @@ export default function Navbar() {
           </nav>
 
           <div className="pt-3 border-t border-[#D1E8F8] flex flex-col gap-2">
-            <Link
-              href="/register/worker"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-3 rounded-xl bg-[#2583D5] text-white font-bold text-center text-sm shadow-md"
-            >
-              Join as Worker (श्रमिक बनें)
-            </Link>
-            <Link
-              href="/register/customer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-3 rounded-xl bg-[#F5FAFF] border border-[#D1E8F8] text-[#153451] font-bold text-center text-sm"
-            >
-              Hire a Worker (कारीगर बुक करें)
-            </Link>
+            {user ? (
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleLogout();
+                }}
+                className="w-full py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 font-bold text-center text-sm flex items-center justify-center gap-2"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Log Out ({user.fullName.split(' ')[0]})</span>
+              </button>
+            ) : (
+              <>
+                <Link
+                  href="/register"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-3 rounded-xl bg-[#2583D5] text-white font-bold text-center text-sm shadow-md"
+                >
+                  Register Now (पंजीकरण करें)
+                </Link>
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-3 rounded-xl bg-[#F5FAFF] border border-[#D1E8F8] text-[#153451] font-bold text-center text-sm"
+                >
+                  Login (लॉगिन करें)
+                </Link>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -15,7 +15,8 @@ import {
   Building2, 
   Users, 
   ArrowLeft,
-  ExternalLink
+  ExternalLink,
+  Home
 } from 'lucide-react';
 import RoleSidebar, { DashboardRole } from './RoleSidebar';
 
@@ -112,12 +113,12 @@ export default function DashboardLayout({
       )}
 
       {/* Workspace Main Area */}
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 pb-24 lg:pb-0">
         
         {/* Workspace Top Navigation Bar */}
-        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-[#D9EEFF] px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <header className="sticky top-0 z-20 bg-white/90 backdrop-blur-md border-b border-[#D9EEFF] px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileOpen(true)}
@@ -127,20 +128,22 @@ export default function DashboardLayout({
               <Menu className="w-5 h-5" />
             </button>
 
+            {/* Quick Home Navigation Key */}
+            <Link
+              href="/"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#EAF6FF] hover:bg-[#D9EEFF] border border-[#D9EEFF] text-[#2583D5] text-xs font-bold transition shadow-2xs"
+              title="Return to KaamSetu Public Home"
+            >
+              <Home className="w-4 h-4 stroke-[2.2]" />
+              <span className="hidden xs:inline">Home</span>
+            </Link>
+
             {/* Role Header Badge */}
             <div className="flex items-center gap-2">
               <span className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${roleMeta.color}`}>
                 <RoleIcon className="w-3.5 h-3.5" />
                 <span>{roleMeta.tag}</span>
               </span>
-              <span className="text-xs text-[#4B6F8E] hidden md:inline">•</span>
-              <Link 
-                href="/" 
-                className="text-xs font-semibold text-[#4B6F8E] hover:text-[#2583D5] hidden md:flex items-center gap-1"
-              >
-                <span>KaamSetu Public Home</span>
-                <ExternalLink className="w-3 h-3" />
-              </Link>
             </div>
           </div>
 

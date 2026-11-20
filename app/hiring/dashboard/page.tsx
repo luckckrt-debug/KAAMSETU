@@ -281,7 +281,7 @@ export default function HiringCustomerDashboard() {
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 sm:gap-3">
             {SERVICE_TIERS.map((tier) => {
               const Icon = tier.icon;
               const isSelected = selectedCategory === tier.id;
@@ -291,7 +291,7 @@ export default function HiringCustomerDashboard() {
                   key={tier.id}
                   type="button"
                   onClick={() => setSelectedCategory(tier.id)}
-                  className={`p-3.5 rounded-2xl border transition-all text-left flex flex-col justify-between gap-3 group hover:scale-[1.02] cursor-pointer ${
+                  className={`p-3 sm:p-3.5 rounded-2xl border transition-all text-left flex flex-col justify-between gap-2.5 sm:gap-3 group hover:scale-[1.02] cursor-pointer ${
                     isSelected
                       ? 'bg-white border-[#2583D5] shadow-md ring-2 ring-[#2583D5]/20'
                       : 'bg-white/90 border-[#D1E8F8] hover:border-[#2583D5]/50 hover:bg-white'

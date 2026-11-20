@@ -100,8 +100,8 @@ export default function UnifiedRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F5FAFF] via-[#EAF6FF]/40 to-[#F5FAFF] flex items-center justify-center">
-      <div className="max-w-md w-full bg-white rounded-3xl p-8 border border-[#D1E8F8] shadow-xl space-y-6">
+    <div className="min-h-screen py-8 sm:py-12 px-3 sm:px-6 lg:px-8 bg-gradient-to-b from-[#F5FAFF] via-[#EAF6FF]/40 to-[#F5FAFF] flex items-center justify-center pb-24 md:pb-12">
+      <div className="max-w-md w-full bg-white rounded-3xl p-5 sm:p-8 border border-[#D1E8F8] shadow-xl space-y-6">
         
         {/* Brand Header */}
         <div className="text-center space-y-2">

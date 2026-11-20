@@ -5,7 +5,7 @@ import Logo from '@/components/Logo';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#123B5D] text-white border-t border-[#1D4F78] relative z-10">
+    <footer className="bg-[#123B5D] text-white border-t border-[#1D4F78] relative z-10 pb-20 md:pb-0">
       {/* Top CTA Strip */}
       <div className="bg-[#1D4F78] border-b border-[#2583D5]/30 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">

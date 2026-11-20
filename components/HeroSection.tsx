@@ -183,7 +183,7 @@ export default function HeroSection() {
             </div>
 
             {/* VIEW MODE TOGGLE BUTTONS */}
-            <div className="flex items-center bg-[#F5FAFF] p-1.5 rounded-2xl border border-[#D1E8F8] text-xs font-bold shrink-0">
+            <div className="flex items-center w-full sm:w-auto justify-center bg-[#F5FAFF] p-1.5 rounded-2xl border border-[#D1E8F8] text-xs font-bold shrink-0">
               <button
                 type="button"
                 onClick={() => setViewMode('FORM')}
