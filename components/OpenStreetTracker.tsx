@@ -149,14 +149,14 @@ export default function OpenStreetTracker({
         const city = addr.city || addr.town || addr.state_district || addr.state || '';
         const postcode = addr.postcode ? ` - ${addr.postcode}` : '';
         if (road || city) {
-          setStreetAddress(`📍 ${[road, city].filter(Boolean).join(', ')}${postcode}`);
+          setStreetAddress(`${[road, city].filter(Boolean).join(', ')}${postcode}`);
           return;
         }
       }
     } catch (e) {
       // ignore network errors
     }
-    setStreetAddress(`📍 GPS Lat: ${lat.toFixed(4)}, Lng: ${lon.toFixed(4)} (Street View Active)`);
+    setStreetAddress(`GPS Lat: ${lat.toFixed(4)}, Lng: ${lon.toFixed(4)} (Street View Active)`);
   }, []);
 
   // Detect Live GPS using browser navigator.geolocation

@@ -12,7 +12,9 @@ import {
   Building2, 
   Award, 
   HeartHandshake,
-  Users
+  Users,
+  CreditCard,
+  Zap
 } from 'lucide-react';
 
 export default function AboutContactSection() {
@@ -104,7 +106,9 @@ export default function AboutContactSection() {
                       <p className="text-2xl font-black text-[#153451]">15,400+</p>
                       <p className="text-xs font-bold text-[#4B6F8E]">Verified Tradesmen Onboarded</p>
                     </div>
-                    <span className="text-2xl">👷‍♂️</span>
+                    <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] text-[#2583D5] flex items-center justify-center">
+                      <Users className="w-5 h-5" />
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-between p-4 bg-[#F5FAFF] rounded-2xl border border-[#D1E8F8]">
@@ -112,7 +116,9 @@ export default function AboutContactSection() {
                       <p className="text-2xl font-black text-[#153451]">₹4.2+ Cr</p>
                       <p className="text-xs font-bold text-[#4B6F8E]">Direct Worker Wage Payouts</p>
                     </div>
-                    <span className="text-2xl">💰</span>
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                      <CreditCard className="w-5 h-5" />
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-between p-4 bg-[#F5FAFF] rounded-2xl border border-[#D1E8F8]">
@@ -120,7 +126,9 @@ export default function AboutContactSection() {
                       <p className="text-2xl font-black text-[#153451]">120+ Cities</p>
                       <p className="text-xs font-bold text-[#4B6F8E]">Active Across 18 Indian States</p>
                     </div>
-                    <span className="text-2xl">📍</span>
+                    <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] text-[#2583D5] flex items-center justify-center">
+                      <MapPin className="w-5 h-5" />
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-between p-4 bg-[#F5FAFF] rounded-2xl border border-[#D1E8F8]">
@@ -128,7 +136,9 @@ export default function AboutContactSection() {
                       <p className="text-2xl font-black text-[#153451]">25 Mins</p>
                       <p className="text-xs font-bold text-[#4B6F8E]">Average Live GPS Arrival Time</p>
                     </div>
-                    <span className="text-2xl">⚡</span>
+                    <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center">
+                      <Zap className="w-5 h-5" />
+                    </div>
                   </div>
                 </div>
 
