@@ -10,6 +10,7 @@ import BulkHiringSection from '@/components/BulkHiringSection';
 import TendersShowcase from '@/components/TendersShowcase';
 import AboutContactSection from '@/components/AboutContactSection';
 import TestimonialsFAQ from '@/components/TestimonialsFAQ';
+import AppsLaunchSection from '@/components/AppsLaunchSection';
 import Link from 'next/link';
 import { HardHat, Building2, ShieldCheck, ArrowRight } from 'lucide-react';
 import { dbStore } from '@/lib/store';
@@ -40,6 +41,9 @@ export default function HomePage() {
 
       {/* PANEL 5: Emergency Services (Soft Blue Accent Gradient, 25-Min Dispatch) */}
       <UrgentBookingSection />
+
+      {/* PANEL 5.5: Official 3 Apps Launchpad & Mobile APK Hub */}
+      <AppsLaunchSection />
 
       {/* PANEL 6: Contractor & Bulk Workforce (Crew Cost Estimator & Tenders) */}
       <BulkHiringSection />
