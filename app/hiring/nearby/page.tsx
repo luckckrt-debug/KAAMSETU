@@ -34,13 +34,13 @@ const InteractiveMap = dynamic(() => import('@/components/InteractiveMap'), {
 
 const CATEGORIES = [
   { slug: 'all', name: 'All Trades (सभी काम)' },
-  { slug: 'electrician', name: '⚡ Electrician' },
-  { slug: 'plumber', name: '🔧 Plumber' },
-  { slug: 'carpenter', name: '🪵 Carpenter' },
-  { slug: 'painter', name: '🎨 Painter' },
-  { slug: 'construction', name: '🧱 Mason / Labour' },
-  { slug: 'housekeeping', name: '🧹 Housekeeping' },
-  { slug: 'delivery', name: '📦 Delivery' },
+  { slug: 'electrician', name: 'Electrician' },
+  { slug: 'plumber', name: 'Plumber' },
+  { slug: 'carpenter', name: 'Carpenter' },
+  { slug: 'painter', name: 'Painter' },
+  { slug: 'construction', name: 'Mason / Labour' },
+  { slug: 'housekeeping', name: 'Housekeeping' },
+  { slug: 'delivery', name: 'Delivery' },
 ];
 
 export default function NearbyWorkersRadarPage() {

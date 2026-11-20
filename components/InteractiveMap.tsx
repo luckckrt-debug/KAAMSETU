@@ -221,7 +221,7 @@ export default function InteractiveMap({
           <div style="position: absolute; width: 52px; height: 52px; border-radius: 9999px; background: rgba(37, 131, 213, 0.3); animation: pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
           <!-- Worker Avatar Container -->
           <div style="position: relative; width: 42px; height: 42px; border-radius: 9999px; background: #2583D5; border: 3px solid #FFFFFF; box-shadow: 0 4px 16px rgba(37,131,213,0.5); display: flex; align-items: center; justify-content: center; font-size: 20px; overflow: hidden;">
-            ${workerMarker.avatarUrl ? `<img src="${workerMarker.avatarUrl}" style="width: 100%; height: 100%; object-fit: cover;" />` : '🛵'}
+            ${workerMarker.avatarUrl ? `<img src="${workerMarker.avatarUrl}" style="width: 100%; height: 100%; object-fit: cover;" />` : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2 10.9 2 11.2 2 11.5V16c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg>`}
           </div>
           <!-- Directional Heading Arrow -->
           <div style="position: absolute; top: -7px; transform: rotate(${headingDeg}deg); transform-origin: center bottom; transition: transform 0.5s ease;">
@@ -308,7 +308,7 @@ export default function InteractiveMap({
       const candHtml = `
         <div style="display: flex; flex-direction: column; align-items: center; cursor: pointer;">
           <div style="width: 32px; height: 32px; border-radius: 9999px; background: #FFFFFF; border: 2px solid #2583D5; box-shadow: 0 3px 8px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; font-size: 15px; overflow: hidden;">
-            ${cm.avatarUrl ? `<img src="${cm.avatarUrl}" style="width: 100%; height: 100%; object-fit: cover;" />` : '🛠️'}
+            ${cm.avatarUrl ? `<img src="${cm.avatarUrl}" style="width: 100%; height: 100%; object-fit: cover;" />` : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2583D5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`}
           </div>
           <div style="margin-top: 2px; background: #FFFFFF; color: #153451; border: 1px solid #D1E8F8; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); white-space: nowrap;">
             ${cm.title} ${cm.distanceKm ? `(${cm.distanceKm}km)` : ''}

@@ -140,12 +140,12 @@ export default function HeroSearch() {
               </span>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { label: '⚡ Emergency Electrician', cat: 'electrician' },
-                  { label: '🔧 Water Leak Plumber', cat: 'plumber' },
-                  { label: '☀️ Solar Rooftop Tech', cat: 'solar-inverter-technician' },
-                  { label: '🚜 JCB Machine Operator', cat: 'heavy-machinery-jcb-operator' },
-                  { label: '🧱 Brickwork Mason', cat: 'mason' },
-                  { label: '🚗 Daily Chauffeur', cat: 'commercial-driver' },
+                  { label: 'Emergency Electrician', cat: 'electrician' },
+                  { label: 'Water Leak Plumber', cat: 'plumber' },
+                  { label: 'Solar Rooftop Tech', cat: 'solar-inverter-technician' },
+                  { label: 'JCB Machine Operator', cat: 'heavy-machinery-jcb-operator' },
+                  { label: 'Brickwork Mason', cat: 'mason' },
+                  { label: 'Daily Chauffeur', cat: 'commercial-driver' },
                 ].map((item) => (
                   <button
                     key={item.label}
