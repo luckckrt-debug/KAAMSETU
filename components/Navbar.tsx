@@ -14,8 +14,7 @@ import {
   ArrowRight,
   Briefcase,
   HardHat,
-  Search,
-  Smartphone
+  Search
 } from 'lucide-react';
 
 export default function Navbar() {
@@ -102,13 +101,6 @@ export default function Navbar() {
             </Link>
             <Link href="/workers" className="hover:text-[#2583D5] transition-colors py-2 flex items-center gap-1">
               Find Workers
-            </Link>
-            <Link href="/apps" className="hover:text-[#2583D5] text-[#2583D5] transition-colors py-2 flex items-center gap-1.5 font-black">
-              <Smartphone className="w-4 h-4" />
-              <span>Launch 3 Apps</span>
-              <span className="bg-emerald-50 text-emerald-700 text-[10px] px-1.5 py-0.2 rounded-full border border-emerald-200 font-bold">
-                Live
-              </span>
             </Link>
             <a href="#how-it-works" className="hover:text-[#2583D5] transition-colors py-2">
               How It Works
@@ -271,17 +263,6 @@ export default function Navbar() {
               className="px-4 py-2.5 rounded-xl hover:bg-[#EAF6FF] transition"
             >
               Home (मुख्य पृष्ठ)
-            </Link>
-            <Link
-              href="/apps"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-4 py-2.5 rounded-xl bg-[#EAF6FF] text-[#2583D5] font-black transition flex items-center justify-between"
-            >
-              <div className="flex items-center gap-2">
-                <Smartphone className="w-4 h-4" />
-                <span>Launch 3 Apps (ऐप्स डाउनलोड)</span>
-              </div>
-              <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">Live</span>
             </Link>
             <Link
               href="/workers"
