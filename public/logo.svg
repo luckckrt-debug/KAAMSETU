@@ -64,7 +64,7 @@
   <!-- Typography -->
   <g transform="translate(90, 44)">
     <!-- KAAM -->
-    <text x="0" y="0" font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" fill="#123B5D" letter-spacing="-0.5">KAAM</text>
+    <text x="0" y="0" font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" fill="#000000" letter-spacing="-0.5">KAAM</text>
     
     <!-- SETU -->
     <text x="86" y="0" font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" font-size="28" font-weight="900" fill="#2196E8" letter-spacing="-0.5">SETU</text>
@@ -73,6 +73,6 @@
     <circle cx="164" cy="-8" r="3" fill="#F59E0B"/>
 
     <!-- Subtitle / Tagline -->
-    <text x="1" y="18" font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="700" fill="#4B6F8E" letter-spacing="2.5">काम सेतु • WORKFORCE PLATFORM</text>
+    <text x="1" y="18" font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="800" fill="#000000" letter-spacing="2.5">काम सेतु • WORKFORCE PLATFORM</text>
   </g>
 </svg>

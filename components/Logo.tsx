@@ -75,13 +75,13 @@ export default function Logo({
       <LogoIcon size={size} />
       
       <div className="flex flex-col">
-        <span className={`${textSize} font-black tracking-tight leading-none flex items-center gap-1 ${isDark ? 'text-white' : 'text-[#123B5D]'}`}>
+        <span className={`${textSize} font-black tracking-tight leading-none flex items-center gap-1 ${isDark ? 'text-white' : 'text-black'}`}>
           KAAM <span className="text-[#2196E8]">SETU</span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#F59E0B] inline-block ml-0.5"></span>
         </span>
         
         {showTagline && (
-          <span className={`${taglineSize} uppercase font-bold tracking-widest mt-1 ${isDark ? 'text-[#93C5FD]' : 'text-[#4B6F8E]'}`}>
+          <span className={`${taglineSize} uppercase font-black tracking-widest mt-1 ${isDark ? 'text-[#93C5FD]' : 'text-black'}`}>
             काम सेतु • WORKFORCE
           </span>
         )}

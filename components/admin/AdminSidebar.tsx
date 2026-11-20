@@ -132,7 +132,7 @@ export default function AdminSidebar({
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-black text-[#153451] text-base tracking-tight">KAAMSETU</span>
+              <span className="font-black text-black text-base tracking-tight">KAAM<span className="text-[#2583D5]">SETU</span></span>
               <span className="text-[10px] font-black uppercase tracking-wider bg-[#EAF6FF] text-[#2583D5] px-1.5 py-0.5 rounded-md border border-[#D1E8F8]">
                 SUPER ADMIN
               </span>

@@ -129,7 +129,7 @@ export default function RoleSidebar({ role, user, onCloseMobile }: RoleSidebarPr
               <RoleHeaderIcon className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-base font-black text-[#153451] tracking-tight block">KAAMSETU</span>
+              <span className="text-base font-black text-black tracking-tight block">KAAM<span className="text-[#2583D5]">SETU</span></span>
               <span className="text-[10px] font-bold text-[#4B6F8E] block -mt-1 tracking-wider uppercase">
                 {role.replace('_', ' ')}
               </span>
