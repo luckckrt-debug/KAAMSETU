@@ -168,15 +168,6 @@ export default function HeroSection() {
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[#EAF6FF] mb-6">
             <div>
-              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                <span className="text-xs font-black uppercase tracking-wider text-[#2583D5] bg-[#EAF6FF] px-3.5 py-1 rounded-full border border-[#D1E8F8] inline-block">
-                  QUICK SEARCH & STREET DISCOVERY
-                </span>
-                <span className="text-xs font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 inline-flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-                  <span>OpenStreetMap Live GPS Active</span>
-                </span>
-              </div>
               <h2 className="text-2xl font-black text-[#153451]">
                 Find Skilled Workers on Your Street
               </h2>
