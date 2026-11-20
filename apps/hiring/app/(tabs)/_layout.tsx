@@ -4,7 +4,7 @@ import { Text, StyleSheet } from 'react-native';
 import { useHiringState } from '../../src/state';
 
 export default function TabsLayout() {
-  const { t } = useHiringState();
+  const { t, activeBookings } = useHiringState();
 
   return (
     <Tabs
@@ -19,36 +19,44 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: t.navHome,
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🏠</Text>,
+          title: t.navHome || 'Home',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 18 }}>🏠</Text>,
+        }}
+      />
+      <Tabs.Screen
+        name="bookings"
+        options={{
+          title: 'Bookings',
+          tabBarBadge: activeBookings.length > 0 ? activeBookings.length : undefined,
+          tabBarBadgeStyle: { backgroundColor: '#EA580C', fontSize: 10 },
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 18 }}>⚡</Text>,
         }}
       />
       <Tabs.Screen
         name="workers"
         options={{
-          title: t.navWorkers,
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>👷‍♂️</Text>,
+          title: t.navWorkers || 'Workers',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 18 }}>👷‍♂️</Text>,
         }}
       />
       <Tabs.Screen
         name="jobs"
         options={{
-          title: t.navJobs,
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>📋</Text>,
+          title: t.navJobs || 'Jobs',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 18 }}>📋</Text>,
         }}
       />
       <Tabs.Screen
         name="messages"
         options={{
-          title: t.navMessages,
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>💬</Text>,
+          href: null, // Hidden from primary bottom bar, accessible via notifs/chat
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: t.navProfile,
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🏢</Text>,
+          title: t.navProfile || 'Profile',
+          tabBarIcon: ({ color }) => <Text style={{ fontSize: 18 }}>🏢</Text>,
         }}
       />
     </Tabs>
@@ -60,7 +68,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
     borderTopColor: '#E2E8F0',
-    height: 60,
+    height: 62,
     paddingBottom: 8,
     paddingTop: 6,
   },

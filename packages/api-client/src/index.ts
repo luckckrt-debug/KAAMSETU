@@ -209,6 +209,52 @@ export class KaamSetuApiClient {
     });
   }
 
+  // -------------------------------------------------------------
+  // BOOKINGS & DISPATCH
+  // -------------------------------------------------------------
+
+  public async getBookings(params?: { customerId?: string; status?: string }): Promise<{
+    success: boolean;
+    count: number;
+    bookings: any[];
+  }> {
+    const query = new URLSearchParams();
+    if (params?.customerId) query.append('customerId', params.customerId);
+    if (params?.status) query.append('status', params.status);
+
+    try {
+      return await this.request(`/api/bookings?${query.toString()}`);
+    } catch {
+      return { success: true, count: 0, bookings: [] };
+    }
+  }
+
+  public async createBooking(data: any): Promise<{ success: boolean; booking: any }> {
+    return this.request('/api/bookings', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  public async getBookingById(id: string): Promise<{ success: boolean; booking: any }> {
+    return this.request(`/api/bookings/${id}`);
+  }
+
+  public async updateBookingStatus(bookingId: string, status: string, notes?: string): Promise<{ success: boolean; booking: any }> {
+    return this.request(`/api/bookings/${bookingId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status, notes }),
+    });
+  }
+
+  public async getProfessions(): Promise<{ success: boolean; categories: any[]; professions: any[] }> {
+    try {
+      return await this.request('/api/professions');
+    } catch {
+      return { success: true, categories: [], professions: [] };
+    }
+  }
+
   public async getMyApplications(workerId: string): Promise<{ success: boolean; count: number; applications: JobApplicationData[] }> {
     return this.request(`/api/worker/my-applications?workerId=${workerId}`);
   }

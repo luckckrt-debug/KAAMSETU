@@ -42,11 +42,11 @@ export const MAJOR_INDIAN_CITIES = [
 
 export const APP_CONFIG = {
   // Mobile / production API endpoints
-  PRODUCTION_API_URL: 'https://api.kaamsetu.in',
-  LAN_API_URL: 'http://10.10.31.251:5000',
-  EMULATOR_API_URL: 'http://10.0.2.2:5000',
-  DEFAULT_API_URL: process.env.EXPO_PUBLIC_API_URL || 'http://10.10.31.251:5000',
-  SOCKET_URL: process.env.EXPO_PUBLIC_API_URL || 'http://10.10.31.251:5000',
+  PRODUCTION_API_URL: 'https://kaamsetu-gamma.vercel.app',
+  LAN_API_URL: 'https://kaamsetu-gamma.vercel.app',
+  EMULATOR_API_URL: 'https://kaamsetu-gamma.vercel.app',
+  DEFAULT_API_URL: process.env.EXPO_PUBLIC_API_URL || 'https://kaamsetu-gamma.vercel.app',
+  SOCKET_URL: process.env.EXPO_PUBLIC_API_URL || 'https://kaamsetu-gamma.vercel.app',
   CURRENCY: '₹',
   DEFAULT_LANGUAGE: 'en',
 };

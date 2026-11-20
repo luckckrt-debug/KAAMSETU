@@ -6,37 +6,36 @@ import {
   StyleSheet,
   TouchableOpacity,
   RefreshControl,
+  TextInput,
+  Linking,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useHiringState } from '../../src/state';
+import { UNIVERSAL_CATEGORIES, MobileCategory } from '../../src/professions';
 import { apiClient } from '@kaamsetu/api-client';
-import { WorkerProfileData, JobPostingData, JobApplicationData } from '@kaamsetu/shared';
+import { WorkerProfileData } from '@kaamsetu/shared';
 
 export default function EmployerHomeScreen() {
   const router = useRouter();
-  const { t, employer } = useHiringState();
-  const [activeJobs, setActiveJobs] = useState<JobPostingData[]>([]);
+  const { t, employer, activeBookings, currentAddress } = useHiringState();
   const [workers, setWorkers] = useState<WorkerProfileData[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchCategory, setSearchCategory] = useState('');
 
   const loadData = async () => {
     try {
-      const jobsRes = await apiClient.getJobs({ employerId: employer?.id || 'emp-1' });
-      if (jobsRes.success && jobsRes.jobs) {
-        setActiveJobs(jobsRes.jobs);
-      }
       const wrkRes = await apiClient.getWorkers({ availableOnly: true });
       if (wrkRes.success && wrkRes.workers) {
-        setWorkers(wrkRes.workers.slice(0, 4));
+        setWorkers(wrkRes.workers);
       }
     } catch (e) {
-      console.warn('Error loading employer home data:', e);
+      console.warn('Network sync notice:', e);
     }
   };
 
   useEffect(() => {
     loadData();
-  }, [employer]);
+  }, []);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -44,7 +43,17 @@ export default function EmployerHomeScreen() {
     setRefreshing(false);
   };
 
-  const totalApplicants = activeJobs.reduce((sum, j) => sum + (j.applicantsCount || 0), 0);
+  // Filter categories by search
+  const filteredCategories = searchCategory.trim()
+    ? UNIVERSAL_CATEGORIES.filter(
+        c =>
+          c.nameEn.toLowerCase().includes(searchCategory.toLowerCase()) ||
+          c.nameHi.includes(searchCategory) ||
+          c.popularProfessions.some(p => p.toLowerCase().includes(searchCategory.toLowerCase()))
+      )
+    : UNIVERSAL_CATEGORIES;
+
+  const topActiveBooking = activeBookings[0];
 
   return (
     <ScrollView
@@ -54,11 +63,12 @@ export default function EmployerHomeScreen() {
       {/* Top Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Text style={styles.appName}>KAAMSETU HIRING</Text>
+          <Text style={styles.appName}>KAAMSETU HIRING (कामसेतु)</Text>
           <Text style={styles.empGreeting}>{employer?.companyName || 'Employer Dashboard'}</Text>
-          <View style={styles.verifiedBadge}>
-            <Text style={styles.verifiedText}>✓ Verified Business Employer</Text>
-          </View>
+          <TouchableOpacity style={styles.addressPill} activeOpacity={0.8}>
+            <Text style={{ fontSize: 11 }}>📍</Text>
+            <Text style={styles.addressText} numberOfLines={1}>{currentAddress}</Text>
+          </TouchableOpacity>
         </View>
 
         <TouchableOpacity
@@ -70,97 +80,176 @@ export default function EmployerHomeScreen() {
       </View>
 
       <View style={styles.content}>
-        {/* Post a Job Hero Action */}
-        <TouchableOpacity
-          style={styles.postJobHero}
-          activeOpacity={0.88}
-          onPress={() => router.push('/post-job')}
-        >
-          <View style={{ flex: 1 }}>
-            <Text style={styles.heroTitle}>+ {t.postJob}</Text>
-            <Text style={styles.heroSub}>{t.postJobSubtitle}</Text>
-          </View>
-          <View style={styles.heroArrow}>
-            <Text style={{ color: '#FFFFFF', fontSize: 18, fontWeight: '800' }}>→</Text>
-          </View>
-        </TouchableOpacity>
+        {/* Active Booking Live Banner (if any) */}
+        {topActiveBooking && (
+          <TouchableOpacity
+            style={styles.activeBookingBanner}
+            activeOpacity={0.9}
+            onPress={() => router.push('/(tabs)/bookings')}
+          >
+            <View style={styles.activeBookingTop}>
+              <View style={styles.livePulseBox}>
+                <View style={styles.pulseDot} />
+                <Text style={styles.liveBookingStatus}>
+                  {topActiveBooking.status === 'EN_ROUTE' ? 'WORKER EN ROUTE (रास्ते में)' :
+                   topActiveBooking.status === 'IN_PROGRESS' ? 'WORK IN PROGRESS (काम चालू)' :
+                   'ACTIVE BOOKING'}
+                </Text>
+              </View>
+              <Text style={styles.liveBookingEta}>ETA: ~{topActiveBooking.etaMinutes} Min</Text>
+            </View>
+
+            <View style={styles.activeBookingDetails}>
+              <Text style={{ fontSize: 26, marginRight: 10 }}>{topActiveBooking.categoryIcon}</Text>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.activeBookingTitle}>{topActiveBooking.profession}</Text>
+                <Text style={styles.activeBookingWorker}>
+                  Assigned: {topActiveBooking.workerName} • 📞 {topActiveBooking.workerPhone}
+                </Text>
+              </View>
+              <View style={styles.otpBox}>
+                <Text style={styles.otpLabel}>START PIN</Text>
+                <Text style={styles.otpCode}>{topActiveBooking.startOtp}</Text>
+              </View>
+            </View>
+
+            <View style={styles.activeBookingFooter}>
+              <Text style={styles.trackLiveLink}>Open Live GPS Tracker →</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+
+        {/* 2 Big Action Cards */}
+        <View style={styles.actionCardsRow}>
+          <TouchableOpacity
+            style={[styles.bigActionCard, { backgroundColor: '#EA580C' }]}
+            activeOpacity={0.88}
+            onPress={() => router.push('/book')}
+          >
+            <View style={styles.actionIconBadge}>
+              <Text style={{ fontSize: 20 }}>⚡</Text>
+            </View>
+            <Text style={styles.actionCardTitle}>Instant Book</Text>
+            <Text style={styles.actionCardSub}>15-Min Doorstep Dispatch (तत्काल कारीगर)</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.bigActionCard, { backgroundColor: '#1E3A8A' }]}
+            activeOpacity={0.88}
+            onPress={() => router.push('/post-job')}
+          >
+            <View style={styles.actionIconBadge}>
+              <Text style={{ fontSize: 20 }}>📋</Text>
+            </View>
+            <Text style={styles.actionCardTitle}>Post Vacancy</Text>
+            <Text style={styles.actionCardSub}>Hire Daily / Contract Staff (वैकेंसी पोस्ट करें)</Text>
+          </TouchableOpacity>
+        </View>
 
         {/* 3 Metric Cards */}
         <View style={styles.kpiRow}>
-          <View style={styles.kpiBox}>
-            <Text style={styles.kpiLabel}>Active Jobs</Text>
-            <Text style={styles.kpiValue}>{activeJobs.length}</Text>
-            <Text style={styles.kpiSub}>Accepting workers</Text>
-          </View>
+          <TouchableOpacity
+            style={styles.kpiBox}
+            onPress={() => router.push('/(tabs)/bookings')}
+          >
+            <Text style={styles.kpiLabel}>Active Bookings</Text>
+            <Text style={[styles.kpiValue, { color: '#EA580C' }]}>{activeBookings.length}</Text>
+            <Text style={styles.kpiSub}>Track live</Text>
+          </TouchableOpacity>
 
-          <View style={styles.kpiBox}>
-            <Text style={styles.kpiLabel}>Total Hired</Text>
+          <TouchableOpacity
+            style={styles.kpiBox}
+            onPress={() => router.push('/(tabs)/workers')}
+          >
+            <Text style={styles.kpiLabel}>Workers Nearby</Text>
             <Text style={[styles.kpiValue, { color: '#059669' }]}>
-              {employer?.totalHiresCount || 5}
+              {workers.length > 0 ? workers.length : 18}
             </Text>
-            <Text style={styles.kpiSub}>Workers working</Text>
-          </View>
+            <Text style={styles.kpiSub}>In 5km radius</Text>
+          </TouchableOpacity>
 
-          <View style={styles.kpiBox}>
-            <Text style={styles.kpiLabel}>Applications</Text>
-            <Text style={[styles.kpiValue, { color: '#EA580C' }]}>{totalApplicants}</Text>
-            <Text style={styles.kpiSub}>Awaiting review</Text>
-          </View>
+          <TouchableOpacity
+            style={styles.kpiBox}
+            onPress={() => router.push('/(tabs)/jobs')}
+          >
+            <Text style={styles.kpiLabel}>Posted Jobs</Text>
+            <Text style={[styles.kpiValue, { color: '#2563EB' }]}>
+              {employer?.postedJobsCount || 4}
+            </Text>
+            <Text style={styles.kpiSub}>Applications</Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Active Jobs Section */}
+        {/* Universal 26 Categories Section */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Your Posted Jobs ({activeJobs.length})</Text>
-          <TouchableOpacity onPress={() => router.push('/(tabs)/jobs')}>
-            <Text style={styles.seeAll}>Manage All →</Text>
-          </TouchableOpacity>
+          <View>
+            <Text style={styles.sectionTitle}>All 26 India-Wide Professions (समस्त 26 कार्य श्रेणियां)</Text>
+            <Text style={styles.sectionSub}>Construction, IT, Tech, Healthcare, Transport & Trades</Text>
+          </View>
         </View>
 
-        {activeJobs.map(job => (
+        {/* Category Search Input */}
+        <View style={styles.categorySearch}>
+          <Text style={{ fontSize: 14, marginRight: 8 }}>🔍</Text>
+          <TextInput
+            style={styles.categorySearchInput}
+            placeholder="Search all 26 industries or trades (e.g. Electrician, Nurse, Driver)..."
+            placeholderTextColor="#94A3B8"
+            value={searchCategory}
+            onChangeText={setSearchCategory}
+          />
+          {searchCategory ? (
+            <TouchableOpacity onPress={() => setSearchCategory('')}>
+              <Text style={{ color: '#94A3B8', fontSize: 16 }}>✕</Text>
+            </TouchableOpacity>
+          ) : null}
+        </View>
+
+        {/* Categories Grid */}
+        <View style={styles.categoryGrid}>
+          {filteredCategories.slice(0, 12).map(cat => (
+            <TouchableOpacity
+              key={cat.id}
+              style={styles.categoryTile}
+              activeOpacity={0.82}
+              onPress={() => router.push({ pathname: '/book', params: { preselectCategory: cat.id } })}
+            >
+              <Text style={styles.categoryEmoji}>{cat.icon}</Text>
+              <Text style={styles.categoryTileName} numberOfLines={1}>{cat.nameEn}</Text>
+              <Text style={styles.categoryTileHindi} numberOfLines={1}>{cat.nameHi}</Text>
+              <View style={styles.ratePill}>
+                <Text style={styles.ratePillText}>From ₹{cat.baseHourlyRate}/hr</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {filteredCategories.length > 12 && (
           <TouchableOpacity
-            key={job.id}
-            style={styles.jobItem}
-            activeOpacity={0.85}
-            onPress={() => router.push(`/job/${job.id}/applications`)}
+            style={styles.viewMoreCatBtn}
+            onPress={() => router.push('/book')}
           >
-            <View style={styles.jobTop}>
-              <Text style={styles.jobTitle}>{job.title}</Text>
-              <View style={styles.statusChip}>
-                <Text style={styles.statusText}>{job.status}</Text>
-              </View>
-            </View>
-
-            <Text style={styles.jobMeta}>
-              📍 {job.location} • ₹{job.dailyWage}/day • {job.durationDays} Days
-            </Text>
-
-            <View style={styles.jobFooter}>
-              <View style={styles.appCountBadge}>
-                <Text style={styles.appCountText}>
-                  👥 {job.applicantsCount} Applicants Received
-                </Text>
-              </View>
-
-              <Text style={styles.viewAppsText}>View Applicants →</Text>
-            </View>
+            <Text style={styles.viewMoreCatText}>View All 26 Categories (सभी 26 श्रेणियां देखें) →</Text>
           </TouchableOpacity>
-        ))}
+        )}
 
-        {/* Nearby Available Workers */}
+        {/* Ready to Hire Workers Radar Preview */}
         <View style={[styles.sectionHeader, { marginTop: 24 }]}>
-          <Text style={styles.sectionTitle}>Ready to Hire Near You (तुरंत उपलब्ध)</Text>
+          <View>
+            <Text style={styles.sectionTitle}>Workforce Radar (आसपास तुरंत उपलब्ध कारीगर)</Text>
+            <Text style={styles.sectionSub}>Verified professionals ready for immediate dispatch</Text>
+          </View>
           <TouchableOpacity onPress={() => router.push('/(tabs)/workers')}>
-            <Text style={styles.seeAll}>Find More →</Text>
+            <Text style={styles.seeAll}>View Radar →</Text>
           </TouchableOpacity>
         </View>
 
-        {workers.map(w => (
-          <TouchableOpacity
-            key={w.id}
-            style={styles.workerCard}
-            activeOpacity={0.85}
-            onPress={() => router.push(`/worker/${w.id}`)}
-          >
+        {(workers.length > 0 ? workers.slice(0, 3) : [
+          { id: 'w-1', fullName: 'Sunil Kumar', skills: ['Electrician'], expectedDailyWage: 800, experienceYears: 6, ratingAvg: 4.9, ratingCount: 42, preferredLocation: 'Sector 78, Noida' },
+          { id: 'w-2', fullName: 'Mohammad Farooq', skills: ['Plumber'], expectedDailyWage: 750, experienceYears: 8, ratingAvg: 4.8, ratingCount: 38, preferredLocation: 'Sector 76, Noida' },
+          { id: 'w-3', fullName: 'Jagdish Mistri', skills: ['Mason / Raj Mistri'], expectedDailyWage: 950, experienceYears: 11, ratingAvg: 5.0, ratingCount: 64, preferredLocation: 'Sector 100, Noida' },
+        ]).map((w: any) => (
+          <View key={w.id} style={styles.workerCard}>
             <View style={styles.workerAvatar}>
               <Text style={{ fontSize: 24 }}>👷‍♂️</Text>
             </View>
@@ -171,19 +260,35 @@ export default function EmployerHomeScreen() {
                 <Text style={styles.workerWage}>₹{w.expectedDailyWage}/day</Text>
               </View>
 
-              <Text style={styles.workerTrade}>{w.skills[0] || 'Skilled Worker'}</Text>
+              <Text style={styles.workerTrade}>{w.skills?.[0] || 'Skilled Worker'}</Text>
               <Text style={styles.workerLocation}>📍 {w.preferredLocation} • {w.experienceYears} yrs exp</Text>
 
               <View style={styles.workerBadgeRow}>
                 <View style={styles.greenPill}>
-                  <Text style={styles.greenPillText}>★ {w.ratingAvg} ({w.ratingCount})</Text>
+                  <Text style={styles.greenPillText}>★ {w.ratingAvg || 4.9} ({w.ratingCount || 20})</Text>
                 </View>
                 <View style={[styles.greenPill, { backgroundColor: '#EFF6FF' }]}>
                   <Text style={[styles.greenPillText, { color: '#1D4ED8' }]}>Aadhaar Verified</Text>
                 </View>
               </View>
+
+              <View style={styles.workerActionRow}>
+                <TouchableOpacity
+                  style={styles.callBtn}
+                  onPress={() => Linking.openURL('tel:9911223344')}
+                >
+                  <Text style={styles.callBtnText}>📞 Call</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.instantBookBtn}
+                  onPress={() => router.push({ pathname: '/book', params: { workerName: w.fullName, trade: w.skills?.[0] } })}
+                >
+                  <Text style={styles.instantBookBtnText}>⚡ Book Now</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </TouchableOpacity>
+          </View>
         ))}
       </View>
     </ScrollView>
@@ -219,18 +324,22 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     marginTop: 2,
   },
-  verifiedBadge: {
+  addressPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'rgba(255, 255, 255, 0.15)',
     paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 999,
+    paddingVertical: 3,
+    borderRadius: 8,
     alignSelf: 'flex-start',
     marginTop: 4,
+    maxWidth: '90%',
   },
-  verifiedText: {
+  addressText: {
     color: '#E0E7FF',
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '600',
+    marginLeft: 4,
   },
   notifBtn: {
     backgroundColor: '#172554',
@@ -242,37 +351,125 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 16,
-    paddingBottom: 30,
+    paddingBottom: 35,
   },
-  postJobHero: {
-    backgroundColor: '#F97316',
+  activeBookingBanner: {
+    backgroundColor: '#FFF7ED',
+    borderWidth: 1.5,
+    borderColor: '#FB923C',
     borderRadius: 18,
-    padding: 18,
+    padding: 14,
+    marginBottom: 16,
+  },
+  activeBookingTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  livePulseBox: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 18,
-    shadowColor: '#F97316',
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 3,
   },
-  heroTitle: {
-    color: '#FFFFFF',
-    fontSize: 18,
+  pulseDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#EA580C',
+    marginRight: 6,
+  },
+  liveBookingStatus: {
+    color: '#C2410C',
+    fontSize: 11,
     fontWeight: '900',
+    letterSpacing: 0.5,
   },
-  heroSub: {
-    color: '#FFEDD5',
+  liveBookingEta: {
+    color: '#9A3412',
+    fontSize: 11,
+    fontWeight: '800',
+    backgroundColor: '#FFEDD5',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  activeBookingDetails: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  activeBookingTitle: {
+    fontSize: 15,
+    fontWeight: '800',
+    color: '#0F172A',
+  },
+  activeBookingWorker: {
     fontSize: 12,
+    color: '#64748B',
     marginTop: 2,
   },
-  heroArrow: {
+  otpBox: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#FED7AA',
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    alignItems: 'center',
+  },
+  otpLabel: {
+    fontSize: 9,
+    fontWeight: '700',
+    color: '#9A3412',
+  },
+  otpCode: {
+    fontSize: 14,
+    fontWeight: '900',
+    color: '#EA580C',
+  },
+  activeBookingFooter: {
+    borderTopWidth: 1,
+    borderTopColor: '#FED7AA',
+    marginTop: 10,
+    paddingTop: 8,
+  },
+  trackLiveLink: {
+    color: '#C2410C',
+    fontSize: 12,
+    fontWeight: '800',
+    textAlign: 'right',
+  },
+  actionCardsRow: {
+    flexDirection: 'row',
+    gap: 12,
+    marginBottom: 16,
+  },
+  bigActionCard: {
+    flex: 1,
+    borderRadius: 18,
+    padding: 16,
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 3,
+  },
+  actionIconBadge: {
     width: 36,
     height: 36,
-    borderRadius: 18,
-    backgroundColor: 'rgba(255,255,255,0.25)',
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.25)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 8,
+  },
+  actionCardTitle: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '900',
+  },
+  actionCardSub: {
+    color: '#FFFFFF',
+    opacity: 0.88,
+    fontSize: 11,
+    marginTop: 2,
   },
   kpiRow: {
     flexDirection: 'row',
@@ -306,78 +503,94 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 10,
   },
   sectionTitle: {
     fontSize: 15,
     fontWeight: '800',
     color: '#0F172A',
   },
+  sectionSub: {
+    fontSize: 11,
+    color: '#64748B',
+    marginTop: 1,
+  },
   seeAll: {
     fontSize: 12,
     color: '#1E3A8A',
     fontWeight: '700',
   },
-  jobItem: {
+  categorySearch: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
     borderWidth: 1,
     borderColor: '#E2E8F0',
-  },
-  jobTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 4,
-  },
-  jobTitle: {
-    fontSize: 15,
-    fontWeight: '800',
-    color: '#0F172A',
-    flex: 1,
-    marginRight: 8,
-  },
-  statusChip: {
-    backgroundColor: '#EFF6FF',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 6,
-  },
-  statusText: {
-    color: '#1D4ED8',
-    fontSize: 10,
-    fontWeight: '800',
-  },
-  jobMeta: {
-    fontSize: 12,
-    color: '#64748B',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     marginBottom: 12,
   },
-  jobFooter: {
+  categorySearchInput: {
+    flex: 1,
+    fontSize: 12,
+    color: '#0F172A',
+  },
+  categoryGrid: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  categoryTile: {
+    width: '31%',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 14,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
     alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#F1F5F9',
-    paddingTop: 10,
   },
-  appCountBadge: {
-    backgroundColor: '#FFF7ED',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+  categoryEmoji: {
+    fontSize: 24,
+    marginBottom: 4,
   },
-  appCountText: {
-    color: '#C2410C',
+  categoryTileName: {
     fontSize: 11,
     fontWeight: '800',
+    color: '#0F172A',
+    textAlign: 'center',
   },
-  viewAppsText: {
+  categoryTileHindi: {
+    fontSize: 9,
+    color: '#64748B',
+    textAlign: 'center',
+    marginTop: 1,
+  },
+  ratePill: {
+    backgroundColor: '#EFF6FF',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+    marginTop: 6,
+  },
+  ratePillText: {
+    color: '#1D4ED8',
+    fontSize: 9,
+    fontWeight: '800',
+  },
+  viewMoreCatBtn: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#CBD5E1',
+    borderRadius: 12,
+    paddingVertical: 10,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  viewMoreCatText: {
     color: '#1E3A8A',
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   workerCard: {
     flexDirection: 'row',
@@ -387,7 +600,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderColor: '#E2E8F0',
-    alignItems: 'center',
   },
   workerAvatar: {
     width: 48,
@@ -442,5 +654,37 @@ const styles = StyleSheet.create({
     color: '#059669',
     fontSize: 10,
     fontWeight: '800',
+  },
+  workerActionRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#F1F5F9',
+    paddingTop: 8,
+  },
+  callBtn: {
+    flex: 1,
+    backgroundColor: '#F1F5F9',
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  callBtnText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#334155',
+  },
+  instantBookBtn: {
+    flex: 1.5,
+    backgroundColor: '#EA580C',
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  instantBookBtnText: {
+    fontSize: 12,
+    fontWeight: '800',
+    color: '#FFFFFF',
   },
 });

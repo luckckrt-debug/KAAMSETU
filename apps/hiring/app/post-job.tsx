@@ -12,7 +12,7 @@ import {
 import { useRouter } from 'expo-router';
 import { useHiringState } from '../src/state';
 import { apiClient } from '@kaamsetu/api-client';
-import { WORKER_CATEGORIES } from '@kaamsetu/shared';
+import { UNIVERSAL_CATEGORIES } from '../src/professions';
 
 export default function EmployerPostJobScreen() {
   const router = useRouter();
@@ -89,13 +89,14 @@ export default function EmployerPostJobScreen() {
 
         <Text style={styles.label}>Select Worker Trade Category *</Text>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tradeScroll}>
-          {WORKER_CATEGORIES.map(cat => (
+          {UNIVERSAL_CATEGORIES.map(cat => (
             <TouchableOpacity
               key={cat.id}
-              style={[styles.tradeChip, selectedCategory === cat.id && styles.tradeChipActive]}
-              onPress={() => setSelectedCategory(cat.id)}
+              style={[styles.tradeChip, selectedCategory === cat.nameEn && styles.tradeChipActive]}
+              onPress={() => setSelectedCategory(cat.nameEn)}
             >
-              <Text style={[styles.tradeChipText, selectedCategory === cat.id && styles.tradeChipTextActive]}>
+              <Text style={{ fontSize: 14, marginRight: 4 }}>{cat.icon}</Text>
+              <Text style={[styles.tradeChipText, selectedCategory === cat.nameEn && styles.tradeChipTextActive]}>
                 {cat.nameEn}
               </Text>
             </TouchableOpacity>
