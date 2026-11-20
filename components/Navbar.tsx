@@ -161,10 +161,10 @@ export default function Navbar() {
                 <div className="relative">
                   <button
                     onClick={() => setRegisterDropdown(!registerDropdown)}
-                    className="px-5 py-2.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white text-sm font-bold shadow-md shadow-[#2583D5]/20 transition-all flex items-center gap-1.5 hover:scale-[1.02]"
+                    className="px-5 py-2.5 rounded-xl bg-zinc-700 hover:bg-zinc-800 text-white text-sm font-bold shadow-sm transition-all flex items-center gap-1.5 hover:scale-[1.01] border border-zinc-600/30"
                   >
-                    <span>Register</span>
-                    <ChevronDown className="w-4 h-4" />
+                    <span className="text-white font-bold">Register</span>
+                    <ChevronDown className="w-4 h-4 text-white" />
                   </button>
 
                   {registerDropdown && (
@@ -326,7 +326,7 @@ export default function Navbar() {
                 <Link
                   href="/register"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3 rounded-xl bg-[#2583D5] text-white font-bold text-center text-sm shadow-md"
+                  className="w-full py-3 rounded-xl bg-zinc-700 hover:bg-zinc-800 text-white font-bold text-center text-sm shadow-sm border border-zinc-600/30"
                 >
                   Register Now (पंजीकरण करें)
                 </Link>
