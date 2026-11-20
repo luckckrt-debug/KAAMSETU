@@ -71,7 +71,7 @@ export default function HomePage() {
 
               <Link
                 href="/register/worker"
-                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-bold text-sm text-center tracking-wide transition-all shadow-lg shadow-[#2583D5]/25 hover:scale-[1.02]"
+                className="w-full sm:w-auto px-7 py-4 rounded-2xl bg-zinc-700 hover:bg-zinc-800 text-white font-bold text-sm text-center tracking-wide transition-all shadow-sm border border-zinc-600/30 hover:scale-[1.01]"
               >
                 Start Worker Registration (श्रमिक पंजीकरण)
               </Link>
