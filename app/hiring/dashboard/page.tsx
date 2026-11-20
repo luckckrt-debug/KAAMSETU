@@ -44,13 +44,13 @@ const InteractiveMap = dynamic(() => import('@/components/InteractiveMap'), {
 });
 
 const SERVICE_TIERS = [
-  { id: 'cat-electrician', slug: 'electrician', name: 'Electrician', nameHi: 'बिजली मिस्त्री', rate: '₹350/hr', eta: '10–15 min', icon: Zap, color: 'text-amber-500 bg-amber-50 border-amber-200' },
-  { id: 'cat-plumber', slug: 'plumber', name: 'Plumber', nameHi: 'नल मिस्त्री', rate: '₹300/hr', eta: '15–20 min', icon: Wrench, color: 'text-blue-500 bg-blue-50 border-blue-200' },
-  { id: 'cat-carpenter', slug: 'carpenter', name: 'Carpenter', nameHi: 'बढ़ई', rate: '₹400/hr', eta: '20–25 min', icon: Hammer, color: 'text-orange-500 bg-orange-50 border-orange-200' },
-  { id: 'cat-painter', slug: 'painter', name: 'Painter', nameHi: 'रंग मिस्त्री', rate: '₹850/day', eta: 'Same Day', icon: Paintbrush, color: 'text-purple-500 bg-purple-50 border-purple-200' },
-  { id: 'cat-mason', slug: 'construction', name: 'Mason / Labour', nameHi: 'राज मिस्त्री', rate: '₹1,050/day', eta: 'Crew Ready', icon: Building2, color: 'text-emerald-500 bg-emerald-50 border-emerald-200' },
-  { id: 'cat-cleaning', slug: 'housekeeping', name: 'Housekeeping', nameHi: 'सफाई कर्मी', rate: '₹250/hr', eta: '15–20 min', icon: Sparkles, color: 'text-teal-500 bg-teal-50 border-teal-200' },
-  { id: 'cat-delivery', slug: 'delivery', name: 'Delivery', nameHi: 'डिलीवरी पार्टनर', rate: '₹150/trip', eta: '10 min', icon: Truck, color: 'text-indigo-500 bg-indigo-50 border-indigo-200' }
+  { id: 'cat-electrician', slug: 'electrician', name: 'Electrician', nameHi: 'बिजली मिस्त्री', rate: '₹350/hr', eta: '10–15 min', icon: Zap },
+  { id: 'cat-plumber', slug: 'plumber', name: 'Plumber', nameHi: 'नल मिस्त्री', rate: '₹300/hr', eta: '15–20 min', icon: Wrench },
+  { id: 'cat-carpenter', slug: 'carpenter', name: 'Carpenter', nameHi: 'बढ़ई', rate: '₹400/hr', eta: '20–25 min', icon: Hammer },
+  { id: 'cat-painter', slug: 'painter', name: 'Painter', nameHi: 'रंग मिस्त्री', rate: '₹850/day', eta: 'Same Day', icon: Paintbrush },
+  { id: 'cat-mason', slug: 'construction', name: 'Mason / Labour', nameHi: 'राज मिस्त्री', rate: '₹1,050/day', eta: 'Crew Ready', icon: Building2 },
+  { id: 'cat-cleaning', slug: 'housekeeping', name: 'Housekeeping', nameHi: 'सफाई कर्मी', rate: '₹250/hr', eta: '15–20 min', icon: Sparkles },
+  { id: 'cat-delivery', slug: 'delivery', name: 'Delivery', nameHi: 'डिलीवरी पार्टनर', rate: '₹150/trip', eta: '10 min', icon: Truck }
 ];
 
 export default function HiringCustomerDashboard() {
@@ -273,7 +273,7 @@ export default function HiringCustomerDashboard() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-black text-[#153451] flex items-center gap-2">
-              <Zap className="w-4 h-4 text-[#2583D5]" />
+              <Layers className="w-4 h-4 text-[#2583D5]" />
               <span>Select Service for Instant Dispatch (तत्काल कारीगर चुनें)</span>
             </h2>
             <span className="text-xs text-[#7697B3] font-medium hidden sm:inline-block">
@@ -291,15 +291,19 @@ export default function HiringCustomerDashboard() {
                   key={tier.id}
                   type="button"
                   onClick={() => setSelectedCategory(tier.id)}
-                  className={`p-3.5 rounded-2xl border transition-all text-left flex flex-col justify-between gap-3 group hover:scale-[1.02] ${
+                  className={`p-3.5 rounded-2xl border transition-all text-left flex flex-col justify-between gap-3 group hover:scale-[1.02] cursor-pointer ${
                     isSelected
                       ? 'bg-white border-[#2583D5] shadow-md ring-2 ring-[#2583D5]/20'
                       : 'bg-white/90 border-[#D1E8F8] hover:border-[#2583D5]/50 hover:bg-white'
                   }`}
                 >
                   <div className="flex items-center justify-between">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold ${tier.color}`}>
-                      <Icon className="w-5 h-5" />
+                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold transition-all ${
+                      isSelected
+                        ? 'bg-[#2583D5] text-white shadow-xs'
+                        : 'bg-[#F5FAFF] text-[#2583D5] border border-[#D1E8F8] group-hover:bg-[#EAF6FF]'
+                    }`}>
+                      <Icon className="w-4 h-4 stroke-[2.2]" />
                     </div>
                     {isSelected && (
                       <CheckCircle2 className="w-4 h-4 text-[#2583D5]" />
@@ -496,7 +500,7 @@ export default function HiringCustomerDashboard() {
           </div>
 
           <div className="p-4 rounded-2xl bg-white border border-[#D1E8F8] shadow-xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] text-[#2583D5] flex items-center justify-center font-bold shrink-0">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
@@ -506,7 +510,7 @@ export default function HiringCustomerDashboard() {
           </div>
 
           <div className="p-4 rounded-2xl bg-white border border-[#D1E8F8] shadow-xs flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[#EAF6FF] text-[#2583D5] flex items-center justify-center font-bold shrink-0">
               <Clock className="w-5 h-5" />
             </div>
             <div>
