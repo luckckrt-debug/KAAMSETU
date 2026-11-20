@@ -363,10 +363,14 @@ export type LedgerTransactionType =
 export type WithdrawalStatus = 
   | 'REQUESTED'
   | 'UNDER_REVIEW'
+  | 'APPROVED'
   | 'PROCESSING'
+  | 'PAID'
   | 'SUCCESS'
   | 'FAILED'
-  | 'CANCELLED';
+  | 'REJECTED'
+  | 'CANCELLED'
+  | 'REVERSED';
 
 export interface PayoutAccount {
   id: string;

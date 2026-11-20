@@ -1,6 +1,9 @@
+export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore, loadStore } from '@/lib/store';
 import { verifyPayoutWebhookSignature } from '@/lib/payout';
+import { finalizeWorkerWithdrawal } from '@/lib/financial-ledger';
+import { getMongoDb } from '@/lib/mongodb';
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,6 +25,24 @@ export async function POST(req: NextRequest) {
     const providerPayoutId = payoutEntity.id || payload.providerPayoutId;
     const withdrawalId = payoutEntity.reference_id || payload.withdrawalId;
 
+    // Log incoming webhook event in webhook_events collection
+    const db = await getMongoDb();
+    if (db) {
+      try {
+        await db.collection('webhook_events').insertOne({
+          id: `wh-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`,
+          event,
+          provider: 'RAZORPAYX',
+          providerPayoutId,
+          withdrawalId,
+          rawPayload: payload,
+          receivedAt: new Date().toISOString(),
+        });
+      } catch (e) {
+        console.warn('[Webhook Event Log Error]:', e);
+      }
+    }
+
     const store = loadStore();
     const withdrawal = store.withdrawals?.find(w => w.id === withdrawalId || w.providerPayoutId === providerPayoutId);
 
@@ -30,14 +51,30 @@ export async function POST(req: NextRequest) {
     }
 
     if (event === 'payout.processed' || event === 'payout.success') {
-      dbStore.finalizeWithdrawal(withdrawal.id, true, providerPayoutId);
+      const utr = payoutEntity.utr || payload.utr || `UTR_${Date.now()}`;
+      await finalizeWorkerWithdrawal({
+        withdrawalId: withdrawal.id,
+        isSuccess: true,
+        bankTransferReference: utr,
+        providerPayoutId,
+        adminId: 'webhook',
+        adminName: 'Gateway Webhook Event',
+      });
+
       return NextResponse.json({
         success: true,
-        message: `Withdrawal ${withdrawal.id} marked as SUCCESS.`,
+        message: `Withdrawal ${withdrawal.id} marked as PAID.`,
       });
     } else if (event === 'payout.reversed' || event === 'payout.failed' || event === 'payout.rejected') {
       const reason = payoutEntity.failure_reason || payload.failureReason || 'Payout provider failed transfer';
-      dbStore.finalizeWithdrawal(withdrawal.id, false, providerPayoutId, reason);
+      await finalizeWorkerWithdrawal({
+        withdrawalId: withdrawal.id,
+        isSuccess: false,
+        failureReason: reason,
+        adminId: 'webhook',
+        adminName: 'Gateway Webhook Event',
+      });
+
       return NextResponse.json({
         success: true,
         message: `Withdrawal ${withdrawal.id} marked as FAILED. Funds restored to wallet.`,

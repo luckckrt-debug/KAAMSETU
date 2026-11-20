@@ -1,19 +1,33 @@
 export const dynamic = 'force-dynamic';
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore, loadStore } from '@/lib/store';
+import { finalizeWorkerWithdrawal } from '@/lib/financial-ledger';
+import { verifySessionToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
+    let adminId = 'user-admin-1';
+    let adminName = 'Super Admin';
+
+    const token = req.cookies.get('kaamsetu_session')?.value;
+    if (token) {
+      const payload = verifySessionToken(token);
+      if (payload) {
+        adminId = payload.userId;
+        adminName = payload.fullName || 'Operations Admin';
+      }
+    }
+
     const body = await req.json();
-    const { action, providerPayoutId, failureReason } = body;
+    const { action, providerPayoutId, bankTransferReference, failureReason } = body;
 
     const store = loadStore();
-    const withdrawal = store.withdrawals?.find(w => w.id === params.id);
+    const withdrawal = store.withdrawals?.find((w) => w.id === params.id);
     if (!withdrawal) {
       return NextResponse.json({ success: false, error: 'Withdrawal not found' }, { status: 404 });
     }
 
-    if (withdrawal.status === 'SUCCESS' || withdrawal.status === 'FAILED') {
+    if (withdrawal.status === 'SUCCESS' || withdrawal.status === 'PAID' || withdrawal.status === 'FAILED') {
       return NextResponse.json(
         { success: false, error: `Withdrawal has already been finalized with status ${withdrawal.status}` },
         { status: 400 }
@@ -21,45 +35,35 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     }
 
     if (action === 'APPROVE') {
-      const updated = dbStore.finalizeWithdrawal(
-        params.id,
-        true,
-        providerPayoutId || `adm_pout_${Date.now()}`
-      );
-      dbStore.recordFinancialAudit(
-        'admin-user-1',
-        'SUPER_ADMIN',
-        'ADMIN_WITHDRAWAL_APPROVE',
-        'WITHDRAWAL',
-        params.id,
-        `Approved withdrawal of ₹${withdrawal.amount} to ${withdrawal.payoutTargetMasked}`,
-        withdrawal.amount
-      );
+      const utrRef = bankTransferReference || `UTR_${Date.now()}_${Math.floor(1000 + Math.random() * 9000)}`;
+      const result = await finalizeWorkerWithdrawal({
+        withdrawalId: params.id,
+        isSuccess: true,
+        bankTransferReference: utrRef,
+        providerPayoutId: providerPayoutId || `pout_adm_${Date.now()}`,
+        adminId,
+        adminName,
+      });
+
       return NextResponse.json({
         success: true,
-        message: `Withdrawal ${params.id} approved and finalized.`,
-        withdrawal: updated,
+        message: `Withdrawal ${params.id} approved and bank transfer confirmed (UTR: ${utrRef}).`,
+        withdrawal: result.withdrawal,
       });
     } else if (action === 'REJECT') {
-      const updated = dbStore.finalizeWithdrawal(
-        params.id,
-        false,
-        undefined,
-        failureReason || 'Rejected by Administrator review'
-      );
-      dbStore.recordFinancialAudit(
-        'admin-user-1',
-        'SUPER_ADMIN',
-        'ADMIN_WITHDRAWAL_REJECT',
-        'WITHDRAWAL',
-        params.id,
-        `Rejected withdrawal of ₹${withdrawal.amount}. Funds restored to wallet. Reason: ${failureReason || 'Admin rejection'}`,
-        withdrawal.amount
-      );
+      const reason = failureReason || 'Rejected by Administrator review';
+      const result = await finalizeWorkerWithdrawal({
+        withdrawalId: params.id,
+        isSuccess: false,
+        failureReason: reason,
+        adminId,
+        adminName,
+      });
+
       return NextResponse.json({
         success: true,
-        message: `Withdrawal ${params.id} rejected. ₹${withdrawal.amount} restored to worker wallet.`,
-        withdrawal: updated,
+        message: `Withdrawal ${params.id} rejected. ₹${withdrawal.amount} safely restored to worker wallet.`,
+        withdrawal: result.withdrawal,
       });
     }
 

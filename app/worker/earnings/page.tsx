@@ -258,15 +258,15 @@ export default function WorkerEarningsPage() {
             </Link>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-[#173D2B]">
+                <h1 className="text-xl sm:text-2xl font-black text-[#153451]">
                   Worker Earnings & Digital Wallet
                 </h1>
-                <span className="bg-[#B7E36A] text-[#173D2B] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                <span className="bg-[#EAF6FF] text-[#2583D5] text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-[#D1E8F8]">
                   <Radio className="w-3 h-3 animate-pulse" /> Live Settlement
                 </span>
               </div>
-              <p className="text-xs text-gray-600">
-                Instant automatic credits upon job verification • Transparent 10% platform commission • Zero hidden deductions
+              <p className="text-xs text-[#7697B3]">
+                100% fair wage retention • ₹99 platform convenience fee paid separately by customer • Zero hidden deductions
               </p>
             </div>
           </div>
@@ -284,7 +284,7 @@ export default function WorkerEarningsPage() {
                 setWithdrawSuccessInfo(null);
                 setIsWithdrawModalOpen(true);
               }}
-              className="px-4 py-2 rounded-xl bg-[#173D2B] hover:bg-[#2D6547] text-[#B7E36A] text-xs font-black uppercase tracking-wider shadow-md transition active:scale-95 flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white text-xs font-black uppercase tracking-wider shadow-md shadow-[#2583D5]/20 transition active:scale-95 flex items-center gap-1.5"
             >
               <ArrowUpRight className="w-4 h-4" /> Withdraw Money (निकासी)
             </button>
@@ -303,17 +303,17 @@ export default function WorkerEarningsPage() {
         )}
 
         {/* Main Balance Hero Card */}
-        <div className="bg-[#173D2B] text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-[#B7E36A]/30 relative overflow-hidden">
+        <div className="bg-gradient-to-tr from-[#123B5D] to-[#1E5785] text-white rounded-3xl p-6 sm:p-8 shadow-xl border border-white/10 relative overflow-hidden">
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="space-y-1">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#B7E36A] flex items-center gap-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#60B5F5] flex items-center gap-1.5">
                 <CreditCard className="w-4 h-4" /> Available for Withdrawal (निकासी योग्य शेष)
               </span>
               <div className="text-3xl sm:text-5xl font-black text-white tracking-tight flex items-baseline gap-2">
                 <span>₹{availableBal.toLocaleString('en-IN')}</span>
-                <span className="text-xs font-bold text-gray-300">INR</span>
+                <span className="text-xs font-bold text-slate-300">INR</span>
               </div>
-              <p className="text-xs text-gray-300 pt-1">
+              <p className="text-xs text-slate-300 pt-1">
                 Settles immediately to your verified primary payout account with 0 fee.
               </p>
             </div>
@@ -321,22 +321,22 @@ export default function WorkerEarningsPage() {
             {/* Quick Metrics Columns */}
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 md:pt-0 border-t md:border-t-0 md:border-l border-white/10 md:pl-6 text-xs">
               <div>
-                <span className="text-gray-400 block text-[11px] font-semibold">Reserved in Payout:</span>
-                <strong className="text-lg font-black text-[#F2A65A]">₹{reservedBal}</strong>
-                <span className="text-[10px] text-gray-400 block">Processing transfer</span>
+                <span className="text-slate-300 block text-[11px] font-semibold">Reserved in Payout:</span>
+                <strong className="text-lg font-black text-amber-400">₹{reservedBal}</strong>
+                <span className="text-[10px] text-slate-300 block">Processing transfer</span>
               </div>
 
               <div>
-                <span className="text-gray-400 block text-[11px] font-semibold">Lifetime Net Earned:</span>
+                <span className="text-slate-300 block text-[11px] font-semibold">Lifetime Net Earned:</span>
                 <strong className="text-lg font-black text-white">₹{summary?.lifetimeEarnings.toLocaleString('en-IN') || 0}</strong>
-                <span className="text-[10px] text-[#B7E36A] block">100% verified</span>
+                <span className="text-[10px] text-emerald-400 block">100% verified</span>
               </div>
 
               {commissionPayable > 0 && (
                 <div>
                   <span className="text-amber-300 block text-[11px] font-semibold">Cash Commission Due:</span>
                   <strong className="text-lg font-black text-amber-400">₹{commissionPayable}</strong>
-                  <span className="text-[10px] text-gray-300 block">From cash jobs</span>
+                  <span className="text-[10px] text-slate-300 block">From cash jobs</span>
                 </div>
               )}
             </div>

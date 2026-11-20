@@ -1,21 +1,50 @@
-// KAAMSETU - Commission Engine & Fee Calculation Architecture
-// Supports platform-wide, profession-wise, service-wise, and worker exemptions.
+// KAAMSETU - Earning Calculation Engine & Pricing Architecture
+// Model:
+// Worker Agreed Wage = 100% Worker Earning (No silent deductions from worker!)
+// KaamSetu Platform Fee = ₹99 (Paid by customer as convenience & dispatch fee)
+// Customer Total Payment = Worker Agreed Wage + ₹99
 
 import { CommissionRule } from './types';
+
+export interface JobPricingBreakdown {
+  workerAgreedCharge: number;
+  platformFee: number; // ₹99
+  totalCustomerPrice: number; // workerAgreedCharge + 99
+  workerNetEarning: number; // Exactly equals workerAgreedCharge
+  ruleApplied: string;
+}
 
 export interface CommissionBreakdown {
   jobAmount: number;
   commissionRatePercent: number;
   commissionAmount: number;
-  additionalFees: number;
-  workerNetEarning: number;
+  additionalFees: number; // ₹99 KaamSetu platform fee
+  workerNetEarning: number; // 100% to worker
   isExempt: boolean;
   ruleApplied: string;
 }
 
+export const KAAMSETU_PLATFORM_FEE = 99;
+
+/**
+ * Standard KaamSetu Marketplace Pricing Calculator:
+ * Worker receives 100% of their agreed charge. Customer pays workerCharge + ₹99.
+ */
+export function calculateJobPricing(workerCharge: number): JobPricingBreakdown {
+  const charge = Math.max(0, Math.round(Number(workerCharge) || 0));
+  const platformFee = KAAMSETU_PLATFORM_FEE;
+  return {
+    workerAgreedCharge: charge,
+    platformFee,
+    totalCustomerPrice: charge + platformFee,
+    workerNetEarning: charge,
+    ruleApplied: `KaamSetu Fair Pricing (100% Worker Earning + ₹${platformFee} Platform Fee)`,
+  };
+}
+
 /**
  * Calculates platform commission and worker net earning with full transparency.
- * workerNetEarning = eligibleJobAmount - platformCommission - applicableFees
+ * Under KaamSetu policy, worker retains 100% of agreed wage; platform fee (₹99) is billed to customer.
  */
 export function calculateJobCommission(params: {
   jobAmount: number;
@@ -25,75 +54,30 @@ export function calculateJobCommission(params: {
   isCash?: boolean;
   customRules?: CommissionRule[];
 }): CommissionBreakdown {
-  const { jobAmount, professionSlug, serviceCategory, workerProfileId, isCash, customRules = [] } = params;
+  const { jobAmount } = params;
 
   if (jobAmount <= 0) {
     return {
       jobAmount: 0,
       commissionRatePercent: 0,
       commissionAmount: 0,
-      additionalFees: 0,
+      additionalFees: KAAMSETU_PLATFORM_FEE,
       workerNetEarning: 0,
       isExempt: false,
       ruleApplied: 'Zero Amount',
     };
   }
 
-  // 1. Check for worker exemption in custom rules
-  const activeRules = customRules.filter(r => r.isActive);
-  const exemptRule = activeRules.find(r => workerProfileId && r.exemptWorkerProfileIds?.includes(workerProfileId));
-  if (exemptRule) {
-    return {
-      jobAmount,
-      commissionRatePercent: 0,
-      commissionAmount: 0,
-      additionalFees: 0,
-      workerNetEarning: jobAmount,
-      isExempt: true,
-      ruleApplied: `Worker Exemption: ${exemptRule.name}`,
-    };
-  }
-
-  // 2. Check for profession / service specific rule
-  let matchedRule: CommissionRule | undefined;
-  if (professionSlug) {
-    matchedRule = activeRules.find(r => r.professionSlug?.toLowerCase() === professionSlug.toLowerCase());
-  }
-  if (!matchedRule && serviceCategory) {
-    matchedRule = activeRules.find(r => r.serviceCategory?.toLowerCase() === serviceCategory.toLowerCase());
-  }
-
-  let ratePercent = Number(process.env.PLATFORM_COMMISSION_PERCENTAGE || 10.0);
-  let ruleName = `Standard Platform Rate (${ratePercent}%)`;
-  let fixedFee = 0;
-
-  if (matchedRule) {
-    if (matchedRule.commissionType === 'PERCENTAGE') {
-      ratePercent = matchedRule.percentageRate;
-      ruleName = `${matchedRule.name} (${ratePercent}%)`;
-    } else if (matchedRule.commissionType === 'FIXED') {
-      ratePercent = 0;
-      fixedFee = matchedRule.fixedAmount || 50;
-      ruleName = `${matchedRule.name} (Fixed ₹${fixedFee})`;
-    } else if (matchedRule.commissionType === 'HYBRID') {
-      ratePercent = matchedRule.percentageRate;
-      fixedFee = matchedRule.fixedAmount || 0;
-      ruleName = `${matchedRule.name} (${ratePercent}% + ₹${fixedFee})`;
-    }
-  }
-
-  // Compute commission rounded to 2 decimal places / nearest rupee
-  const percentageCommission = Math.round(((jobAmount * ratePercent) / 100) * 100) / 100;
-  const totalCommission = Math.min(jobAmount, Math.round((percentageCommission + fixedFee) * 100) / 100);
-  const workerNet = Math.max(0, Math.round((jobAmount - totalCommission) * 100) / 100);
+  // 100% of agreed wage belongs to the worker
+  const workerNet = Math.round(jobAmount * 100) / 100;
 
   return {
     jobAmount,
-    commissionRatePercent: ratePercent,
-    commissionAmount: totalCommission,
-    additionalFees: 0,
+    commissionRatePercent: 0,
+    commissionAmount: 0,
+    additionalFees: KAAMSETU_PLATFORM_FEE,
     workerNetEarning: workerNet,
-    isExempt: false,
-    ruleApplied: ruleName,
+    isExempt: true,
+    ruleApplied: 'KaamSetu Fair Wage Guarantee (100% to Worker)',
   };
 }
