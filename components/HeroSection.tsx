@@ -148,14 +148,14 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Link
               href="/register/worker"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-black hover:bg-zinc-900 text-white text-base font-black shadow-lg shadow-black/25 transition-all hover:scale-[1.02] flex items-center justify-center gap-2 group border border-black/10"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-zinc-700 hover:bg-zinc-800 text-white text-base font-bold shadow-sm transition-all hover:scale-[1.01] flex items-center justify-center gap-2 group border border-zinc-600/30"
             >
               <span>Find Work (काम पाएं)</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/workers"
-              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/90 hover:bg-white text-black border border-[#D1E8F8] hover:border-black text-base font-black shadow-sm transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+              className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white/90 hover:bg-white text-[#153451] border border-[#D1E8F8] hover:border-zinc-400 text-base font-bold shadow-sm transition-all hover:scale-[1.01] flex items-center justify-center gap-2"
             >
               <span>Hire Workers (कारीगर खोजें)</span>
             </Link>

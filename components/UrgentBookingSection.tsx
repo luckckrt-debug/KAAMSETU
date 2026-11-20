@@ -83,7 +83,7 @@ export default function UrgentBookingSection() {
 
               <Link
                 href="/booking/new?urgent=true&category=cat-electrician"
-                className="w-full py-3.5 rounded-xl bg-black hover:bg-neutral-900 text-white font-black text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xs group"
+                className="w-full py-3.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-xs group"
               >
                 <span>REQUEST EMERGENCY DISPATCH</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
