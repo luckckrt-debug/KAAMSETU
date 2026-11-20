@@ -40,11 +40,24 @@ const COMMON_TRADES = [
   'Construction Helper / Beldar (मजदूर / हेल्पर)',
   'Electrician (बिजली मिस्त्री)',
   'Plumber & Pipe Fitter (नल मिस्त्री)',
-  'Carpenter / Shuttering (बढ़ई / शटरिंग)',
-  'Painter (पेंटर)',
+  'Carpenter & Woodworker (बढ़ई)',
+  'Painter & Waterproofing (रंग मिस्त्री)',
   'Welder & Steel Fabricator (वेल्डर)',
-  'Bar Bender (सरिया मिस्त्री)',
-  'Tile & Marble Mason (टाइल मिस्त्री)'
+  'Bar Bender / Saria Mistri (सरिया मिस्त्री)',
+  'Tile & Marble Installer (टाइल मिस्त्री)',
+  'Civil Site Supervisor (सिविल सुपरवाइजर)',
+  'Civil Engineer (सिविल इंजीनियर)',
+  'Commercial Driver (ड्राइवर)',
+  'Security Guard (सुरक्षा गार्ड)',
+  'Deep Cleaning / Housekeeping (सफाई कर्मी)',
+  'Cook / Chef / Maharaj (रसोइया)',
+  'Waiter / Catering Staff (वेटर)',
+  'Warehouse Picker & Packer (गोदाम पैकर)',
+  'Auto & Vehicle Mechanic (मैकेनिक)',
+  'Software Developer / IT Support (सॉफ्टवेयर डेवलपर)',
+  'Data Entry Operator / Typist (डाटा एंट्री ऑपरेटर)',
+  'Accountant / Tally GST (अकाउंटेंट)',
+  'Qualified Nurse / Caregiver (नर्स / रोगी देखभाल)'
 ];
 
 export default function ContractorPostWorkPage() {
@@ -423,11 +436,17 @@ export default function ContractorPostWorkPage() {
                       <input
                         type="text"
                         required
+                        list="all-trades-list"
                         value={cat.trade}
                         onChange={(e) => updateCategory(idx, 'trade', e.target.value)}
-                        placeholder="e.g. Mason / Raj Mistri"
+                        placeholder="Search or enter any trade (e.g. Mason, Electrician, Cook, Driver, Developer)..."
                         className="w-full px-3 py-2.5 rounded-xl border border-border bg-white text-xs font-bold text-text-primary"
                       />
+                      <datalist id="all-trades-list">
+                        {COMMON_TRADES.map((t) => (
+                          <option key={t} value={t} />
+                        ))}
+                      </datalist>
                     </div>
 
                     <div>

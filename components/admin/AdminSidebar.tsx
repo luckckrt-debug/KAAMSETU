@@ -60,6 +60,7 @@ export default function AdminSidebar({
       group: 'IDENTITY & WORKFORCE',
       items: [
         { label: 'All Users', href: '/admin/users', icon: Users },
+        { label: 'Profession Catalogue', href: '/admin/professions', icon: Briefcase, isNew: true },
         { label: 'Workers Fleet', href: '/admin/workers', icon: HardHat },
         { label: 'Contractors', href: '/admin/contractors', icon: Building2 },
         { label: 'Hiring Partners', href: '/admin/hiring-partners', icon: Briefcase },

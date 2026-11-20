@@ -18,8 +18,13 @@ import {
   Upload,
   Lock,
   Eye,
-  EyeOff
+  EyeOff,
+  Plus,
+  Trash2,
+  Sparkles,
+  Search
 } from 'lucide-react';
+import { MASTER_CATEGORIES, MASTER_PROFESSIONS, findProfessionByIdOrSlug } from '@/lib/professions-master';
 
 export default function WorkerRegistrationPage() {
   const router = useRouter();
@@ -37,7 +42,13 @@ export default function WorkerRegistrationPage() {
   const [gender, setGender] = useState('MALE');
   const [language, setLanguage] = useState('hi');
 
-  // Step 2: Profession
+  // Step 2: Multi-Profession Support
+  const [selectedCatId, setSelectedCatId] = useState('cat-b-electrical');
+  const [primaryProfessionId, setPrimaryProfessionId] = useState('prof-electrician');
+  const [additionalProfessions, setAdditionalProfessions] = useState<string[]>(['prof-cctv-technician', 'prof-solar-technician']);
+  const [customProfessionInput, setCustomProfessionInput] = useState('');
+  const [showCustomModal, setShowCustomModal] = useState(false);
+  const [customSubmitted, setCustomSubmitted] = useState(false);
   const [category, setCategory] = useState('cat-electrician');
   const [skills, setSkills] = useState<string[]>(['House Wiring', 'MCB Fixing', 'Inverter Setup']);
 
@@ -103,6 +114,29 @@ export default function WorkerRegistrationPage() {
     setLoading(true);
 
     try {
+      const primaryProf = MASTER_PROFESSIONS.find(p => p.id === primaryProfessionId);
+      const allProfessionsPayload = [
+        {
+          professionId: primaryProfessionId,
+          name: primaryProf ? primaryProf.name : 'Electrician',
+          isPrimary: true,
+          hourlyRate,
+          dailyRate,
+          skills
+        },
+        ...additionalProfessions.map(addId => {
+          const p = MASTER_PROFESSIONS.find(mp => mp.id === addId);
+          return {
+            professionId: addId,
+            name: p ? p.name : addId,
+            isPrimary: false,
+            hourlyRate,
+            dailyRate,
+            skills: p ? p.popularSkills : []
+          };
+        })
+      ];
+
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -116,10 +150,11 @@ export default function WorkerRegistrationPage() {
           state,
           city,
           pincode,
-          tradeCategory: category,
+          tradeCategory: primaryProf ? primaryProf.name : category,
           yearsExperience,
           hourlyRate,
           dailyRate,
+          professions: allProfessionsPayload
         }),
       });
 
@@ -307,60 +342,202 @@ export default function WorkerRegistrationPage() {
 
         {/* STEP 2: PROFESSION */}
         {currentStep === 2 && (
-          <div className="space-y-4">
-            <h2 className="text-base font-bold text-forest border-b border-border pb-2 flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-sage" /> Step 2: Profession & Trade (व्यवसाय)
+          <div className="space-y-5">
+            <h2 className="text-base font-bold text-forest border-b border-border pb-2 flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-sage" /> Step 2: Profession & Trades (व्यवसाय व कौशल)
+              </span>
+              <span className="text-xs bg-lime/20 text-forest font-bold px-2.5 py-1 rounded-full">
+                26 Industry Categories
+              </span>
             </h2>
 
+            {/* Category Selector */}
             <div>
-              <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-2">
-                Select Primary Trade Skill *
+              <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-1.5">
+                1. Select Industry Category (उद्योग श्रेणी) *
               </label>
               <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={selectedCatId}
+                onChange={(e) => {
+                  setSelectedCatId(e.target.value);
+                  const firstInCat = MASTER_PROFESSIONS.find(p => p.categoryId === e.target.value);
+                  if (firstInCat) {
+                    setPrimaryProfessionId(firstInCat.id);
+                    setCategory(firstInCat.slug);
+                  }
+                }}
                 className="w-full px-4 py-3 rounded-xl border border-border bg-bg text-sm font-bold text-forest focus:outline-none focus:border-forest"
               >
-                <optgroup label="🏠 Home Repair & Maintenance">
-                  <option value="cat-electrician">Electrician (बिजली मिस्त्री)</option>
-                  <option value="cat-plumber">Plumber & Sanitary Specialist (नल मिस्त्री)</option>
-                  <option value="cat-carpenter">Carpenter & Woodworker (बढ़ई)</option>
-                  <option value="cat-painter">Painter & Waterproofing (रंग मिस्त्री)</option>
-                  <option value="cat-ac-tech">AC & Refrigeration Tech (एसी रिपेयर)</option>
-                  <option value="cat-ro-appliance">Water Purifier & RO Tech (आरओ)</option>
-                  <option value="cat-pest-control">Pest Control Specialist (पेस्ट कंट्रोल)</option>
-                </optgroup>
-                <optgroup label="🏗️ Construction & Civil Works">
-                  <option value="cat-mason">Mason / Raj Mistri (राज मिस्त्री)</option>
-                  <option value="cat-labour">Construction Labour / Beldar (मजदूर / बेलदार)</option>
-                  <option value="cat-steel-barbender">Steel Barbender & Saria Mistri (सरिया मिस्त्री)</option>
-                  <option value="cat-tiles-stone">Tiles, Marble & Granite Setter (टाइल मिस्त्री)</option>
-                  <option value="cat-welder">Welder & Metal Fabricator (वेल्डर)</option>
-                </optgroup>
-                <optgroup label="⚡ Engineering & Supervision">
-                  <option value="cat-solar-tech">Solar & Inverter Engineer (सोलर पैनल)</option>
-                  <option value="cat-cctv-security">CCTV & Smart Security Tech (सीसीटीवी)</option>
-                  <option value="cat-civil-engineer">Civil Site Engineer & Supervisor (सिविल इंजीनियर)</option>
-                </optgroup>
-                <optgroup label="🚚 Logistics, Transport & Heavy Machinery">
-                  <option value="cat-driver">Commercial Driver & Chauffeur (ड्राइवर)</option>
-                  <option value="cat-heavy-machinery">Heavy Machinery & JCB Operator (जेसीबी)</option>
-                  <option value="cat-packaging-logistics">Warehouse & Packaging Staff (पैकेजिंग)</option>
-                </optgroup>
-                <optgroup label="🏢 Facility & Security">
-                  <option value="cat-housekeeping">Deep Cleaning & Housekeeping (डीप क्लीनिंग)</option>
-                  <option value="cat-security-guard">Security Personnel & Guards (सुरक्षा गार्ड)</option>
-                </optgroup>
-                <optgroup label="🌿 Agriculture & Events">
-                  <option value="cat-gardener">Gardener / Mali & Landscaper (माली)</option>
-                  <option value="cat-event-stewards">Event Setup & Banquet Staff (इवेंट टीम)</option>
-                </optgroup>
+                {MASTER_CATEGORIES.map(cat => (
+                  <option key={cat.id} value={cat.id}>
+                    [{cat.code}] {cat.name} ({cat.nameHi})
+                  </option>
+                ))}
               </select>
             </div>
 
+            {/* Primary Profession */}
+            <div>
+              <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-1.5">
+                2. Select Primary Profession (मुख्य पेशा / व्यवसाय) *
+              </label>
+              <select
+                value={primaryProfessionId}
+                onChange={(e) => {
+                  setPrimaryProfessionId(e.target.value);
+                  const p = MASTER_PROFESSIONS.find(mp => mp.id === e.target.value);
+                  if (p) {
+                    setCategory(p.slug);
+                    if (p.popularSkills.length > 0) {
+                      setSkills(p.popularSkills.slice(0, 4));
+                    }
+                  }
+                }}
+                className="w-full px-4 py-3 rounded-xl border border-border bg-bg text-sm font-bold text-forest focus:outline-none focus:border-forest"
+              >
+                {MASTER_PROFESSIONS.filter(p => p.categoryId === selectedCatId).map(prof => (
+                  <option key={prof.id} value={prof.id}>
+                    {prof.name} — {prof.nameHi}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Regulated Professional Notice if applicable */}
+            {MASTER_PROFESSIONS.find(p => p.id === primaryProfessionId)?.isRegulated && (
+              <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs space-y-1">
+                <p className="font-bold flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-amber-600" />
+                  Regulated Occupation • सत्यापन अनिवार्य
+                </p>
+                <p className="text-[11px] text-amber-800 leading-relaxed">
+                  This profession requires official qualification proof: {MASTER_PROFESSIONS.find(p => p.id === primaryProfessionId)?.verificationRequirements?.join(', ')}. You will be asked to upload certifications in Step 6.
+                </p>
+              </div>
+            )}
+
+            {/* Additional Secondary Professions */}
+            <div className="bg-[#F5FAFF] p-4 rounded-2xl border border-border space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <label className="block text-xs font-bold text-forest uppercase tracking-wider">
+                    Additional Secondary Professions (अतिरिक्त कौशल / कार्य)
+                  </label>
+                  <p className="text-[11px] text-text-secondary">
+                    Add other trades you work in so you appear in multiple job searches.
+                  </p>
+                </div>
+              </div>
+
+              {/* Active Additional Tags */}
+              <div className="flex flex-wrap gap-2">
+                {additionalProfessions.map(profId => {
+                  const prof = MASTER_PROFESSIONS.find(p => p.id === profId);
+                  return (
+                    <span 
+                      key={profId} 
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#D1E8F8] text-xs font-bold text-[#153451] shadow-2xs"
+                    >
+                      <span>{prof ? prof.name : profId}</span>
+                      <button
+                        type="button"
+                        onClick={() => setAdditionalProfessions(additionalProfessions.filter(id => id !== profId))}
+                        className="text-slate-400 hover:text-rose-600 transition"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  );
+                })}
+              </div>
+
+              {/* Dropdown to add more */}
+              <div className="flex items-center gap-2 pt-1">
+                <select
+                  id="add-secondary-prof"
+                  className="flex-1 px-3 py-2 rounded-xl border border-border bg-white text-xs font-semibold focus:outline-none focus:border-forest"
+                  defaultValue=""
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val && !additionalProfessions.includes(val) && val !== primaryProfessionId) {
+                      setAdditionalProfessions([...additionalProfessions, val]);
+                    }
+                    e.target.value = '';
+                  }}
+                >
+                  <option value="" disabled>+ Add Another Profession (अन्य पेशा जोड़ें)...</option>
+                  {MASTER_PROFESSIONS.filter(p => p.id !== primaryProfessionId && !additionalProfessions.includes(p.id)).map(p => (
+                    <option key={p.id} value={p.id}>
+                      {p.name} ({p.nameHi})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Custom Profession Submission Trigger */}
+            <div className="pt-1 flex items-center justify-between border-t border-border pt-3">
+              <span className="text-xs text-text-secondary">
+                Your profession not listed in the catalogue?
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowCustomModal(true)}
+                className="text-xs font-bold text-forest underline hover:text-sage flex items-center gap-1"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add Custom Profession (नया व्यवसाय जोड़ें)</span>
+              </button>
+            </div>
+
+            {/* Custom Profession Input Dialog */}
+            {showCustomModal && (
+              <div className="p-4 rounded-2xl bg-white border-2 border-forest/30 space-y-3 shadow-md animate-in fade-in">
+                <h4 className="text-xs font-black uppercase tracking-wider text-forest">
+                  Propose New Profession (अनलिस्टेड पेशा दर्ज करें)
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <input
+                    type="text"
+                    placeholder="Profession name (e.g. Drone Camera Operator)"
+                    value={customProfessionInput}
+                    onChange={(e) => setCustomProfessionInput(e.target.value)}
+                    className="px-3 py-2 rounded-xl border border-border text-xs font-semibold"
+                  />
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!customProfessionInput.trim()) return;
+                      try {
+                        await fetch('/api/professions/suggest', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            name: customProfessionInput.trim(),
+                            submittedByRole: 'WORKER'
+                          })
+                        });
+                        setCustomSubmitted(true);
+                        setAdditionalProfessions([...additionalProfessions, customProfessionInput.trim()]);
+                        setCustomProfessionInput('');
+                        setShowCustomModal(false);
+                      } catch (e) {
+                        setShowCustomModal(false);
+                      }
+                    }}
+                    className="px-4 py-2 rounded-xl bg-forest text-lime font-bold text-xs"
+                  >
+                    Submit & Attach to Profile
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Specific Skills Selector */}
             <div>
               <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-1">
-                Specific Skills & Expertise (विशेष कौशल)
+                Specific Skills & Expertise (विशेष कौशल टैग)
               </label>
               <div className="flex flex-wrap gap-2 pt-1">
                 {[

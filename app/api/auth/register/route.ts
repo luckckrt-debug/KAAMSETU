@@ -193,6 +193,30 @@ export async function POST(req: NextRequest) {
             ...workerDoc,
             _id: workerDoc.id as any,
           });
+
+          // Multi-Profession Mapping Save
+          if (body.professions && Array.isArray(body.professions)) {
+            const workerProfCol = await getMongoCollection('worker_professions');
+            if (workerProfCol) {
+              const profEntries = body.professions.map((p: any, idx: number) => ({
+                id: `wp-${workerDoc.id}-${idx}-${Date.now()}`,
+                workerProfileId: workerDoc.id,
+                userId,
+                professionId: p.professionId || p.id || p.name,
+                professionName: p.name || p.professionName || p.trade,
+                isPrimary: p.isPrimary !== undefined ? p.isPrimary : idx === 0,
+                experienceYears: Number(p.experienceYears) || Number(yearsExperience) || 2,
+                hourlyRate: Number(p.hourlyRate) || Number(hourlyRate) || 350,
+                dailyRate: Number(p.dailyRate) || Number(dailyRate) || 1000,
+                skills: p.skills || [],
+                isActive: true,
+                createdAt: nowIso
+              }));
+              if (profEntries.length > 0) {
+                await workerProfCol.insertMany(profEntries).catch(() => {});
+              }
+            }
+          }
         } catch (err) {
           console.error('[MongoDB Worker Profile Error]:', err);
         }

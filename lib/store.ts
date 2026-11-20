@@ -35,6 +35,7 @@ import {
 } from './types';
 import { calculateDistanceKm, calculateEstimatedEtaMinutes } from './geo';
 import { getProfessionBySlug } from './professions';
+import { findProfessionByIdOrSlug, searchProfessionsCatalogue } from './professions-master';
 import { calculateJobCommission } from './commission';
 import { dispatchPayout } from './payout';
 import { deleteMongoDocument, upsertMongoDocument } from './mongodb';
@@ -2447,13 +2448,36 @@ export const dbStore = {
     }
 
     if (params.query) {
-      const q = params.query.toLowerCase();
-      workers = workers.filter(w => 
-        w.headline?.toLowerCase().includes(q) ||
-        w.bio?.toLowerCase().includes(q) ||
-        w.user?.fullName.toLowerCase().includes(q) ||
-        w.skills?.some(s => s.categoryName?.toLowerCase().includes(q))
-      );
+      const q = params.query.toLowerCase().trim();
+      const matchedProf = findProfessionByIdOrSlug(q);
+      const aliasTerms: string[] = matchedProf ? [matchedProf.name.toLowerCase(), matchedProf.singular.toLowerCase(), matchedProf.nameHi, ...matchedProf.aliases] : [q];
+
+      workers = workers.filter(w => {
+        // Direct string match on worker fields
+        if (
+          w.headline?.toLowerCase().includes(q) ||
+          w.bio?.toLowerCase().includes(q) ||
+          w.user?.fullName.toLowerCase().includes(q) ||
+          w.skills?.some(s => s.categoryName?.toLowerCase().includes(q))
+        ) {
+          return true;
+        }
+
+        // Universal Synonym, Hindi and Alias Matching from master catalog
+        if (matchedProf) {
+          const matchSkill = w.skills?.some(s => 
+            s.categoryId === matchedProf.id || 
+            s.categoryId === matchedProf.slug ||
+            aliasTerms.some(term => 
+              s.categoryName?.toLowerCase().includes(term) || 
+              (w.headline && w.headline.toLowerCase().includes(term))
+            )
+          );
+          if (matchSkill) return true;
+        }
+
+        return false;
+      });
     }
 
     // Distance & ETA calculation if coordinates provided
