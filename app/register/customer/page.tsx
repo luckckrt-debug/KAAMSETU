@@ -3,8 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { User, Phone, MapPin, Mail, ArrowRight, ShieldCheck, CheckCircle2, Loader2 } from 'lucide-react';
-import { sendFirebaseEmailLink } from '@/lib/firebase';
+import { User, Phone, MapPin, Mail, Lock, Eye, EyeOff, ArrowRight, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function CustomerRegistrationPage() {
   return (
@@ -25,6 +24,9 @@ function CustomerRegistrationForm() {
 
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState(phoneParam);
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [city, setCity] = useState('Noida');
   const [address, setAddress] = useState('');
@@ -37,6 +39,25 @@ function CustomerRegistrationForm() {
     e.preventDefault();
     setError('');
     setSuccessNotice('');
+
+    if (!fullName.trim()) {
+      setError('Please enter your full name.');
+      return;
+    }
+    const cleanPhone = phoneNumber.replace(/\D/g, '');
+    if (cleanPhone.length !== 10) {
+      setError('Please enter a valid 10-digit Indian mobile number.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match. Please verify both fields.');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -44,41 +65,33 @@ function CustomerRegistrationForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName,
-          phoneNumber,
+          fullName: fullName.trim(),
+          phoneNumber: cleanPhone,
+          password,
+          confirmPassword,
           email: email.trim() || undefined,
-          city,
-          addressLine: address,
-          pincode,
+          city: city.trim(),
+          addressLine: address.trim(),
+          pincode: pincode.trim(),
           role: 'CUSTOMER',
         }),
       });
 
       const data = await res.json();
       if (!data.success) {
-        setError(data.error || 'Registration failed');
+        setError(data.error || 'Registration failed. Please check your details.');
         setLoading(false);
         return;
       }
 
-      // If user specified an email, also initiate Firebase Email Link authentication in parallel
-      if (email.trim()) {
-        try {
-          await sendFirebaseEmailLink(email.trim(), { role: 'CUSTOMER', returnUrl: '/hiring/dashboard' });
-          setSuccessNotice('Account registered & Firebase one-click verification link sent to your email!');
-        } catch (fbErr: any) {
-          console.warn('[Firebase Email Link Notice]:', fbErr);
-        }
-      }
-
-      // Seamless redirect to Customer / Hiring Partner workspace
+      setSuccessNotice('Account registered successfully! Redirecting to Hiring Partner workspace...');
       const destination = data.redirectUrl || '/hiring/dashboard';
       setTimeout(() => {
         router.push(destination);
-      }, email.trim() ? 1000 : 300);
+      }, 700);
 
     } catch (err: any) {
-      setError(err.message || 'Network error during registration');
+      setError(err.message || 'Network error during registration. Please try again.');
       setLoading(false);
     }
   };
@@ -100,8 +113,9 @@ function CustomerRegistrationForm() {
         </div>
 
         {error && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
-            {error}
+          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{error}</span>
           </div>
         )}
 
@@ -117,42 +131,106 @@ function CustomerRegistrationForm() {
             <label className="block text-xs font-bold text-[#153451] uppercase tracking-wider mb-1">
               Full Name (पूरा नाम) *
             </label>
-            <input
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="e.g. Ananya Deshmukh"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs text-[#153451] font-semibold focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
-              required
-            />
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#7697B3]">
+                <User className="w-4 h-4" />
+              </span>
+              <input
+                type="text"
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Rahul Sharma"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
+              />
+            </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#153451] uppercase tracking-wider mb-1">
               Mobile Number (मोबाइल नंबर) *
             </label>
-            <input
-              type="tel"
-              maxLength={10}
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
-              placeholder="9876543210"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs text-[#153451] font-semibold focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
-              required
-            />
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-xs font-bold text-[#7697B3]">
+                +91
+              </span>
+              <input
+                type="tel"
+                required
+                maxLength={10}
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
+                placeholder="9876543210"
+                className="w-full pl-12 pr-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
+              />
+            </div>
+          </div>
+
+          {/* Password Field */}
+          <div>
+            <label className="block text-xs font-bold text-[#153451] uppercase tracking-wider mb-1">
+              Create Password (पासवर्ड) *
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#7697B3]">
+                <Lock className="w-4 h-4" />
+              </span>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="At least 6 characters"
+                className="w-full pl-10 pr-10 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-[#7697B3] hover:text-[#153451]"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Confirm Password Field */}
+          <div>
+            <label className="block text-xs font-bold text-[#153451] uppercase tracking-wider mb-1">
+              Confirm Password (पासवर्ड की पुष्टि करें) *
+            </label>
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#7697B3]">
+                <Lock className="w-4 h-4" />
+              </span>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                required
+                minLength={6}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter password"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
+              />
+            </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#153451] uppercase tracking-wider mb-1">
-              Email Address (वैकल्पिक ईमेल - Passwordless Login)
+              Email Address (वैकल्पिक ईमेल)
             </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="ananya@example.com"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs text-[#153451] font-semibold focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
-            />
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#7697B3]">
+                <Mail className="w-4 h-4" />
+              </span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="rahul@example.com"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -162,10 +240,11 @@ function CustomerRegistrationForm() {
               </label>
               <input
                 type="text"
+                required
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs text-[#153451] font-semibold focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
-                required
+                placeholder="Noida / Delhi"
+                className="w-full px-3 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
               />
             </div>
             <div>
@@ -174,57 +253,60 @@ function CustomerRegistrationForm() {
               </label>
               <input
                 type="text"
+                required
                 maxLength={6}
                 value={pincode}
-                onChange={(e) => setPincode(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs text-[#153451] font-semibold focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
-                required
+                onChange={(e) => setPincode(e.target.value.replace(/\D/g, ''))}
+                placeholder="201301"
+                className="w-full px-3 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
               />
             </div>
           </div>
 
           <div>
             <label className="block text-xs font-bold text-[#153451] uppercase tracking-wider mb-1">
-              Address / Locality (पता / इलाका)
+              Service Address (पता)
             </label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="e.g. Sector 62, Indirapuram"
-              className="w-full px-4 py-2.5 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs text-[#153451] font-semibold focus:outline-none focus:border-[#2583D5] focus:bg-white transition"
-            />
+            <div className="relative">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-[#7697B3]">
+                <MapPin className="w-4 h-4" />
+              </span>
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="House No, Street, Sector"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] text-xs font-bold text-[#153451] focus:outline-none focus:border-[#2583D5] focus:bg-white"
+              />
+            </div>
           </div>
 
           <button
             type="submit"
-            disabled={loading}
-            className="w-full py-3.5 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-black text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 mt-4"
+            disabled={loading || phoneNumber.length < 10 || password.length < 6}
+            className="w-full py-4 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-black text-xs uppercase tracking-wider shadow-lg shadow-[#2583D5]/25 transition flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>REGISTERING...</span>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                <span>REGISTERING ACCOUNT...</span>
               </>
             ) : (
               <>
-                <span>REGISTER & PROCEED (पंजीकरण करें)</span>
+                <span>REGISTER & BOOK WORKERS (पंजीकरण करें)</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
 
-        <div className="mt-6 pt-4 border-t border-[#EAF6FF] text-center text-xs text-[#7697B3]">
-          Already registered?{' '}
-          <Link href="/login" className="font-bold text-[#2583D5] hover:underline">
-            Login Here
-          </Link>
-        </div>
-
-        <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-[#4B6F8E]">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-          <span>MongoDB Atlas Encrypted • Firebase Verified</span>
+        <div className="mt-6 pt-4 border-t border-[#EAF6FF] text-center">
+          <p className="text-xs text-[#7697B3]">
+            Already have a registered account?{' '}
+            <Link href="/login" className="font-bold text-[#2583D5] hover:underline">
+              Login here (लॉगिन करें)
+            </Link>
+          </p>
         </div>
 
       </div>

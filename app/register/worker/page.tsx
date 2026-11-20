@@ -15,7 +15,10 @@ import {
   ArrowLeft,
   CheckCircle2,
   Crosshair,
-  Upload
+  Upload,
+  Lock,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export default function WorkerRegistrationPage() {
@@ -27,7 +30,9 @@ export default function WorkerRegistrationPage() {
   // Step 1: Personal
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [otp, setOtp] = useState('123456');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [dob, setDob] = useState('1994-05-15');
   const [gender, setGender] = useState('MALE');
   const [language, setLanguage] = useState('hi');
@@ -85,6 +90,16 @@ export default function WorkerRegistrationPage() {
 
   const handleSubmit = async () => {
     setError('');
+
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match. Please verify.');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -94,6 +109,8 @@ export default function WorkerRegistrationPage() {
         body: JSON.stringify({
           fullName,
           phoneNumber,
+          password,
+          confirmPassword,
           role: 'WORKER',
           language,
           state,
@@ -209,16 +226,40 @@ export default function WorkerRegistrationPage() {
               </div>
               <div>
                 <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-1">
-                  OTP Code (ओटीपी)
+                  Create Password (पासवर्ड) *
                 </label>
-                <input
-                  type="text"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  placeholder="123456"
-                  className="w-full px-4 py-2.5 rounded-xl border border-border bg-bg text-sm font-semibold focus:outline-none focus:border-forest"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="At least 6 characters"
+                    className="w-full px-4 py-2.5 rounded-xl border border-border bg-bg text-sm font-semibold focus:outline-none focus:border-forest"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
               </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-text-primary uppercase tracking-wider mb-1">
+                Confirm Password (पासवर्ड की पुष्टि करें) *
+              </label>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Re-enter password"
+                className="w-full px-4 py-2.5 rounded-xl border border-border bg-bg text-sm font-semibold focus:outline-none focus:border-forest"
+                required
+              />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

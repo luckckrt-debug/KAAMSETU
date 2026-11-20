@@ -113,7 +113,8 @@ export async function GET(
       avatarUrl: user.avatarUrl,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
-      firebaseUid: user.firebaseUid ? 'CONNECTED' : undefined,
+      authProvider: 'CENTRAL_MONGODB',
+      passwordProtected: Boolean(user.passwordHash),
     };
 
     // Calculate Platform Fees for bookings associated with this user

@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/store';
-import { comparePassword, hashPassword, signSessionToken, getRoleDashboardPath, normalizeRole, verifyOtp } from '@/lib/auth';
+import { comparePassword, hashPassword, signSessionToken, getRoleDashboardPath, normalizeRole } from '@/lib/auth';
 import { getMongoCollection } from '@/lib/mongodb';
 import { UserRole } from '@/lib/types';
+
+export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { phoneNumber, password, otp } = body;
+    const { phoneNumber, password } = body;
 
     if (!phoneNumber) {
       return NextResponse.json({ 
@@ -21,6 +23,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ 
         success: false, 
         error: 'Please enter a valid 10-digit Indian mobile number.' 
+      }, { status: 400 });
+    }
+
+    if (!password) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Password is required to log in.' 
       }, { status: 400 });
     }
 
@@ -44,52 +53,38 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Check if account is suspended or blocked
-    if (user.status === 'BLOCKED' || user.status === 'SUSPENDED') {
+    const accountStatus = user.accountStatus || user.status || 'ACTIVE';
+    if (accountStatus === 'BLOCKED' || accountStatus === 'SUSPENDED') {
       return NextResponse.json({ 
         success: false, 
         error: 'Your account has been suspended or restricted by KaamSetu Operations. Please contact support.' 
       }, { status: 403 });
     }
 
-    // 3. Password Verification (or OTP verification if OTP was provided)
-    if (otp) {
-      const otpRes = verifyOtp(cleanPhone, otp);
-      if (!otpRes.success) {
-        return NextResponse.json({ success: false, error: otpRes.message }, { status: 400 });
-      }
-    } else {
-      if (!password) {
+    // 3. Password Verification
+    if (user.passwordHash) {
+      const isMatch = comparePassword(String(password), user.passwordHash);
+      if (!isMatch) {
         return NextResponse.json({ 
           success: false, 
-          error: 'Password is required to log in.' 
-        }, { status: 400 });
+          error: 'Incorrect password. Please verify and try again.' 
+        }, { status: 401 });
       }
-
-      // If user has a hashed password
-      if (user.passwordHash) {
-        const isMatch = comparePassword(String(password), user.passwordHash);
-        if (!isMatch) {
-          return NextResponse.json({ 
-            success: false, 
-            error: 'Incorrect password. Please try again or use OTP verification.' 
-          }, { status: 401 });
-        }
-      } else {
-        // Legacy / Pre-seeded demo user (accepts default demo password "KaamSetu@2026" or "123456")
-        const isDemoPass = password === 'KaamSetu@2026' || password === '123456' || password === 'password123';
-        if (!isDemoPass) {
-          return NextResponse.json({ 
-            success: false, 
-            error: 'Incorrect password. (For demo accounts, use: KaamSetu@2026)' 
-          }, { status: 401 });
-        }
-        // Save hashed password for next time
-        const newHash = hashPassword(String(password));
-        if (usersCol) {
-          await usersCol.updateOne({ phoneNumber: cleanPhone }, { $set: { passwordHash: newHash } });
-        }
-        user.passwordHash = newHash;
+    } else {
+      // Legacy / Pre-seeded demo user (accepts default demo password "KaamSetu@2026" or "123456")
+      const isDemoPass = password === 'KaamSetu@2026' || password === '123456' || password === 'password123';
+      if (!isDemoPass) {
+        return NextResponse.json({ 
+          success: false, 
+          error: 'Incorrect password. Please try again.' 
+        }, { status: 401 });
       }
+      // Migrate password to secure hash for subsequent logins
+      const newHash = hashPassword(String(password));
+      if (usersCol) {
+        await usersCol.updateOne({ phoneNumber: cleanPhone }, { $set: { passwordHash: newHash } });
+      }
+      user.passwordHash = newHash;
     }
 
     // 4. Role determination and authorized dashboard route
@@ -97,6 +92,14 @@ export async function POST(req: NextRequest) {
     const primaryRole = roles[0];
     const normalized = normalizeRole(primaryRole);
     const redirectUrl = getRoleDashboardPath(normalized);
+
+    // Record last login in MongoDB Atlas
+    if (usersCol) {
+      usersCol.updateOne(
+        { phoneNumber: cleanPhone },
+        { $set: { lastLoginAt: new Date().toISOString() } }
+      ).catch(() => {});
+    }
 
     // 5. Generate signed JWT session token
     const token = signSessionToken({

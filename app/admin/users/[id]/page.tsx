@@ -305,8 +305,8 @@ export default function UserBackofficePage({
                 <span className="font-bold text-[#153451]">{user.language === 'hi' ? 'हिंदी (Hindi)' : 'English'}</span>
               </div>
               <div className="flex justify-between py-2 border-b border-[#EAF6FF]">
-                <span className="text-[#7697B3]">Firebase Authentication</span>
-                <span className="font-bold text-emerald-600">{user.firebaseUid ? 'Linked & Verified' : 'Standard Session'}</span>
+                <span className="text-[#7697B3]">Authentication Security</span>
+                <span className="font-bold text-emerald-600">Central Auth • MongoDB Atlas</span>
               </div>
               <div className="flex justify-between py-2">
                 <span className="text-[#7697B3]">Registration Date</span>
