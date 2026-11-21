@@ -160,14 +160,14 @@ export async function recordAdminAuditLog(entry: {
 export async function getSystemSettings(): Promise<any> {
   const defaultSettings = {
     id: 'system-settings-main',
-    platformName: 'KAAMSETU',
+    platformName: 'DigiWork',
     platformFee: 99,
     serviceFeeEnabled: true,
     maintenanceMode: false,
     kycRequiredForBookings: true,
     payoutProvider: 'MANUAL',
     supportPhone: '+91-8887642828',
-    supportEmail: 'support@kaamsetu.in',
+    supportEmail: 'support@digiwork.in',
     autoDispatchEnabled: true,
     updatedAt: new Date().toISOString(),
   };

@@ -64,6 +64,7 @@ export default function UnifiedRegisterPage() {
     setLoading(true);
 
     try {
+      const refCode = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('ref') || '') : '';
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -76,6 +77,7 @@ export default function UnifiedRegisterPage() {
           tradeCategory: selectedRole === 'WORKER' ? tradeCategory : undefined,
           companyName: selectedRole === 'CONTRACTOR' ? (companyName.trim() || `${fullName} Contracting`) : undefined,
           city: city.trim(),
+          referralCode: refCode || undefined,
         }),
       });
 
@@ -109,7 +111,7 @@ export default function UnifiedRegisterPage() {
             <Zap className="w-6 h-6 fill-white" />
           </div>
           <h1 className="text-2xl font-black text-[#153451] tracking-tight">
-            Create KaamSetu Account
+            Create DigiWork Account
           </h1>
           <p className="text-xs text-[#7697B3]">
             Central Registration • Choose your account role below

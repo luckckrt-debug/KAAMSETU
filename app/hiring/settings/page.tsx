@@ -116,7 +116,7 @@ export default function CustomerSettingsPage() {
           <div className="flex items-center gap-2 border-b border-[#EAF6FF] pb-3">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
             <h3 className="font-black text-[#153451] text-base">
-              KaamSetu Trust & 24x7 Safety Helpdesk
+              DigiWork Trust & 24x7 Safety Helpdesk
             </h3>
           </div>
 
@@ -124,7 +124,7 @@ export default function CustomerSettingsPage() {
             <div className="p-4 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8] space-y-2">
               <span className="text-[#7697B3] font-bold uppercase block">Customer Support Toll-Free</span>
               <p className="text-base font-black text-[#2583D5] flex items-center gap-1.5">
-                <Phone className="w-4 h-4" /> 1800-208-KAAM (5226)
+                <Phone className="w-4 h-4" /> 1800-DIGIWORK (3444)
               </p>
               <p className="text-[11px] text-[#7697B3]">Available 24 hours, 7 days a week in Hindi & English</p>
             </div>
@@ -142,7 +142,7 @@ export default function CustomerSettingsPage() {
         {/* 3. Account Actions */}
         <div className="bg-white rounded-3xl p-6 border border-[#D1E8F8] shadow-sm flex items-center justify-between">
           <div>
-            <h4 className="text-xs font-bold text-[#153451]">Sign Out of KaamSetu</h4>
+            <h4 className="text-xs font-bold text-[#153451]">Sign Out of DigiWork</h4>
             <p className="text-[11px] text-[#7697B3]">Log out from this browser session</p>
           </div>
 

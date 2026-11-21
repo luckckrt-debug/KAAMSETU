@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     if (accountStatus === 'BLOCKED' || accountStatus === 'SUSPENDED') {
       return NextResponse.json({
         success: false,
-        error: 'This account is restricted. Please contact KaamSetu Support.'
+        error: 'This account is restricted. Please contact DigiWork Support.'
       }, { status: 403 });
     }
 

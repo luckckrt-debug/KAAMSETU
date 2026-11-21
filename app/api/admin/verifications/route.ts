@@ -24,7 +24,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
 
     if (token) {

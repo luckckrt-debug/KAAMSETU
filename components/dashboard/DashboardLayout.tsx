@@ -64,17 +64,17 @@ export default function DashboardLayout({
 
   const roleMeta = {
     WORKER: {
-      tag: 'Worker Workspace (श्रमिक कार्यस्थल)',
+      tag: 'DigiWork Worker (श्रमिक कार्यस्थल)',
       color: 'bg-emerald-500/10 text-emerald-800 border-emerald-300',
       icon: HardHat,
     },
     HIRING_PARTNER: {
-      tag: 'Hiring Partner Workspace (भर्ती पोर्टल)',
+      tag: 'DigiWork Hiring Partner (हायरिंग पोर्टल)',
       color: 'bg-blue-500/10 text-blue-800 border-blue-300',
       icon: Users,
     },
     CONTRACTOR: {
-      tag: 'Contractor Workspace (ठेकेदार पोर्टल)',
+      tag: 'DigiWork Contractor (ठेकेदार पोर्टल)',
       color: 'bg-amber-500/10 text-amber-900 border-amber-300',
       icon: Building2,
     },
@@ -131,8 +131,8 @@ export default function DashboardLayout({
             {/* Quick Home Navigation Key */}
             <Link
               href="/"
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#EAF6FF] hover:bg-[#D9EEFF] border border-[#D9EEFF] text-[#2583D5] text-xs font-bold transition shadow-2xs"
-              title="Return to KaamSetu Public Home"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#EDF4FC] hover:bg-[#D7E3F1] border border-[#D7E3F1] text-[#2563EB] text-xs font-bold transition shadow-2xs"
+              title="Return to DigiWork Public Home"
             >
               <Home className="w-4 h-4 stroke-[2.2]" />
               <span className="hidden xs:inline">Home</span>

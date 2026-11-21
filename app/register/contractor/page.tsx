@@ -80,6 +80,7 @@ export default function ContractorRegistrationPage() {
     setLoading(true);
 
     try {
+      const refCode = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('ref') || '') : '';
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -95,6 +96,7 @@ export default function ContractorRegistrationPage() {
           pincode: pincode.trim(),
           gstin: gstin.trim().toUpperCase() || undefined,
           panNumber: panNumber.trim().toUpperCase() || undefined,
+          referralCode: refCode || undefined,
         }),
       });
 
@@ -112,7 +114,7 @@ export default function ContractorRegistrationPage() {
       }, 1500);
     } catch (err: any) {
       console.error('Contractor registration error:', err);
-      setError(err.message || 'Network error occurred while connecting to KaamSetu servers.');
+      setError(err.message || 'Network error occurred while connecting to DigiWork servers.');
       setLoading(false);
     }
   };
@@ -130,7 +132,7 @@ export default function ContractorRegistrationPage() {
             CONTRACTOR PORTAL REGISTRATION
           </span>
           <h1 className="text-2xl sm:text-3xl font-black text-[#153451]">
-            Register as KaamSetu Contractor (ठेकेदार पंजीकरण)
+            Register as DigiWork Contractor (ठेकेदार पंजीकरण)
           </h1>
           <p className="text-xs sm:text-sm text-[#7697B3] max-w-md mx-auto">
             Create an authorized contractor account to post multi-trade projects, manage workforce, track muster rolls, and execute daily payouts.

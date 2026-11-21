@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     if (accountStatus === 'BLOCKED' || accountStatus === 'SUSPENDED') {
       return NextResponse.json({ 
         success: false, 
-        error: 'Your account has been suspended or restricted by KaamSetu Operations. Please contact support.' 
+        error: 'Your account has been suspended or restricted by DigiWork Operations. Please contact support.' 
       }, { status: 403 });
     }
 
@@ -71,8 +71,8 @@ export async function POST(req: NextRequest) {
         }, { status: 401 });
       }
     } else {
-      // Legacy / Pre-seeded demo user (accepts default demo password "KaamSetu@2026" or "123456")
-      const isDemoPass = password === 'KaamSetu@2026' || password === '123456' || password === 'password123';
+      // Pre-seeded demo user (accepts default demo password "DigiWork@2026", "KaamSetu@2026" or "123456")
+      const isDemoPass = password === 'DigiWork@2026' || password === 'KaamSetu@2026' || password === '123456' || password === 'password123';
       if (!isDemoPass) {
         return NextResponse.json({ 
           success: false, 
@@ -126,12 +126,20 @@ export async function POST(req: NextRequest) {
       redirectUrl,
     });
 
-    response.cookies.set('kaamsetu_session', token, {
+    response.cookies.set('digiwork_session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
       maxAge: 7 * 24 * 60 * 60, // 7 days
+    });
+
+    response.cookies.set('kaamsetu_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60, // 7 days (backwards compatibility)
     });
 
     return response;

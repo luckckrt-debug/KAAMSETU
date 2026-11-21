@@ -114,7 +114,7 @@ export default function WorkerSettingsPage() {
         <div className="bg-white rounded-3xl p-6 border border-[#D9EEFF] shadow-xs space-y-4">
           <h3 className="font-black text-[#153451] text-base border-b border-[#D9EEFF] pb-3 flex items-center gap-2">
             <HelpCircle className="w-5 h-5 text-[#2583D5]" />
-            <span>24x7 KaamSetu Worker Helpline (सहायता केंद्र)</span>
+            <span>24x7 DigiWork Worker Helpline (सहायता केंद्र)</span>
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
@@ -124,7 +124,7 @@ export default function WorkerSettingsPage() {
               </div>
               <div>
                 <span className="text-[#4B6F8E] block">Toll-Free Worker Support</span>
-                <strong className="text-sm text-[#153451]">1800-KAAMSETU (522673)</strong>
+                <strong className="text-sm text-[#153451]">1800-DIGIWORK (3444)</strong>
               </div>
             </div>
 
@@ -134,7 +134,7 @@ export default function WorkerSettingsPage() {
               </div>
               <div>
                 <span className="text-[#4B6F8E] block">Worker Email Support</span>
-                <strong className="text-sm text-[#153451]">support@kaamsetu.in</strong>
+                <strong className="text-sm text-[#153451]">support@digiwork.in</strong>
               </div>
             </div>
           </div>

@@ -106,7 +106,7 @@ export default function AdminOverviewScreen() {
         <Ionicons name="phone-portrait" size={28} color="#FF6B00" />
         <View style={{ flex: 1, marginLeft: 12 }}>
           <Text style={styles.actionTitle}>3 Standalone Android APKs</Text>
-          <Text style={styles.actionDesc}>KaamSetu Worker, Hiring & Contractor APKs are stored in central-directory/apks.</Text>
+          <Text style={styles.actionDesc}>DigiWork Worker, Hiring & Contractor APKs are stored in central-directory/apks.</Text>
         </View>
         <Ionicons name="chevron-forward" size={20} color="#94A3B8" />
       </View>

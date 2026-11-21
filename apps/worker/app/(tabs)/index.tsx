@@ -58,7 +58,7 @@ export default function WorkerHomeScreen() {
       {/* Top App Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Text style={styles.appName}>KAAMSETU</Text>
+          <Text style={styles.appName}>DIGIWORK</Text>
           <Text style={styles.workerGreeting}>
             {language === 'hi' ? 'नमस्ते' : 'Hello'}, {worker?.fullName || 'Worker'}!
           </Text>

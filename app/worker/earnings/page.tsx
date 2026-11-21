@@ -422,7 +422,7 @@ export default function WorkerEarningsPage() {
               </div>
 
               <p className="text-xs text-gray-600 leading-relaxed">
-                KAAMSETU charges a standard 10% platform commission on completed jobs. Workers retain 90% of all gross payments. 0 withdrawal fees on UPI or bank transfers.
+                DIGIWORK fair pricing guarantees 100% of your agreed charge belongs to you. Platform fees are paid by customers. Zero silent deductions on completed jobs, and 0 withdrawal fees on UPI or bank transfers.
               </p>
 
               <div className="p-3.5 bg-[#F7F7F2] rounded-2xl border border-[#D4DED5] space-y-2 text-xs">

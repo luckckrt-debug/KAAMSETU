@@ -128,7 +128,7 @@ export default function CustomerProfilePage() {
               </label>
               <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-bold text-emerald-800 flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>₹25,000 KaamSetu Escrow Guarantee Protected</span>
+                <span>₹25,000 DigiWork Escrow Guarantee Protected</span>
               </div>
             </div>
           </div>

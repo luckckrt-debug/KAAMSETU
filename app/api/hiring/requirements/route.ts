@@ -5,7 +5,7 @@ import { upsertMongoDocument } from '@/lib/mongodb';
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let userId = 'user-customer-1';
     if (token) {
       const payload = verifySessionToken(token);
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let userId = 'user-customer-1';
     if (token) {
       const payload = verifySessionToken(token);

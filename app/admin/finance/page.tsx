@@ -116,7 +116,7 @@ export default function AdminFinancePage() {
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
     link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `KaamSetu_${title}_${Date.now()}.csv`);
+    link.setAttribute('download', `DigiWork_${title}_${Date.now()}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -196,7 +196,7 @@ export default function AdminFinancePage() {
           <div className="bg-emerald-50 rounded-2xl p-3.5 border border-emerald-200 shadow-xs col-span-1">
             <span className="text-[10px] font-bold text-emerald-800 uppercase block truncate">Net Revenue</span>
             <div className="text-lg font-black text-emerald-700 mt-1">₹{(summary?.platformNetFeeRevenue || 0).toLocaleString('en-IN')}</div>
-            <span className="text-[10px] text-emerald-800 font-bold">Net KaamSetu</span>
+            <span className="text-[10px] text-emerald-800 font-bold">Net DigiWork</span>
           </div>
         </div>
 
@@ -355,7 +355,7 @@ export default function AdminFinancePage() {
                 )}
               </div>
 
-              {/* KaamSetu Platform Fee Collection Overview */}
+              {/* DigiWork Platform Fee Collection Overview */}
               <div className="bg-white rounded-3xl p-6 border border-[#D1E8F8] shadow-xs space-y-4">
                 <div className="flex items-center justify-between border-b border-[#EAF6FF] pb-3">
                   <h3 className="font-black text-sm text-[#153451]">Platform Revenue Summary (₹99 Fee)</h3>
@@ -489,7 +489,7 @@ export default function AdminFinancePage() {
           <div className="bg-white rounded-3xl p-6 border border-[#D1E8F8] shadow-xs space-y-4">
             <h3 className="font-black text-sm text-[#153451]">₹99 Platform Service Fee Overview</h3>
             <p className="text-xs text-[#4B6F8E]">
-              KaamSetu charges a fixed ₹99 convenience & dispatch fee on every completed customer booking. This fee is paid directly by the customer and routed to the platform business account.
+              DigiWork charges a fixed ₹99 convenience & dispatch fee on every completed customer booking. This fee is paid directly by the customer and routed to the platform business account.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
               <div className="p-4 rounded-2xl bg-[#F5FAFF] border border-[#D1E8F8]">

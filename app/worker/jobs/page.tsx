@@ -411,7 +411,7 @@ export default function WorkerFindWorkPage() {
               </div>
 
               <div className="p-3 rounded-xl bg-blue-50/80 border border-blue-200 text-[11px] text-[#153451] leading-relaxed">
-                ℹ️ <strong>Direct Payout Notice:</strong> Upon selection and daily work completion verification by the contractor, your earnings will be credited directly to your KaamSetu digital wallet.
+                ℹ️ <strong>Direct Payout Notice:</strong> Upon selection and daily work completion verification by the contractor, your earnings will be credited directly to your DigiWork digital wallet.
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-2">

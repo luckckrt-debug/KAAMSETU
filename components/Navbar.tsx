@@ -60,22 +60,22 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-[#D1E8F8]/70 shadow-[0_4px_25px_rgba(37,131,213,0.06)] transition-all">
       {/* Top Micro-Banner: Trust & Helpline */}
-      <div className="bg-[#123B5D] text-white text-xs py-1.5 px-4 hidden md:flex justify-between items-center border-b border-[#1D4F78]">
+      <div className="bg-[#0B1F3A] text-white text-xs py-1.5 px-4 hidden md:flex justify-between items-center border-b border-[#1E3A8A]">
         <div className="flex items-center space-x-4 max-w-7xl mx-auto w-full justify-between">
           <div className="flex items-center space-x-3">
-            <span className="flex items-center gap-1.5 text-[#60B5F5] font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#2196E8]" /> 100% Aadhaar & Skill Verified Indian Workforce
+            <span className="flex items-center gap-1.5 text-[#38BDF8] font-bold">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#2563EB]" /> 100% Aadhaar & Skill Verified Indian Workforce
             </span>
             <span className="text-[#4B6F8E]">|</span>
-            <span className="text-slate-300">Right People. Right Place. Right Work.</span>
+            <span className="text-slate-300">Empowering India&apos;s Workforce with Digital Connectivity</span>
           </div>
           <div className="flex items-center space-x-4 text-slate-300">
             <span className="flex items-center gap-1">
-              <Phone className="w-3 h-3 text-[#2196E8]" /> 
-              Toll-Free Helpline: <strong className="text-white ml-0.5">1800-KAAMSETU</strong>
+              <Phone className="w-3 h-3 text-[#38BDF8]" /> 
+              Toll-Free Helpline: <strong className="text-white ml-0.5">1800-DIGIWORK</strong>
             </span>
             <span className="text-[#4B6F8E]">|</span>
-            <span className="bg-[#2196E8]/20 text-[#60B5F5] px-2 py-0.5 rounded text-[11px] font-semibold border border-[#2196E8]/30">
+            <span className="bg-[#2563EB]/20 text-[#38BDF8] px-2 py-0.5 rounded text-[11px] font-semibold border border-[#2563EB]/30">
               हिन्दी / English
             </span>
           </div>

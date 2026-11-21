@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (!token) {
       return NextResponse.json({ authenticated: false, message: 'No active session token found' }, { status: 200 });
     }
@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
     const payload = verifySessionToken(token);
     if (!payload || !payload.userId) {
       const res = NextResponse.json({ authenticated: false, message: 'Session expired or invalid' }, { status: 200 });
+      res.cookies.delete('digiwork_session');
       res.cookies.delete('kaamsetu_session');
       return res;
     }
@@ -33,6 +34,7 @@ export async function GET(req: NextRequest) {
 
     if (!user) {
       const res = NextResponse.json({ authenticated: false, message: 'User record not found' }, { status: 200 });
+      res.cookies.delete('digiwork_session');
       res.cookies.delete('kaamsetu_session');
       return res;
     }
@@ -43,8 +45,9 @@ export async function GET(req: NextRequest) {
       const res = NextResponse.json({ 
         authenticated: false, 
         blocked: true,
-        message: 'Account has been restricted or blocked by KaamSetu Operations.' 
+        message: 'Account has been restricted or blocked by DigiWork Operations.' 
       }, { status: 403 });
+      res.cookies.delete('digiwork_session');
       res.cookies.delete('kaamsetu_session');
       return res;
     }

@@ -95,9 +95,9 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Worker profile ID and action are required.' }, { status: 400 });
     }
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
-    let adminName = 'KaamSetu Operations';
+    let adminName = 'DigiWork Operations';
     let adminRole = 'KYC_ADMIN';
 
     if (token) {

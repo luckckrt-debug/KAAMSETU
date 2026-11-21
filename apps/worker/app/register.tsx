@@ -60,7 +60,7 @@ export default function WorkerRegistrationScreen() {
 
       if (res.success && res.worker) {
         login(res.token, { userId: res.worker.userId, phoneNumber: phone, role: 'WORKER' }, res.worker);
-        Alert.alert('Registration Successful', 'Welcome to KaamSetu! Your profile is active and verified.', [
+        Alert.alert('Registration Successful', 'Welcome to DigiWork! Your profile is active and verified.', [
           { text: 'Start Working', onPress: () => router.replace('/(tabs)') },
         ]);
       } else {

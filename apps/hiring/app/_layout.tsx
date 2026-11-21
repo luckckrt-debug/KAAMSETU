@@ -37,15 +37,15 @@ class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState>
       return (
         <View style={errorStyles.container}>
           <Text style={errorStyles.icon}>⚠️</Text>
-          <Text style={errorStyles.title}>KaamSetu Recovered Safely</Text>
+          <Text style={errorStyles.title}>DigiWork Recovered Safely</Text>
           <Text style={errorStyles.subtitle}>
-            An unexpected glitch occurred, but KaamSetu protected your data.
+            An unexpected glitch occurred, but DigiWork protected your data.
           </Text>
           <Text style={errorStyles.errorText}>
             {this.state.error?.message || 'Unknown issue'}
           </Text>
           <TouchableOpacity style={errorStyles.retryBtn} onPress={this.handleRestart}>
-            <Text style={errorStyles.retryText}>Reload KaamSetu</Text>
+            <Text style={errorStyles.retryText}>Reload DigiWork</Text>
           </TouchableOpacity>
         </View>
       );

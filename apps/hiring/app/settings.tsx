@@ -56,7 +56,7 @@ export default function EmployerSettingsScreen() {
         <View style={styles.card}>
           <TouchableOpacity
             style={styles.actionRow}
-            onPress={() => Alert.alert('Corporate Hiring Help', 'Contact priority employer line at business@kaamsetu.in')}
+            onPress={() => Alert.alert('Corporate Hiring Help', 'Contact priority employer line at business@digiwork.in')}
           >
             <Text style={styles.actionText}>🏢 Corporate Bulk Manpower Solutions</Text>
             <Text style={styles.arrow}>→</Text>
@@ -75,7 +75,7 @@ export default function EmployerSettingsScreen() {
           <Text style={styles.logoutBtnText}>Log Out of Employer Account</Text>
         </TouchableOpacity>
 
-        <Text style={styles.versionText}>KaamSetu Employer App v1.0.0 (Android Production)</Text>
+        <Text style={styles.versionText}>DigiWork Hiring App v1.0.0 (Android Production)</Text>
       </ScrollView>
     </View>
   );

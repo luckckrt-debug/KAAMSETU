@@ -26,9 +26,9 @@ export default function WhyTrustSection() {
     },
     {
       icon: Award,
-      title: '₹25,000 KaamSetu Guarantee',
+      title: '₹25,000 DigiWork Guarantee',
       titleHi: '₹25,000 सुरक्षा गारंटी',
-      description: 'Full damage protection and free 7-day rework guarantee on every service booked through KaamSetu. Dedicated dispute resolution officer on call.',
+      description: 'Full damage protection and free 7-day rework guarantee on every service booked through DigiWork. Dedicated dispute resolution officer on call.',
       tag: 'Workmanship Insured',
     },
   ];
@@ -44,10 +44,10 @@ export default function WhyTrustSection() {
             <span>Built on Trust & Integrity • विश्वसनीयता</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#153451] tracking-tight">
-            Why India Trusts KaamSetu
+            Why India Trusts DigiWork
           </h2>
           <p className="text-base sm:text-lg text-[#4B6F8E] font-medium leading-relaxed">
-            Unlike unorganized roadside stands or unregulated aggregators, KaamSetu provides complete transparency, verified worker safety, and institutional quality control.
+            Unlike unorganized roadside stands or unregulated aggregators, DigiWork provides complete transparency, verified worker safety, and institutional quality control.
           </p>
         </div>
 

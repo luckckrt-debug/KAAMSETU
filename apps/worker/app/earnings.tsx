@@ -99,7 +99,7 @@ export default function WorkerEarningsScreen() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <Text style={styles.backText}>← Back</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>KaamSetu Wallet (कमाई व वॉलेट)</Text>
+        <Text style={styles.headerTitle}>DigiWork Wallet (कमाई व वॉलेट)</Text>
         <View style={{ width: 40 }} />
       </View>
 

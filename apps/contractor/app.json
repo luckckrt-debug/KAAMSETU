@@ -1,27 +1,27 @@
 {
   "expo": {
-    "name": "KaamSetu Contractor",
-    "slug": "kaamsetu-contractor",
+    "name": "DigiWork Contractor",
+    "slug": "digiwork-contractor",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "kaamsetu-contractor",
+    "scheme": "digiwork-contractor",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0F172A"
+      "backgroundColor": "#0B1F3A"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kaamsetu.contractor"
+      "bundleIdentifier": "com.digiwork.contractor"
     },
     "android": {
-      "package": "com.kaamsetu.contractor",
+      "package": "com.digiwork.contractor",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0F172A"
+        "backgroundColor": "#0B1F3A"
       },
       "permissions": [
         "ACCESS_COARSE_LOCATION",

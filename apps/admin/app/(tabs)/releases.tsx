@@ -4,36 +4,36 @@ import { Ionicons } from '@expo/vector-icons';
 
 const RELEASED_APPS = [
   {
-    name: 'KaamSetu Worker',
-    package: 'com.kaamsetu.worker',
+    name: 'DigiWork Worker',
+    package: 'com.digiwork.worker',
     role: 'Workers & Daily Wage Labor',
     version: '1.0.0',
     size: '64.84 MB',
-    file: 'KaamSetu-Worker-preview.apk',
+    file: 'DigiWork-Worker-preview.apk',
     url: 'https://expo.dev/artifacts/eas/6Zci0-hiEwLc53RGVoY4UVPl-gaA9eF2eVLPF4TRBYo.apk',
-    color: '#FF6B00',
+    color: '#0284C7',
     icon: 'hammer'
   },
   {
-    name: 'KaamSetu Hiring',
-    package: 'com.kaamsetu.app',
+    name: 'DigiWork Hiring',
+    package: 'com.digiwork.hiring',
     role: 'Customers, Homeowners & SMEs',
     version: '1.0.0',
     size: '64.83 MB',
-    file: 'KaamSetu-Hiring-preview.apk',
+    file: 'DigiWork-Hiring-preview.apk',
     url: 'https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk',
     color: '#2563EB',
     icon: 'people'
   },
   {
-    name: 'KaamSetu Contractor',
-    package: 'com.kaamsetu.contractor',
+    name: 'DigiWork Contractor',
+    package: 'com.digiwork.contractor',
     role: 'Construction Contractors & Builders',
     version: '1.0.0',
     size: '64.84 MB',
-    file: 'KaamSetu-Contractor-preview.apk',
+    file: 'DigiWork-Contractor-preview.apk',
     url: 'https://expo.dev/artifacts/eas/JPCBbmDl3gfGcYUuCJad-c7QV8jZ39Vt7z736lLmeq0.apk',
-    color: '#7C3AED',
+    color: '#4338CA',
     icon: 'business'
   }
 ];

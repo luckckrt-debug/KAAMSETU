@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
         {
           id: 'notif-2',
           title: 'System Maintenance Notice',
-          body: 'KaamSetu payment ledger reconciliation scheduled for tonight at 2:00 AM.',
+          body: 'DigiWork payment ledger reconciliation scheduled for tonight at 2:00 AM.',
           targetRole: 'ALL',
           channel: 'IN_APP',
           sentBy: 'Super Admin',
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
     let adminName = 'Super Admin';
     let adminUserId = 'user-admin-1';
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (token) {
       const payload = verifySessionToken(token);
       if (payload) {

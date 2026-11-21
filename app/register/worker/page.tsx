@@ -137,6 +137,7 @@ export default function WorkerRegistrationPage() {
         })
       ];
 
+      const refCode = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('ref') || '') : '';
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -154,7 +155,8 @@ export default function WorkerRegistrationPage() {
           yearsExperience,
           hourlyRate,
           dailyRate,
-          professions: allProfessionsPayload
+          professions: allProfessionsPayload,
+          referralCode: refCode || undefined,
         }),
       });
 

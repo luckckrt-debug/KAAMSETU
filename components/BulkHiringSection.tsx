@@ -45,7 +45,7 @@ export default function BulkHiringSection() {
             </h2>
 
             <p className="text-base sm:text-lg text-[#4B6F8E] leading-relaxed font-normal">
-              Need 10 to 100+ verified tradesmen on your site tomorrow? KaamSetu connects prime contractors directly with organized workforce teams, registered labour contractors, and certified team leaders.
+              Need 10 to 100+ verified tradesmen on your site tomorrow? DigiWork connects prime contractors directly with organized workforce teams, registered labour contractors, and certified team leaders.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">

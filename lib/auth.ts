@@ -1,4 +1,4 @@
-// KAAMSETU - Authentication, Session & RBAC Module
+// DIGIWORK - Authentication, Session & RBAC Module
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -87,7 +87,7 @@ export function generateOtp(phoneNumber: string): { success: boolean; message: s
   }
 
   // In production, integrate with SMS gateway (e.g. Fast2SMS / MSG91)
-  console.log(`[KAAMSETU OTP SERVICE] Sent OTP to +91-${cleanPhone}: ${otpCode}`);
+  console.log(`[DIGIWORK OTP SERVICE] Sent OTP to +91-${cleanPhone}: ${otpCode}`);
 
   return {
     success: true,

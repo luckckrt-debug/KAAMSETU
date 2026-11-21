@@ -1,5 +1,5 @@
-import KaamSetuAppsLaunchpad from '../apps/page';
+import DigiWorkAppsLaunchpad from '../apps/page';
 
 export default function DownloadPage() {
-  return <KaamSetuAppsLaunchpad />;
+  return <DigiWorkAppsLaunchpad />;
 }

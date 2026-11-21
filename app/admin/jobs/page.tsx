@@ -126,8 +126,8 @@ export default function AdminJobsPage() {
         <div className="flex items-center gap-2.5">
           <Receipt className="w-5 h-5 text-[#2583D5] shrink-0" />
           <div>
-            <span className="font-black text-[#153451]">KaamSetu Pricing Formula: </span>
-            <span className="text-[#4B6F8E]">Worker Base Charge (100% to Worker) + <strong>₹99 KaamSetu Platform Fee</strong> = Total Customer Payable</span>
+            <span className="font-black text-[#153451]">DigiWork Pricing Formula: </span>
+            <span className="text-[#4B6F8E]">Worker Base Charge (100% to Worker) + <strong>₹99 DigiWork Platform Fee</strong> = Total Customer Payable</span>
           </div>
         </div>
         <Link href="/admin/platform-fees" className="font-bold text-[#2583D5] hover:underline shrink-0">

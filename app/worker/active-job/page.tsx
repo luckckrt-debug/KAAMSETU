@@ -710,7 +710,7 @@ export default function WorkerActiveJobPage() {
               <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
               <h3 className="text-base font-black text-emerald-900">Job Finished Successfully!</h3>
               <p className="text-xs text-emerald-700 font-medium">
-                Customer has been notified to inspect and release ₹{activeJob.finalAmount || activeJob.estimatedAmount} payout to your KaamSetu digital wallet.
+                Customer has been notified to inspect and release ₹{activeJob.finalAmount || activeJob.estimatedAmount} payout to your DigiWork digital wallet.
               </p>
               <Link
                 href="/worker/dashboard"

@@ -58,7 +58,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const sessionCookie = request.cookies.get('kaamsetu_session')?.value;
+  const sessionCookie =
+    request.cookies.get('digiwork_session')?.value ||
+    request.cookies.get('kaamsetu_session')?.value;
 
   // Unauthenticated access attempt to protected workspace
   if (!sessionCookie) {
@@ -74,6 +76,7 @@ export function middleware(request: NextRequest) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('redirect', pathname);
     const response = NextResponse.redirect(loginUrl);
+    response.cookies.delete('digiwork_session');
     response.cookies.delete('kaamsetu_session');
     return response;
   }

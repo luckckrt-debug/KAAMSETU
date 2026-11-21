@@ -580,7 +580,7 @@ export default function PopularCategories() {
               Are you a skilled tradesperson or labour contractor?
             </h4>
             <p className="text-sm text-lime-light/80">
-              Join KaamSetu today. Direct customer bookings, weekly payouts, and zero middlemen commissions.
+              Join DigiWork today. Direct customer bookings, weekly payouts, and zero middlemen commissions.
             </p>
           </div>
           <div className="flex flex-wrap gap-3 shrink-0">

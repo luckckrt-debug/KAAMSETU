@@ -8,6 +8,15 @@ export async function POST(req: NextRequest) {
     message: 'Logged out successfully.'
   });
 
+  response.cookies.set('digiwork_session', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 0,
+    expires: new Date(0),
+  });
+
   response.cookies.set('kaamsetu_session', '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',

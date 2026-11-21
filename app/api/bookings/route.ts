@@ -4,7 +4,7 @@ import { dbStore, loadStore } from '@/lib/store';
 
 export async function GET(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (!token) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let customerUserId = 'user-customer-1'; // Default guest / demo fallback
     let customerProfileId = 'cust-prof-1';
 

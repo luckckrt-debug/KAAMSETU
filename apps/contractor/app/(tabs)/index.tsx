@@ -57,7 +57,7 @@ export default function ContractorHomeScreen() {
       {/* Top Banner */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Text style={styles.appName}>KAAMSETU CONTRACTOR</Text>
+          <Text style={styles.appName}>DIGIWORK CONTRACTOR</Text>
           <Text style={styles.companyName}>{contractor?.companyName || 'Shri Ram Infra'}</Text>
           <View style={styles.gstBadge}>
             <Text style={styles.gstText}>GST: {contractor?.gstNumber || '07AAACS1429B1Z8'}</Text>

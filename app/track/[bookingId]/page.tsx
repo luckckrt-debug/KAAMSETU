@@ -507,7 +507,7 @@ export default function LiveTrackingPage() {
                     onClick={() => {
                       if (navigator.share) {
                         navigator.share({
-                          title: 'Track My KaamSetu Service',
+                          title: 'Track My DigiWork Service',
                           url: window.location.href,
                         });
                       } else {
@@ -596,7 +596,7 @@ export default function LiveTrackingPage() {
             <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-4 border border-[#D1E8F8] shadow-xs text-xs text-[#4B6F8E] space-y-2">
               <div className="flex items-center gap-2 text-[#153451] font-bold">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>KaamSetu Safety &amp; Trust Guarantee</span>
+                <span>DigiWork Safety &amp; Trust Guarantee</span>
               </div>
               <p className="leading-relaxed text-[11px]">
                 Your worker is Aadhaar verified with active police character clearance. Payments are held safely in escrow until you inspect and approve completed work.
@@ -620,7 +620,7 @@ export default function LiveTrackingPage() {
               </div>
 
               <p className="text-xs text-gray-600 leading-relaxed">
-                If you feel unsafe or experience an urgent situation, contact local law enforcement or the KaamSetu rapid incident team immediately.
+                If you feel unsafe or experience an urgent situation, contact local law enforcement or the DigiWork rapid incident team immediately.
               </p>
 
               <div className="space-y-2 pt-2">
@@ -631,10 +631,10 @@ export default function LiveTrackingPage() {
                   CALL POLICE EMERGENCY (112)
                 </a>
                 <a
-                  href="tel:1800KAAMSETU"
+                  href="tel:18003444967"
                   className="w-full py-2.5 rounded-xl border border-rose-200 bg-rose-50 text-rose-800 font-bold text-xs text-center block"
                 >
-                  KaamSetu Trust Team: 1800-KAAMSETU
+                  DigiWork Trust Team: 1800-DIGIWORK
                 </a>
                 <button
                   type="button"

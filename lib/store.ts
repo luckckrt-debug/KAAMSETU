@@ -926,8 +926,8 @@ export function getInitialSeedData(): DatabaseState {
       id: 'user-admin-1',
       phoneNumber: '9999999999',
       phoneVerified: true,
-      email: 'admin@kaamsetu.in',
-      fullName: 'KaamSetu Operations Administrator',
+      email: 'admin@digiwork.in',
+      fullName: 'DigiWork Operations Administrator',
       avatarUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&auto=format&fit=crop&q=80',
       language: 'en',
       roles: ['ADMIN', 'SUPER_ADMIN'],
@@ -2078,7 +2078,7 @@ export function getInitialSeedData(): DatabaseState {
       id: 'pay-1',
       bookingId: 'book-active-1',
       provider: 'RAZORPAY',
-      providerOrderId: 'order_KaamSetu_9921',
+      providerOrderId: 'order_DigiWork_9921',
       amount: 700,
       currency: 'INR',
       status: 'AUTHORIZED',
@@ -2867,7 +2867,7 @@ export const dbStore = {
         id: `pay-${Date.now()}`,
         bookingId,
         provider: 'RAZORPAY',
-        providerOrderId: `order_kaamsetu_${Date.now()}`,
+        providerOrderId: `order_digiwork_${Date.now()}`,
         amount,
         currency: 'INR',
         status: 'INITIATED',
@@ -3253,8 +3253,8 @@ export const dbStore = {
     saveStore();
 
     // 5. Real-Time Socket.IO Broadcast to Worker Dashboard & Booking Room
-    if ((global as any).__kaamsetu_io) {
-      const io = (global as any).__kaamsetu_io;
+    if ((global as any).__digiwork_io || (global as any).__kaamsetu_io) {
+      const io = (global as any).__digiwork_io || (global as any).__kaamsetu_io;
       io.to(`worker:${workerProfileId}`).emit('wallet:balance:updated', {
         workerProfileId,
         availableBalance: wallet.availableBalance,
@@ -3405,8 +3405,8 @@ export const dbStore = {
     }
 
     // Socket.IO Broadcast
-    if ((global as any).__kaamsetu_io) {
-      const io = (global as any).__kaamsetu_io;
+    if ((global as any).__digiwork_io || (global as any).__kaamsetu_io) {
+      const io = (global as any).__digiwork_io || (global as any).__kaamsetu_io;
       io.to(`worker:${params.workerProfileId}`).emit('wallet:balance:updated', {
         workerProfileId: params.workerProfileId,
         availableBalance: wallet.availableBalance,
@@ -3496,8 +3496,8 @@ export const dbStore = {
     saveStore();
 
     // Broadcast Real-time Events
-    if ((global as any).__kaamsetu_io) {
-      const io = (global as any).__kaamsetu_io;
+    if ((global as any).__digiwork_io || (global as any).__kaamsetu_io) {
+      const io = (global as any).__digiwork_io || (global as any).__kaamsetu_io;
       io.to(`worker:${withdrawal.workerProfileId}`).emit('wallet:balance:updated', {
         workerProfileId: withdrawal.workerProfileId,
         availableBalance: wallet.availableBalance,

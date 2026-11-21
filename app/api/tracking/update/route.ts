@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 2. Validate Worker Ownership & Authentication
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (token) {
       const payload = verifySessionToken(token);
       if (payload) {
@@ -84,10 +84,10 @@ export async function POST(req: NextRequest) {
     };
 
     // 5. Realtime broadcast via Socket.IO if active
-    if ((global as any).__kaamsetu_io) {
-      (global as any).__kaamsetu_io.to(`booking:${bookingId}`).emit('worker:location:update', payload);
-      (global as any).__kaamsetu_io.to(`booking:${bookingId}`).emit('location:stream', payload);
-      (global as any).__kaamsetu_io.to('admin:operations').emit('worker:location:update', payload);
+    if (((global as any).__digiwork_io || (global as any).__kaamsetu_io)) {
+      ((global as any).__digiwork_io || (global as any).__kaamsetu_io).to(`booking:${bookingId}`).emit('worker:location:update', payload);
+      ((global as any).__digiwork_io || (global as any).__kaamsetu_io).to(`booking:${bookingId}`).emit('location:stream', payload);
+      ((global as any).__digiwork_io || (global as any).__kaamsetu_io).to('admin:operations').emit('worker:location:update', payload);
     }
 
     return NextResponse.json({

@@ -110,9 +110,9 @@ export default function ContractorSettingsScreen() {
           <View style={styles.divider} />
           <TouchableOpacity
             style={styles.menuRow}
-            onPress={() => Alert.alert('Terms of Service', 'Standard KaamSetu Contractor & Labour Marketplace Terms.')}
+            onPress={() => Alert.alert('Terms of Service', 'Standard DigiWork Contractor & Labour Marketplace Terms.')}
           >
-            <Text style={styles.menuTitle}>KaamSetu Contractor T&C</Text>
+            <Text style={styles.menuTitle}>DigiWork Contractor T&C</Text>
             <Text style={styles.menuArrow}>›</Text>
           </TouchableOpacity>
         </View>
@@ -123,7 +123,7 @@ export default function ContractorSettingsScreen() {
           <TouchableOpacity style={styles.menuRow} onPress={handleCallSupport}>
             <View>
               <Text style={styles.menuTitle}>Contractor Key Account Desk</Text>
-              <Text style={styles.menuSub}>Toll-Free: 1800-123-KAAM (9 AM - 8 PM)</Text>
+              <Text style={styles.menuSub}>Toll-Free: 1800-DIGIWORK (9 AM - 8 PM)</Text>
             </View>
             <Text style={styles.callIcon}>📞</Text>
           </TouchableOpacity>
@@ -131,8 +131,8 @@ export default function ContractorSettingsScreen() {
 
         {/* Version & Logout */}
         <View style={styles.footer}>
-          <Text style={styles.versionText}>KaamSetu Contractor v1.0.0 (Build 100)</Text>
-          <Text style={styles.versionSub}>Package: com.kaamsetu.contractor</Text>
+          <Text style={styles.versionText}>DigiWork Contractor v1.0.0 (Build 100)</Text>
+          <Text style={styles.versionSub}>Package: com.digiwork.contractor</Text>
 
           <TouchableOpacity style={styles.logoutBtn} onPress={handleLogout}>
             <Text style={styles.logoutBtnText}>Sign Out (लॉग आउट)</Text>

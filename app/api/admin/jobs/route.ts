@@ -96,9 +96,9 @@ export async function PATCH(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Job ID and new status are required.' }, { status: 400 });
     }
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
-    let adminName = 'KaamSetu Operations';
+    let adminName = 'DigiWork Operations';
     let adminRole = 'OPERATIONS_ADMIN';
 
     if (token) {

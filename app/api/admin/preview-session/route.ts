@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Target user ID is required.' }, { status: 400 });
     }
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
     let adminName = 'Super Admin';
     let adminRole = 'SUPER_ADMIN';
@@ -77,7 +77,15 @@ export async function POST(req: NextRequest) {
       redirectUrl: `${redirectUrl}?adminPreview=true&adminId=${adminId}`,
     });
 
-    // Set preview session cookie
+    // Set preview session cookies
+    response.cookies.set('digiwork_session', previewToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60, // 1 hour
+    });
+
     response.cookies.set('kaamsetu_session', previewToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

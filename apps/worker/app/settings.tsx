@@ -80,13 +80,13 @@ export default function WorkerSettingsScreen() {
         </View>
 
         {/* Support */}
-        <Text style={styles.sectionTitle}>KaamSetu Worker Support (मजदूर सहायता)</Text>
+        <Text style={styles.sectionTitle}>DigiWork Worker Support (मजदूर सहायता)</Text>
         <View style={styles.card}>
           <TouchableOpacity
             style={styles.actionRow}
-            onPress={() => Alert.alert('Toll-Free Helpline', '1800-KAAMSETU (1800-522-6738)')}
+            onPress={() => Alert.alert('Toll-Free Helpline', '1800-DIGIWORK')}
           >
-            <Text style={styles.actionText}>📞 Toll-Free Helpline: 1800-KAAMSETU</Text>
+            <Text style={styles.actionText}>📞 Toll-Free Helpline: 1800-DIGIWORK</Text>
             <Text style={styles.arrow}>→</Text>
           </TouchableOpacity>
 
@@ -104,7 +104,7 @@ export default function WorkerSettingsScreen() {
           <Text style={styles.logoutBtnText}>Log Out of Account (लॉग आउट)</Text>
         </TouchableOpacity>
 
-        <Text style={styles.versionText}>KaamSetu Worker v1.0.0 (Android Production)</Text>
+        <Text style={styles.versionText}>DigiWork Worker v1.0.0 (Android Production)</Text>
       </ScrollView>
     </View>
   );

@@ -41,19 +41,19 @@ export default function AboutContactSection() {
             {/* Left Column: Mission & Vision */}
             <div className="lg:col-span-7 space-y-6">
               <span className="text-xs font-black uppercase tracking-wider text-[#2583D5] bg-white/80 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#D1E8F8] inline-block shadow-xs">
-                ABOUT KAAMSETU • हमारे बारे में
+                ABOUT DIGIWORK • हमारे बारे में
               </span>
 
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#153451] tracking-tight leading-tight">
-                India&apos;s Digital Bridge for Dignity, Fair Work & Rapid Hiring.
+                India&apos;s Digital Platform for Dignity, Fair Work & Rapid Hiring.
               </h2>
 
               <p className="text-base sm:text-lg text-[#4B6F8E] font-medium leading-relaxed">
-                KaamSetu was founded with a singular purpose: to transform India&apos;s fragmented informal labour ecosystem into a transparent, location-enabled digital marketplace. For generations, skilled artisans and daily wage workers had to stand at unorganized labour chowks without income guarantee.
+                DigiWork was founded with a singular purpose: to transform India&apos;s fragmented informal workforce ecosystem into a modern, transparent, location-enabled digital marketplace. For generations, skilled artisans and daily wage workers had to stand at unorganized labour chowks without income guarantee.
               </p>
 
               <p className="text-base sm:text-lg text-[#4B6F8E] font-medium leading-relaxed">
-                By bridging workers, customers, contractors, and infrastructure enterprises through GPS dispatch, upfront transparent pricing, and instant UPI escrow payouts, KaamSetu brings digital dignity and financial empowerment to millions of working hands.
+                By bridging workers, customers, contractors, and infrastructure enterprises through GPS dispatch, upfront transparent pricing, and instant UPI escrow payouts, DigiWork brings digital dignity and financial empowerment to millions of working hands.
               </p>
 
               {/* 4 Core Pillars */}
@@ -182,8 +182,8 @@ export default function AboutContactSection() {
                 <div>
                   <h4 className="text-base font-bold text-[#153451]">Toll-Free Helpline</h4>
                   <p className="text-xs text-[#4B6F8E] mt-0.5">24 hours a day, 7 days a week</p>
-                  <a href="tel:18005226738" className="text-base font-black text-[#2583D5] mt-2 block hover:underline">
-                    1800-KAAMSETU (1800-522-6738)
+                  <a href="tel:18003444967" className="text-base font-black text-[#2583D5] mt-2 block hover:underline">
+                    1800-DIGIWORK (1800-3444-9675)
                   </a>
                 </div>
               </div>
@@ -195,8 +195,8 @@ export default function AboutContactSection() {
                 <div>
                   <h4 className="text-base font-bold text-[#153451]">Email Support</h4>
                   <p className="text-xs text-[#4B6F8E] mt-0.5">Responses within 2 business hours</p>
-                  <p className="text-sm font-bold text-[#153451] mt-2">support@kaamsetu.in</p>
-                  <p className="text-xs text-[#4B6F8E]">partners@kaamsetu.in (Commercial)</p>
+                  <p className="text-sm font-bold text-[#153451] mt-2">support@digiwork.in</p>
+                  <p className="text-xs text-[#4B6F8E]">partners@digiwork.in (Commercial)</p>
                 </div>
               </div>
 
@@ -207,7 +207,7 @@ export default function AboutContactSection() {
                 <div>
                   <h4 className="text-base font-bold text-[#153451]">Central Headquarters</h4>
                   <p className="text-xs text-[#4B6F8E] mt-1 leading-relaxed">
-                    KaamSetu Towers, Connaught Place, New Delhi 110001.<br />
+                    DigiWork Towers, Connaught Place, New Delhi 110001.<br />
                     Regional Operations: Patna, Lucknow, Mumbai, Bengaluru.
                   </p>
                 </div>
@@ -225,7 +225,7 @@ export default function AboutContactSection() {
                   <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2">
                     <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
                     <h4 className="text-base font-bold text-emerald-900">Message Received!</h4>
-                    <p className="text-xs text-emerald-700">Thank you for reaching out. A KaamSetu representative will call you shortly on your provided phone number.</p>
+                    <p className="text-xs text-emerald-700">Thank you for reaching out. A DigiWork representative will call you shortly on your provided phone number.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">

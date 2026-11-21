@@ -5,7 +5,7 @@ import { WorkerDocument } from '@/lib/types';
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (!token) {
       return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
     }

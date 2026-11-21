@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Platform fee must be a valid non-negative number.' }, { status: 400 });
     }
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminUser = { id: 'user-admin-1', name: 'Super Admin', role: 'SUPER_ADMIN' };
 
     if (token) {

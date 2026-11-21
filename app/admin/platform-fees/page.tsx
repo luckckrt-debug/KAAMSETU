@@ -51,7 +51,7 @@ export default function PlatformFeeLedgerPage() {
   return (
     <AdminLayout
       title="Platform Fee Ledger (₹99 Revenue)"
-      subtitle="प्लेटफ़ॉर्म शुल्क खाता बही • Dedicated ledger tracking all ₹99 KaamSetu service fees and net platform revenue"
+      subtitle="प्लेटफ़ॉर्म शुल्क खाता बही • Dedicated ledger tracking all ₹99 DigiWork service fees and net platform revenue"
       actions={
         <div className="flex items-center gap-2">
           <button
@@ -149,7 +149,7 @@ export default function PlatformFeeLedgerPage() {
                 <th className="py-3 px-4">Customer</th>
                 <th className="py-3 px-4">Worker</th>
                 <th className="py-3 px-4 text-right">Base Charge</th>
-                <th className="py-3 px-4 text-right">KaamSetu Fee</th>
+                <th className="py-3 px-4 text-right">DigiWork Fee</th>
                 <th className="py-3 px-4 text-right">Total Price</th>
                 <th className="py-3 px-4">Settlement Status</th>
                 <th className="py-3 px-4">Date</th>

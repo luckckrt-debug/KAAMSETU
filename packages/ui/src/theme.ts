@@ -1,15 +1,20 @@
-// KAAMSETU - Mobile Design Tokens
-// Navy Blue, White, Vibrant Orange, Emerald Green
+// DIGIWORK - Mobile & UI Design Tokens
+// Deep Navy Blue (#0B1F3A), Electric Blue (#2563EB), Sky Blue (#38BDF8), White, Soft Neutral Gray
 
 export const Colors = {
-  // Brand Primary: Navy
-  navy: '#0F172A',
-  navyLight: '#1E293B',
-  navyDark: '#020617',
-  blue: '#1E3A8A',
-  blueLight: '#3B82F6',
+  // Brand Primary: Deep Navy
+  navy: '#0B1F3A',
+  navyLight: '#1E3A8A',
+  navyDark: '#071324',
+  blue: '#2563EB',
+  blueLight: '#38BDF8',
 
-  // Brand Accent: Orange
+  // Brand Accent: Sky Blue
+  accent: '#38BDF8',
+  accentDark: '#0284C7',
+  accentLight: '#E0F2FE',
+
+  // Accent Orange (for urgent badges/alerts if needed)
   orange: '#F97316',
   orangeDark: '#EA580C',
   orangeLight: '#FFEDD5',
@@ -27,12 +32,12 @@ export const Colors = {
 
   // Neutrals
   white: '#FFFFFF',
-  background: '#F8FAFC',
+  background: '#F5F8FC',
   card: '#FFFFFF',
-  border: '#E2E8F0',
+  border: '#D7E3F1',
   borderDark: '#CBD5E1',
-  text: '#0F172A',
-  textSecondary: '#64748B',
+  text: '#0B1F3A',
+  textSecondary: '#4B6F8E',
   textMuted: '#94A3B8',
   divider: '#F1F5F9',
 };
@@ -57,21 +62,21 @@ export const BorderRadius = {
 
 export const Shadows = {
   sm: {
-    shadowColor: '#0F172A',
+    shadowColor: '#0B1F3A',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
     elevation: 2,
   },
   md: {
-    shadowColor: '#0F172A',
+    shadowColor: '#0B1F3A',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 4,
     elevation: 3,
   },
   lg: {
-    shadowColor: '#0F172A',
+    shadowColor: '#0B1F3A',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.12,
     shadowRadius: 8,

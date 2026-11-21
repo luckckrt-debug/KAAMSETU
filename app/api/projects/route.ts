@@ -93,7 +93,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let contractorProfileId = 'cont-prof-1';
     let contractorName = 'Apex Infra Construction';
     let contractorPhone = '9811002233';
@@ -201,7 +201,7 @@ export async function POST(req: NextRequest) {
       payoutSchedule: (payoutSchedule as PayoutSchedule) || 'DAILY',
       attendanceVerification: attendanceVerification || 'DAILY_SUPERVISOR',
       paymentDueDate: paymentDueDate || 'Same day 08:00 PM',
-      paymentTerms: paymentTerms || 'Daily verified wage transfer via KaamSetu central payout',
+      paymentTerms: paymentTerms || 'Daily verified wage transfer via DigiWork central payout',
       estimatedBudget: Number(estimatedBudget) || (totalWorkersRequired * 900 * 30),
       status: 'OPEN',
       applicationsCount: 0,

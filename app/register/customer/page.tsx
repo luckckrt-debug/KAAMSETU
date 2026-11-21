@@ -61,6 +61,7 @@ function CustomerRegistrationForm() {
     setLoading(true);
 
     try {
+      const refCode = typeof window !== 'undefined' ? (new URLSearchParams(window.location.search).get('ref') || '') : '';
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -74,6 +75,7 @@ function CustomerRegistrationForm() {
           addressLine: address.trim(),
           pincode: pincode.trim(),
           role: 'CUSTOMER',
+          referralCode: refCode || undefined,
         }),
       });
 

@@ -29,7 +29,8 @@ import {
   LogOut,
   ChevronRight,
   Sparkles,
-  ExternalLink
+  ExternalLink,
+  Award
 } from 'lucide-react';
 import { LogoIcon } from '@/components/Logo';
 
@@ -107,6 +108,13 @@ export default function AdminSidebar({
           badgeColor: 'bg-rose-100 text-rose-800 border-rose-200'
         },
         { label: 'Payment Gateway', href: '/admin/finance', icon: CreditCard },
+        { 
+          label: 'Referral Rewards Engine', 
+          href: '/admin/referrals', 
+          icon: Award, 
+          highlight: true,
+          badge: 'Campaign'
+        },
       ],
     },
     {
@@ -126,19 +134,17 @@ export default function AdminSidebar({
     <aside className="w-72 bg-white/95 backdrop-blur-xl border-r border-[#D1E8F8] flex flex-col h-full shadow-sm select-none">
       
       {/* Brand Header */}
-      <div className="p-5 border-b border-[#EAF6FF] flex items-center justify-between">
-        <Link href="/admin" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#2583D5] to-[#1E70B8] flex items-center justify-center text-white shadow-md shadow-[#2583D5]/20">
-            <LogoIcon className="w-6 h-6 text-white" />
-          </div>
+      <div className="p-5 border-b border-[#EDF4FC] flex items-center justify-between">
+        <Link href="/admin" className="flex items-center gap-3 group">
+          <LogoIcon size="sm" className="w-9 h-9" />
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-black text-black text-base tracking-tight">KAAM<span className="text-[#2583D5]">SETU</span></span>
-              <span className="text-[10px] font-black uppercase tracking-wider bg-[#EAF6FF] text-[#2583D5] px-1.5 py-0.5 rounded-md border border-[#D1E8F8]">
-                SUPER ADMIN
+              <span className="font-black text-[#0B1F3A] text-base tracking-tight">Digi<span className="text-[#2563EB]">Work</span></span>
+              <span className="text-[9px] font-black uppercase tracking-wider bg-[#EDF4FC] text-[#2563EB] px-1.5 py-0.5 rounded-md border border-[#D7E3F1]">
+                CONTROL CENTER
               </span>
             </div>
-            <p className="text-[11px] text-[#7697B3] font-semibold">Central Command Center</p>
+            <p className="text-[11px] text-[#7697B3] font-semibold">Central Administration Hub</p>
           </div>
         </Link>
       </div>

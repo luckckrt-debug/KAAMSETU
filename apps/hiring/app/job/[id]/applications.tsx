@@ -56,7 +56,7 @@ export default function JobApplicationsDeskScreen() {
         Alert.alert(
           'Status Updated',
           status === 'HIRED'
-            ? 'Worker successfully hired! They have been notified on their KaamSetu Worker app.'
+            ? 'Worker successfully hired! They have been notified on their DigiWork Worker app.'
             : `Worker marked as ${status}.`
         );
       }

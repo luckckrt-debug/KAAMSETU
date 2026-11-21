@@ -17,6 +17,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/apks/DigiWork-Worker-preview.apk',
+        destination: 'https://expo.dev/artifacts/eas/6Zci0-hiEwLc53RGVoY4UVPl-gaA9eF2eVLPF4TRBYo.apk',
+        permanent: false,
+      },
+      {
         source: '/apks/KaamSetu-Worker-preview.apk',
         destination: 'https://expo.dev/artifacts/eas/6Zci0-hiEwLc53RGVoY4UVPl-gaA9eF2eVLPF4TRBYo.apk',
         permanent: false,
@@ -27,6 +32,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: '/apks/DigiWork-Hiring-preview.apk',
+        destination: 'https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk',
+        permanent: false,
+      },
+      {
         source: '/apks/KaamSetu-Hiring-preview.apk',
         destination: 'https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk',
         permanent: false,
@@ -34,6 +44,11 @@ const nextConfig = {
       {
         source: '/apks/hiring.apk',
         destination: 'https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk',
+        permanent: false,
+      },
+      {
+        source: '/apks/DigiWork-Contractor-preview.apk',
+        destination: 'https://expo.dev/artifacts/eas/JPCBbmDl3gfGcYUuCJad-c7QV8jZ39Vt7z736lLmeq0.apk',
         permanent: false,
       },
       {

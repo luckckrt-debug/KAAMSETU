@@ -237,7 +237,7 @@ export default function OpenStreetTracker({
 
       // Attribution
       L.control.attribution({ position: 'bottomright', prefix: false })
-        .addAttribution('KaamSetu Live GPS • &copy; OpenStreetMap')
+        .addAttribution('DigiWork Live GPS • &copy; OpenStreetMap')
         .addTo(map);
 
       markersLayerRef.current = L.layerGroup().addTo(map);

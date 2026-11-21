@@ -1,4 +1,4 @@
-// KAAMSETU — Mobile Universal Professions & Categories Catalogue (All 26 Categories A to Z)
+// DIGIWORK — Mobile Universal Professions & Categories Catalogue (All 26 Categories A to Z)
 
 export interface MobileCategory {
   id: string;

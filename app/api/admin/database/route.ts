@@ -155,7 +155,7 @@ export async function POST(req: NextRequest) {
       }, { status: 400 });
     }
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
     let adminName = 'Super Admin';
     let adminRole = 'SUPER_ADMIN';

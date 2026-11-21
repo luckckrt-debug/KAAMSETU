@@ -12,7 +12,7 @@ export default function TestimonialsFAQ() {
       role: 'Homeowner, Lotus Boulevard, Noida',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120',
-      comment: 'At 10 PM our kitchen MCB caught spark. Through KaamSetu, Ramesh ji arrived in 22 minutes with a digital multimeter and replacement MCB. Live tracking gave immense relief. Super clean work!',
+      comment: 'At 10 PM our kitchen MCB caught spark. Through DigiWork, Ramesh ji arrived in 22 minutes with a digital multimeter and replacement MCB. Live tracking gave immense relief. Super clean work!',
     },
     {
       name: 'Vikram Singh',
@@ -26,13 +26,13 @@ export default function TestimonialsFAQ() {
       role: 'Certified Electrician (Partner Worker)',
       rating: 5,
       avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=120',
-      comment: 'Earlier I waited at the local chowk every morning without guarantee of work. On KaamSetu, I get 3 to 4 direct bookings daily, payment goes straight to my UPI account, and respect has doubled.',
+      comment: 'Earlier I waited at the local chowk every morning without guarantee of work. On DigiWork, I get 3 to 4 direct bookings daily, payment goes straight to my UPI account, and respect has doubled.',
     },
   ];
 
   const faqs = [
     {
-      q: 'How does KaamSetu verify workers and tradesmen?',
+      q: 'How does DigiWork verify workers and tradesmen?',
       a: 'Every worker must complete a 7-step onboarding process including government Aadhaar authentication, trade certificate verification, address proof check, and a mandatory skill test by our field operations team. Only verified profiles receive active job dispatches.',
     },
     {
@@ -45,11 +45,11 @@ export default function TestimonialsFAQ() {
     },
     {
       q: 'Can contractors hire bulk teams and post tenders?',
-      a: 'Yes! KaamSetu features a dedicated Tender Marketplace. Registered contractors and builders can post workforce requirements (from 5 to 200+ workers), review team leader bids, track digital muster-roll attendance, and process milestone payouts.',
+      a: 'Yes! DigiWork features a dedicated Tender Marketplace. Registered contractors and builders can post workforce requirements (from 5 to 200+ workers), review team leader bids, track digital muster-roll attendance, and process milestone payouts.',
     },
     {
       q: 'What if I am not satisfied with the work done?',
-      a: 'Every booking includes the KaamSetu ₹25,000 Workmanship Guarantee. If you notice any issue within 7 days, you can raise a dispute directly from your dashboard. Our resolution officer will investigate, arrange a free rework, or issue a full refund.',
+      a: 'Every booking includes the DigiWork ₹25,000 Workmanship Guarantee. If you notice any issue within 7 days, you can raise a dispute directly from your dashboard. Our resolution officer will investigate, arrange a free rework, or issue a full refund.',
     },
   ];
 

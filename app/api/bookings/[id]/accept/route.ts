@@ -4,7 +4,7 @@ import { verifySessionToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let workerProfileId: string | undefined;
 
     if (token) {
@@ -41,8 +41,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const updatedBooking = dbStore.getBookingById(params.id);
 
     // Real-time broadcast to customer room
-    if ((global as any).__kaamsetu_io) {
-      const io = (global as any).__kaamsetu_io;
+    const io = (global as any).__digiwork_io || ((global as any).__digiwork_io || (global as any).__kaamsetu_io);
+    if (io) {
       io.to(`booking:${params.id}`).emit('booking:worker:assigned', {
         bookingId: params.id,
         worker: updatedBooking?.assignedWorker,

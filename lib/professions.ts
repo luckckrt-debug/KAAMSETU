@@ -1,4 +1,4 @@
-// KAAMSETU - Dynamic Profession-Wise Marketplace Architecture
+// DIGIWORK - Dynamic Profession-Wise Marketplace Architecture
 // Complete metadata registry for all 25 workforce professions
 
 export interface ProfessionSubcategory {
@@ -58,7 +58,7 @@ export const PROFESSIONS_LIST: ProfessionData[] = [
     iconName: 'Zap',
     coverImage: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1200&auto=format&fit=crop&q=80',
     intro: 'Certified electricians for concealed residential wiring, MCB tripping repair, inverter-battery installation, switchboards, and emergency short circuits.',
-    detailedBio: 'KaamSetu verified electricians hold government wireman licences or ITI certificates. They carry professional multi-meters, heavy-duty insulated hand tools, and core drilling gear for clean installations.',
+    detailedBio: 'DigiWork verified electricians hold government wireman licences or ITI certificates. They carry professional multi-meters, heavy-duty insulated hand tools, and core drilling gear for clean installations.',
     baseHourlyRate: 350,
     baseDailyRate: 1100,
     workerCountEstimate: '1,420+ Available',
@@ -81,7 +81,7 @@ export const PROFESSIONS_LIST: ProfessionData[] = [
     faqs: [
       { question: 'How quickly can an electrician arrive in an emergency?', answer: 'Our emergency dispatch algorithm connects you with workers within 2–5 km who can reach your location in an average of 25–30 minutes.' },
       { question: 'Are replacement electrical parts included in the hourly rate?', answer: 'No. Labour charges cover diagnosis and fitting. Replacement switches, MCBs, or wires can be provided at actual retail MRP or supplied by you directly.' },
-      { question: 'Do electricians carry insurance or safety gear?', answer: 'Yes, all KaamSetu verified electricians are trained in 1000V electrical safety and equipped with insulated protective tools.' },
+      { question: 'Do electricians carry insurance or safety gear?', answer: 'Yes, all DigiWork verified electricians are trained in 1000V electrical safety and equipped with insulated protective tools.' },
     ],
   },
   {
@@ -212,7 +212,7 @@ export const PROFESSIONS_LIST: ProfessionData[] = [
     requiredTools: ['Airless Paint Sprayer', 'Putty Knives (Patra)', 'Orbital Sanding Machine', 'Microfiber Rollers', 'Floor Protection Masking Film'],
     certifications: ['Paints and Coatings Skill Council (PCSC) Certified', 'Aadhaar Identity Verified'],
     faqs: [
-      { question: 'Will painters protect floors and furniture from paint drops?', answer: 'Yes, KaamSetu painters lay plastic masking sheets on all furniture and floors prior to beginning work.' },
+      { question: 'Will painters protect floors and furniture from paint drops?', answer: 'Yes, DigiWork painters lay plastic masking sheets on all furniture and floors prior to beginning work.' },
     ],
   },
   {
@@ -335,7 +335,7 @@ export const PROFESSIONS_LIST: ProfessionData[] = [
     requiredTools: ['Commercial Driving Licence (LMV/HMV)', 'GPS Navigation Smartphone', 'Fastag Pass Access'],
     certifications: ['RTO Commercial Transport Badge', 'Police Verification Certificate', 'Aadhaar Identity Verified'],
     faqs: [
-      { question: 'Are drivers background checked and verified?', answer: 'Yes, every driver profile on KaamSetu requires police verification clearance, commercial licence verification, and Aadhaar validation.' },
+      { question: 'Are drivers background checked and verified?', answer: 'Yes, every driver profile on DigiWork requires police verification clearance, commercial licence verification, and Aadhaar validation.' },
     ],
   },
   {
@@ -752,7 +752,7 @@ export const PROFESSIONS_LIST: ProfessionData[] = [
     requiredTools: ['Microfiber Flat Mop System', 'Color-Coded Cleaning Cloths', 'Bio-Degradable Surface Disinfectants'],
     certifications: ['Housekeeping Standards Certification', 'Police Verification Clearance', 'Aadhaar Identity Verified'],
     faqs: [
-      { question: 'Is police verification completed for housekeeping staff?', answer: 'Yes, 100% of housekeeping staff profiles undergo background and identity checks before being allowed on KaamSetu.' },
+      { question: 'Is police verification completed for housekeeping staff?', answer: 'Yes, 100% of housekeeping staff profiles undergo background and identity checks before being allowed on DigiWork.' },
     ],
   },
   {

@@ -9,13 +9,38 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#153451',
+  themeColor: '#0B1F3A',
 };
 
 export const metadata: Metadata = {
-  title: 'KAAMSETU — Right People. Right Place. Right Work.',
-  description: 'India\'s digital workforce platform connecting local skilled workers, customers, contractors, and companies with real GPS dispatch and transparent payments.',
-  keywords: 'kaamsetu, electrician, plumber, mason, carpenter, painter, labour, tenders, contractor hiring, workforce, india',
+  title: "DigiWork | India's Digital Workforce & Hiring Platform",
+  description: "DigiWork connects workers, skilled professionals, contractors and hiring partners through a digital platform for work opportunities, workforce discovery, project management and professional services.",
+  keywords: 'DigiWork, digital workforce, indian workforce, electrician, plumber, mason, carpenter, painter, labour, tenders, contractor hiring, professional services, india',
+  authors: [{ name: 'DigiWork Technologies' }],
+  creator: 'DigiWork Technologies',
+  publisher: 'DigiWork Technologies',
+  metadataBase: new URL('https://digiwork.in'),
+  openGraph: {
+    title: "DigiWork | India's Digital Workforce & Hiring Platform",
+    description: "DigiWork connects workers, skilled professionals, contractors and hiring partners through a digital platform for work opportunities, workforce discovery, project management and professional services.",
+    siteName: 'DigiWork',
+    locale: 'en_IN',
+    type: 'website',
+    images: [
+      {
+        url: '/logo.svg',
+        width: 1200,
+        height: 630,
+        alt: 'DigiWork - Digital Workforce Platform',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "DigiWork | India's Digital Workforce & Hiring Platform",
+    description: "DigiWork connects workers, skilled professionals, contractors and hiring partners through a digital platform for work opportunities, workforce discovery, project management and professional services.",
+    images: ['/logo.svg'],
+  },
   icons: {
     icon: '/logo-icon.svg',
     shortcut: '/logo-icon.svg',
@@ -30,7 +55,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-[#EAF6FF] text-[#153451] antialiased selection:bg-[#2583D5] selection:text-white">
+      <body className="min-h-screen flex flex-col bg-[#F5F8FC] text-[#0B1F3A] antialiased selection:bg-[#2563EB] selection:text-white">
         <Navbar />
         <main className="flex-1 pb-20 md:pb-0">
           {children}

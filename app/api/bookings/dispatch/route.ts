@@ -4,7 +4,7 @@ import { verifySessionToken } from '@/lib/auth';
 
 export async function POST(req: NextRequest) {
   try {
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let customerUserId = 'user-customer-1';
     let customerProfileId = 'cust-prof-1';
 
@@ -87,8 +87,8 @@ export async function POST(req: NextRequest) {
     const updatedBooking = dbStore.getBookingById(booking.id);
 
     // Socket.IO Broadcast to eligible workers & customer room
-    if ((global as any).__kaamsetu_io) {
-      const io = (global as any).__kaamsetu_io;
+    const io = (global as any).__digiwork_io || ((global as any).__digiwork_io || (global as any).__kaamsetu_io);
+    if (io) {
 
       // Broadcast to specific booking room
       io.to(`booking:${booking.id}`).emit('booking:dispatch:started', {

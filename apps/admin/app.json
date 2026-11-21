@@ -1,27 +1,27 @@
 {
   "expo": {
-    "name": "KaamSetu Admin",
-    "slug": "kaamsetu-admin",
+    "name": "DigiWork Control Center",
+    "slug": "digiwork-admin",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "kaamsetu-admin",
+    "scheme": "digiwork-admin",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0F172A"
+      "backgroundColor": "#0B1F3A"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kaamsetu.admin"
+      "bundleIdentifier": "com.digiwork.admin"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#0F172A"
+        "backgroundColor": "#0B1F3A"
       },
-      "package": "com.kaamsetu.admin"
+      "package": "com.digiwork.admin"
     },
     "plugins": [
       "expo-router",

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dbStore } from '@/lib/store';
 import { BookingStatus } from '@/lib/types';
 import { recordVerifiedJobEarning } from '@/lib/financial-ledger';
+import { processQualifyingEvent } from '@/lib/referral';
 
 const VALID_TRANSITIONS: Record<string, string[]> = {
   REQUESTED: ['SEARCHING_WORKERS', 'WORKER_NOTIFIED', 'OFFERED', 'ACCEPTED', 'CANCELLED'],
@@ -61,14 +62,35 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
           paymentMethod: body.paymentMethod === 'CASH' ? 'CASH' : 'ONLINE',
           paymentReference: body.paymentId || `pay_${Date.now()}`,
         });
+
+        // Process referral rewards for qualifying first booking
+        const workerUserId = currentBooking.assignedWorker?.userId || currentBooking.assignedWorkerProfileId;
+        const customerUserId = currentBooking.customer?.id || currentBooking.customerProfileId;
+
+        if (workerUserId) {
+          processQualifyingEvent({
+            referredUserId: workerUserId,
+            eventType: 'FIRST_BOOKING_COMPLETED',
+            transactionAmount: workerCharge,
+            metadata: { bookingId: params.id, role: 'WORKER' },
+          }).catch(() => {});
+        }
+        if (customerUserId) {
+          processQualifyingEvent({
+            referredUserId: customerUserId,
+            eventType: 'FIRST_BOOKING_COMPLETED',
+            transactionAmount: workerCharge,
+            metadata: { bookingId: params.id, role: 'HIRING_PARTNER' },
+          }).catch(() => {});
+        }
       } catch (e) {
         console.error('Wallet credit notice on status transition:', e);
       }
     }
 
     // Notify realtime room via socket if server active
-    if ((global as any).__kaamsetu_io) {
-      (global as any).__kaamsetu_io.to(`booking:${params.id}`).emit('booking:status_changed', {
+    if (((global as any).__digiwork_io || (global as any).__kaamsetu_io)) {
+      ((global as any).__digiwork_io || (global as any).__kaamsetu_io).to(`booking:${params.id}`).emit('booking:status_changed', {
         bookingId: params.id,
         status: newStatus,
         updatedAt: updated?.updatedAt,

@@ -19,14 +19,14 @@ import AdminLayout from '@/components/admin/AdminLayout';
 
 export default function SystemSettingsPage() {
   const [settings, setSettings] = useState<any>({
-    platformName: 'KAAMSETU',
+    platformName: 'DigiWork',
     platformFee: 99,
     serviceFeeEnabled: true,
     maintenanceMode: false,
     kycRequiredForBookings: true,
     payoutProvider: 'MANUAL',
     supportPhone: '+91-8887642828',
-    supportEmail: 'support@kaamsetu.in',
+    supportEmail: 'support@digiwork.in',
     autoDispatchEnabled: true,
   });
 
@@ -125,7 +125,7 @@ export default function SystemSettingsPage() {
                 required
               />
               <p className="text-[10px] text-[#7697B3] mt-1">
-                Standard KaamSetu fee applied separately from the worker&apos;s displayed base charge.
+                Standard DigiWork fee applied separately from the worker&apos;s displayed base charge.
               </p>
             </div>
 

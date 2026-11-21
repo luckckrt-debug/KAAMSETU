@@ -10,7 +10,7 @@ export async function POST(
 ) {
   try {
     const projectId = params.id;
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     
     let workerProfileId = 'work-prof-1';
     let workerName = 'Ramesh Sharma';

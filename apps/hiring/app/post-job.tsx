@@ -59,7 +59,7 @@ export default function EmployerPostJobScreen() {
       if (res.success) {
         Alert.alert(
           'Job Successfully Posted! (काम पोस्ट हुआ)',
-          'Your job has been published and broadcasted to verified workers nearby on the KaamSetu Worker app.',
+          'Your job has been published and broadcasted to verified workers nearby on the DigiWork Worker app.',
           [{ text: 'View Jobs', onPress: () => router.replace('/(tabs)/jobs') }]
         );
       } else {

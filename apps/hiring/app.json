@@ -1,28 +1,28 @@
 {
   "expo": {
-    "name": "KaamSetu Hiring",
-    "slug": "kaamsetu-app",
+    "name": "DigiWork Hiring",
+    "slug": "digiwork-hiring",
     "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "kaamsetu-hiring",
+    "scheme": "digiwork-hiring",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1E3A8A"
+      "backgroundColor": "#0B1F3A"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.kaamsetu.app"
+      "bundleIdentifier": "com.digiwork.hiring"
     },
     "android": {
-      "package": "com.kaamsetu.app",
+      "package": "com.digiwork.hiring",
       "versionCode": 2,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#1E3A8A"
+        "backgroundColor": "#0B1F3A"
       },
       "permissions": [
         "ACCESS_COARSE_LOCATION",

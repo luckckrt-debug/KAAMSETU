@@ -30,7 +30,7 @@ export default function CustomerPaymentsPage() {
             </div>
             <div>
               <span className="text-xs font-black uppercase tracking-wider text-emerald-300">
-                100% KAAMSETU ESCROW PROTECTION ACTIVE
+                100% DIGIWORK ESCROW PROTECTION ACTIVE
               </span>
               <h2 className="text-xl sm:text-2xl font-black text-white">
                 Pay Only After Work is Completed to Satisfaction
@@ -38,7 +38,7 @@ export default function CustomerPaymentsPage() {
             </div>
           </div>
           <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-2xl">
-            When you book a worker on KaamSetu, your money stays securely held in digital escrow. The worker receives payment only when the job is verified and confirmed by you.
+            When you book a worker on DigiWork, your money stays securely held in digital escrow. The worker receives payment only when the job is verified and confirmed by you.
           </p>
         </div>
 

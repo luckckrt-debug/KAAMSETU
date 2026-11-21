@@ -95,7 +95,7 @@ export default function UrgentBookingSection() {
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#4B6F8E] hover:text-[#153451] transition-colors"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#2583D5]" />
-                  <span>Or Call 24x7 Helpline: <strong className="text-[#153451]">1800-KAAMSETU</strong></span>
+                  <span>Or Call 24x7 Helpline: <strong className="text-[#153451]">1800-DIGIWORK</strong></span>
                 </a>
               </div>
             </div>

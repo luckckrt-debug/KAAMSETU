@@ -1,4 +1,4 @@
-// KAAMSETU - Shared Categories, Cities, and Configurations
+// DIGIWORK - Shared Categories, Cities, and Configurations
 
 export const WORKER_CATEGORIES = [
   { id: 'electrician', nameEn: 'Electrician', nameHi: 'इलेक्ट्रीशियन', icon: 'flash-outline' },

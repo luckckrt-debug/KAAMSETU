@@ -28,7 +28,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Overview',
-          headerTitle: 'KaamSetu Admin Console',
+          headerTitle: 'DigiWork Control Center',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="stats-chart" size={size} color={color} />
           )

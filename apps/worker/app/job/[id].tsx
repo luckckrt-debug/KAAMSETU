@@ -159,7 +159,7 @@ export default function WorkerJobDetailsScreen() {
             </View>
             <View>
               <Text style={styles.empName}>{job.employerName}</Text>
-              <Text style={styles.empPhone}>Verified KaamSetu Employer</Text>
+              <Text style={styles.empPhone}>Verified DigiWork Employer</Text>
             </View>
           </View>
 

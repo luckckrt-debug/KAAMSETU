@@ -14,7 +14,7 @@ export default function AdminSettingsScreen() {
         </View>
         <View style={{ flex: 1, marginLeft: 14 }}>
           <Text style={styles.adminName}>Super Administrator</Text>
-          <Text style={styles.adminEmail}>admin@kaamsetu.in • Root Access</Text>
+          <Text style={styles.adminEmail}>admin@digiwork.in • Root Access</Text>
           <View style={styles.activeTag}>
             <Text style={styles.activeText}>Active Session</Text>
           </View>

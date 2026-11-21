@@ -142,7 +142,7 @@ export default function AdminProjectsPage() {
             <div className="col-span-2 py-16 text-center text-xs text-[#7697B3] space-y-2 bg-white rounded-3xl border border-[#D1E8F8]">
               <FolderGit2 className="w-8 h-8 text-[#7697B3] mx-auto" />
               <p className="font-bold text-[#153451]">No projects found</p>
-              <p>Contractor projects created on KaamSetu appear here.</p>
+              <p>Contractor projects created on DigiWork appear here.</p>
             </div>
           ) : (
             filteredProjects.map((project) => (

@@ -1,15 +1,15 @@
-// KAAMSETU - Dual Language Translation Dictionary (English & Hindi)
+// DIGIWORK - Dual Language Translation Dictionary (English & Hindi)
 
 export type Language = 'en' | 'hi';
 
 export const translations = {
   en: {
     // Brand
-    appName: 'KaamSetu',
-    tagline: 'Right People. Right Place. Right Work.',
+    appName: 'DigiWork',
+    tagline: 'India\'s Digital Workforce & Hiring Platform',
     
     // Auth & Onboarding
-    welcomeTitle: 'Welcome to KaamSetu',
+    welcomeTitle: 'Welcome to DigiWork',
     welcomeSubtitle: 'India\'s Most Trusted Digital Workforce Ecosystem',
     selectLanguage: 'Choose Language / भाषा चुनें',
     enterPhone: 'Enter Mobile Number',
@@ -120,11 +120,11 @@ export const translations = {
   },
   hi: {
     // Brand
-    appName: 'कामसेतु',
-    tagline: 'सही लोग। सही जगह। सही काम।',
+    appName: 'डिजीवर्क',
+    tagline: 'भारत का डिजिटल वर्कफोर्स व हायरिंग प्लेटफॉर्म',
     
     // Auth & Onboarding
-    welcomeTitle: 'कामसेतु में आपका स्वागत है',
+    welcomeTitle: 'डिजीवर्क में आपका स्वागत है',
     welcomeSubtitle: 'भारत का सबसे भरोसेमंद डिजिटल मजदूर व कारीगर मंच',
     selectLanguage: 'भाषा चुनें / Choose Language',
     enterPhone: 'अपना मोबाइल नंबर दर्ज करें',

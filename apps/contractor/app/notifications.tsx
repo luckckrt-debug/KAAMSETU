@@ -29,7 +29,7 @@ export default function ContractorNotificationsScreen() {
       id: 'nt-c2',
       userId: contractor?.userId || 'usr-c-1',
       title: 'New Labour Pool Allocation',
-      body: '4 Masons & 2 Welders from KaamSetu verified pool accepted deployment to Omaxe Residency.',
+      body: '4 Masons & 2 Welders from DigiWork verified pool accepted deployment to Omaxe Residency.',
       type: 'SYSTEM',
       isRead: true,
       createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),

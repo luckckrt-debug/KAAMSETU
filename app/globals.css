@@ -4,10 +4,11 @@
 
 :root {
   --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --bg-sky: #EAF6FF;
-  --bg-sky-pale: #D9EEFF;
-  --text-dark: #153451;
-  --accent-blue: #2583D5;
+  --bg-sky: #F5F8FC;
+  --bg-sky-pale: #EDF4FC;
+  --text-dark: #0B1F3A;
+  --accent-blue: #2563EB;
+  --accent-sky: #38BDF8;
 }
 
 html {
@@ -15,8 +16,8 @@ html {
 }
 
 body {
-  background-color: #EAF6FF;
-  color: #153451;
+  background-color: #F5F8FC;
+  color: #0B1F3A;
   font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -29,47 +30,47 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #EAF6FF;
+  background: #F5F8FC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #B4D7F0;
+  background: #B6CEE8;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2583D5;
+  background: #2563EB;
 }
 
 /* Accessible focus ring */
 *:focus-visible {
-  outline: 2px solid #2583D5;
+  outline: 2px solid #2563EB;
   outline-offset: 2px;
 }
 
 /* Glassmorphism Presets */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow: 0 20px 50px -12px rgba(37, 131, 213, 0.12), 0 4px 16px -2px rgba(21, 52, 81, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 50px -12px rgba(11, 31, 58, 0.08), 0 4px 16px -2px rgba(11, 31, 58, 0.04);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(209, 232, 248, 0.85);
-  box-shadow: 0 10px 30px -8px rgba(37, 131, 213, 0.08);
+  border: 1px solid rgba(215, 227, 241, 0.85);
+  box-shadow: 0 10px 30px -8px rgba(37, 99, 235, 0.06);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: rgba(37, 131, 213, 0.4);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(37, 99, 235, 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 20px 40px -10px rgba(37, 131, 213, 0.16);
+  box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.12);
 }
 
 /* Subtle Ambient Lighting Keyframes */

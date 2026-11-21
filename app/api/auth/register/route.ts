@@ -3,6 +3,7 @@ import { dbStore } from '@/lib/store';
 import { hashPassword, getRoleDashboardPath, normalizeRole, signSessionToken } from '@/lib/auth';
 import { getMongoCollection } from '@/lib/mongodb';
 import { UserRole } from '@/lib/types';
+import { attributeReferralOnRegister } from '@/lib/referral';
 
 export const dynamic = 'force-dynamic';
 
@@ -58,7 +59,7 @@ export async function POST(req: NextRequest) {
     if (!password || String(password).trim().length === 0) {
       return NextResponse.json({ 
         success: false, 
-        error: 'Password is required to create a secure KaamSetu account.' 
+        error: 'Password is required to create a secure DigiWork account.' 
       }, { status: 400 });
     }
 
@@ -270,6 +271,26 @@ export async function POST(req: NextRequest) {
 
     const redirectPath = getRoleDashboardPath(normalizeRole(assignedRole));
 
+    // Process referral attribution if referralCode / ref is provided
+    const refCode = body.referralCode || body.ref;
+    if (refCode) {
+      try {
+        const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || '127.0.0.1';
+        const userAgent = req.headers.get('user-agent') || '';
+        await attributeReferralOnRegister({
+          referredUserId: userId,
+          referredRole: assignedRole,
+          referralCode: String(refCode),
+          referralSource: body.referralSource || 'DIRECT_LINK',
+          ipAddress: clientIp,
+          userAgent,
+          phoneNumber: cleanPhone,
+        });
+      } catch (refErr) {
+        console.warn('[Referral Attribution Notice]:', refErr);
+      }
+    }
+
     // Sign session token for automatic login option
     const token = signSessionToken({
       userId,
@@ -281,7 +302,7 @@ export async function POST(req: NextRequest) {
 
     const response = NextResponse.json({
       success: true,
-      message: 'Account registered successfully! Welcome to KaamSetu.',
+      message: 'Account registered successfully! Welcome to DigiWork.',
       user: {
         id: userId,
         phoneNumber: cleanPhone,
@@ -292,6 +313,14 @@ export async function POST(req: NextRequest) {
       token,
       redirectUrl: redirectPath,
     }, { status: 201 });
+
+    response.cookies.set('digiwork_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60,
+    });
 
     response.cookies.set('kaamsetu_session', token, {
       httpOnly: true,

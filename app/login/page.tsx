@@ -204,7 +204,7 @@ export default function LoginPage() {
             <Zap className="w-6 h-6 fill-white" />
           </div>
           <h1 className="text-2xl font-black text-[#153451] tracking-tight">
-            Login to KAAMSETU
+            Login to DigiWork
           </h1>
           <p className="text-xs text-[#7697B3]">
             Central Authentication • सुरक्षित मोबाइल व पासवर्ड लॉगिन
@@ -313,7 +313,7 @@ export default function LoginPage() {
           <div className="grid grid-cols-2 gap-2 text-[11px]">
             <button
               type="button"
-              onClick={() => selectDemoUser('9876543210', 'KaamSetu@2026')}
+              onClick={() => selectDemoUser('9876543210', 'DigiWork@2026')}
               className="p-2 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] hover:bg-[#EAF6FF] text-left transition flex items-center gap-2 font-bold text-[#153451]"
             >
               <HardHat className="w-4 h-4 text-[#2583D5] shrink-0" />
@@ -325,7 +325,7 @@ export default function LoginPage() {
 
             <button
               type="button"
-              onClick={() => selectDemoUser('9876543211', 'KaamSetu@2026')}
+              onClick={() => selectDemoUser('9876543211', 'DigiWork@2026')}
               className="p-2 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] hover:bg-[#EAF6FF] text-left transition flex items-center gap-2 font-bold text-[#153451]"
             >
               <Building2 className="w-4 h-4 text-[#2583D5] shrink-0" />
@@ -337,7 +337,7 @@ export default function LoginPage() {
 
             <button
               type="button"
-              onClick={() => selectDemoUser('9876543212', 'KaamSetu@2026')}
+              onClick={() => selectDemoUser('9876543212', 'DigiWork@2026')}
               className="p-2 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] hover:bg-[#EAF6FF] text-left transition flex items-center gap-2 font-bold text-[#153451]"
             >
               <User className="w-4 h-4 text-[#2583D5] shrink-0" />
@@ -349,7 +349,7 @@ export default function LoginPage() {
 
             <button
               type="button"
-              onClick={() => selectDemoUser('9999999999', 'KaamSetu@2026')}
+              onClick={() => selectDemoUser('9999999999', 'DigiWork@2026')}
               className="p-2 rounded-xl border border-[#D1E8F8] bg-[#F5FAFF] hover:bg-[#EAF6FF] text-left transition flex items-center gap-2 font-bold text-[#153451]"
             >
               <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />

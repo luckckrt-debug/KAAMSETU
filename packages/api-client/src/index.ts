@@ -1,5 +1,5 @@
-// KAAMSETU - Universal Typed API & Socket.IO Client SDK
-// Consumed by KaamSetu Worker, KaamSetu Hiring, and KaamSetu Contractor Mobile Apps
+// DIGIWORK - Universal Typed API & Socket.IO Client SDK
+// Consumed by DigiWork Worker, DigiWork Hiring, and DigiWork Contractor Mobile Apps
 
 import {
   WorkerProfileData,
@@ -16,7 +16,7 @@ import {
 } from '@kaamsetu/shared';
 import { io, Socket } from 'socket.io-client';
 
-export class KaamSetuApiClient {
+export class DigiWorkApiClient {
   private baseUrl: string;
   private authToken: string | null = null;
   private socket: Socket | null = null;
@@ -391,4 +391,5 @@ export class KaamSetuApiClient {
 }
 
 // Default Singleton Instance
-export const apiClient = new KaamSetuApiClient();
+export const apiClient = new DigiWorkApiClient();
+export const KaamSetuApiClient = DigiWorkApiClient; // Backward compatibility alias

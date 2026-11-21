@@ -5,22 +5,22 @@ import Logo from '@/components/Logo';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#123B5D] text-white border-t border-[#1D4F78] relative z-10 pb-20 md:pb-0">
+    <footer className="bg-[#0B1F3A] text-white border-t border-[#1E3A8A] relative z-10 pb-20 md:pb-0">
       {/* Top CTA Strip */}
-      <div className="bg-[#1D4F78] border-b border-[#2583D5]/30 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="bg-[#1E3A8A] border-b border-[#2563EB]/30 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl sm:text-2xl font-black text-white flex items-center justify-center md:justify-start gap-2">
-              <ShieldCheck className="w-6 h-6 text-[#60B5F5]" /> Are you a skilled electrician, plumber or contractor?
+              <ShieldCheck className="w-6 h-6 text-[#38BDF8]" /> Are you a skilled electrician, plumber or contractor?
             </h3>
-            <p className="text-slate-300 text-sm mt-1 font-medium">
-              Join KaamSetu. Get direct daily bookings, fair hourly rates, and instant digital wallet payouts.
+            <p className="text-slate-200 text-sm mt-1 font-medium">
+              Join DigiWork. Get direct daily bookings, fair hourly rates, and instant digital wallet payouts.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/register/worker"
-              className="px-6 py-3 rounded-xl bg-[#2583D5] hover:bg-[#1E70B8] text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 hover:scale-[1.02]"
+              className="px-6 py-3 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-sm shadow-md transition-all flex items-center gap-2 hover:scale-[1.02]"
             >
               Join as Worker (श्रमिक बनें) <ArrowRight className="w-4 h-4" />
             </Link>
@@ -42,59 +42,59 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-4">
             <Logo variant="dark" size="md" />
             <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
-              India&apos;s trusted digital workforce ecosystem connecting verified skilled workers, customers, contractors, and companies with real-time GPS dispatch and transparent payments.
+              India&apos;s digital workforce platform connecting verified skilled workers, customers, contractors, and businesses with real-time GPS dispatch and transparent payments.
             </p>
-            <div className="pt-2 text-xs text-[#60B5F5] font-semibold flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-[#60B5F5] animate-pulse"></span>
+            <div className="pt-2 text-xs text-[#38BDF8] font-semibold flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-[#38BDF8] animate-pulse"></span>
               Live across Delhi NCR, Patna, Lucknow, Mumbai, Bengaluru, & 120+ Cities
             </div>
           </div>
 
           {/* Popular Categories */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-[#1D4F78] pb-2">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-[#1E3A8A] pb-2">
               Categories (श्रेणियां)
             </h4>
             <ul className="space-y-2.5 text-sm text-slate-300">
-              <li><Link href="/workers?category=electrician" className="hover:text-[#60B5F5] transition-colors">Electricians (बिजली मिस्त्री)</Link></li>
-              <li><Link href="/workers?category=plumber" className="hover:text-[#60B5F5] transition-colors">Plumbers (नल मिस्त्री)</Link></li>
-              <li><Link href="/workers?category=mason" className="hover:text-[#60B5F5] transition-colors">Masons (राज मिस्त्री)</Link></li>
-              <li><Link href="/workers?category=carpenter" className="hover:text-[#60B5F5] transition-colors">Carpenters (बढ़ई)</Link></li>
-              <li><Link href="/workers?category=painter" className="hover:text-[#60B5F5] transition-colors">Painters (रंग मिस्त्री)</Link></li>
-              <li><Link href="/workers?category=delivery" className="hover:text-[#60B5F5] transition-colors">Delivery Partners (डिलीवरी)</Link></li>
+              <li><Link href="/workers?category=electrician" className="hover:text-[#38BDF8] transition-colors">Electricians (बिजली मिस्त्री)</Link></li>
+              <li><Link href="/workers?category=plumber" className="hover:text-[#38BDF8] transition-colors">Plumbers (नल मिस्त्री)</Link></li>
+              <li><Link href="/workers?category=mason" className="hover:text-[#38BDF8] transition-colors">Masons (राज मिस्त्री)</Link></li>
+              <li><Link href="/workers?category=carpenter" className="hover:text-[#38BDF8] transition-colors">Carpenters (बढ़ई)</Link></li>
+              <li><Link href="/workers?category=painter" className="hover:text-[#38BDF8] transition-colors">Painters (रंग मिस्त्री)</Link></li>
+              <li><Link href="/workers?category=delivery" className="hover:text-[#38BDF8] transition-colors">Delivery Partners (डिलीवरी)</Link></li>
             </ul>
           </div>
 
-          {/* Workforce Solutions (Admin link strictly excluded) */}
+          {/* Workforce Solutions */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-[#1D4F78] pb-2">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-[#1E3A8A] pb-2">
               Solutions (समाधान)
             </h4>
             <ul className="space-y-2.5 text-sm text-slate-300">
-              <li><Link href="/workers" className="hover:text-[#60B5F5] transition-colors">Emergency Worker Dispatch</Link></li>
-              <li><Link href="/tenders" className="hover:text-[#60B5F5] transition-colors">Tender Marketplace</Link></li>
-              <li><Link href="/contractor" className="hover:text-[#60B5F5] transition-colors">Bulk Manpower Supply</Link></li>
-              <li><Link href="/register/worker" className="hover:text-[#60B5F5] transition-colors">Worker Verification & KYC</Link></li>
-              <li><a href="#how-it-works" className="hover:text-[#60B5F5] transition-colors">How Escrow Works</a></li>
+              <li><Link href="/workers" className="hover:text-[#38BDF8] transition-colors">Emergency Worker Dispatch</Link></li>
+              <li><Link href="/tenders" className="hover:text-[#38BDF8] transition-colors">Tender Marketplace</Link></li>
+              <li><Link href="/contractor" className="hover:text-[#38BDF8] transition-colors">Bulk Manpower Supply</Link></li>
+              <li><Link href="/register/worker" className="hover:text-[#38BDF8] transition-colors">Worker Verification & KYC</Link></li>
+              <li><a href="#how-it-works" className="hover:text-[#38BDF8] transition-colors">How Escrow Works</a></li>
             </ul>
           </div>
 
           {/* Contact & Support */}
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-[#1D4F78] pb-2">
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-[#1E3A8A] pb-2">
               Trust & Support
             </h4>
             <div className="space-y-3 text-sm text-slate-300">
               <div className="flex items-start gap-2">
-                <Phone className="w-4 h-4 text-[#60B5F5] shrink-0 mt-0.5" />
-                <span>1800-KAAMSETU (Toll-Free)</span>
+                <Phone className="w-4 h-4 text-[#38BDF8] shrink-0 mt-0.5" />
+                <span>1800-DIGIWORK (Toll-Free)</span>
               </div>
               <div className="flex items-start gap-2">
-                <Mail className="w-4 h-4 text-[#60B5F5] shrink-0 mt-0.5" />
-                <span>support@kaamsetu.in</span>
+                <Mail className="w-4 h-4 text-[#38BDF8] shrink-0 mt-0.5" />
+                <span>support@digiwork.in</span>
               </div>
               <div className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-[#60B5F5] shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-[#38BDF8] shrink-0 mt-0.5" />
                 <span>Connaught Place, New Delhi, India</span>
               </div>
             </div>
@@ -103,8 +103,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Credits */}
-        <div className="mt-12 pt-8 border-t border-[#1D4F78] flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>© {new Date().getFullYear()} KAAMSETU Technologies Private Limited. All rights reserved.</p>
+        <div className="mt-12 pt-8 border-t border-[#1E3A8A] flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+          <p>© {new Date().getFullYear()} DigiWork Technologies Private Limited. All rights reserved.</p>
           <p className="flex items-center gap-1">
             Built with <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500" /> for India&apos;s proud skilled workforce
           </p>

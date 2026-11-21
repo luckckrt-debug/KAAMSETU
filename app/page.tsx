@@ -32,7 +32,7 @@ export default function HomePage() {
       {/* PANEL 2: Popular Categories (9 Core Structured Category Cards) */}
       <CategoriesSection />
 
-      {/* PANEL 3: How KaamSetu Works (01 – Register, 02 – Find Work/Workers, 03 – Connect & Complete) */}
+      {/* PANEL 3: How DigiWork Works (01 – Register, 02 – Find Work/Workers, 03 – Connect & Complete) */}
       <HowItWorksSection />
 
       {/* PANEL 4: Nearby Workers (Real Database & GPS Telemetry Grid) */}
@@ -108,7 +108,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PANEL 7: Trust & Why KaamSetu */}
+      {/* PANEL 7: Trust & Why DigiWork */}
       <WhyTrustSection />
 
       {/* PANEL 8: Testimonials & Community Impact */}

@@ -14,7 +14,7 @@ export default function EmployerWelcomeScreen() {
           <Text style={{ fontSize: 44 }}>🏢</Text>
         </View>
 
-        <Text style={styles.brandTitle}>KAAMSETU</Text>
+        <Text style={styles.brandTitle}>DIGIWORK</Text>
         <Text style={styles.empBadge}>HIRING & EMPLOYER APP</Text>
         <Text style={styles.tagline}>Hire Verified Local Workers & Tradespeople Across India</Text>
 

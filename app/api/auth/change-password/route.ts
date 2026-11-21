@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     const { currentPassword, newPassword, confirmPassword, phoneNumber } = body;
 
     // Check session or direct phone verification
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let targetPhone = phoneNumber ? String(phoneNumber).replace(/\D/g, '') : '';
     let targetUserId = '';
 
@@ -86,8 +86,8 @@ export async function POST(req: NextRequest) {
         }, { status: 401 });
       }
     } else {
-      // Legacy demo password check
-      const isDemo = currentPassword === 'KaamSetu@2026' || currentPassword === '123456';
+      // Pre-seeded demo password check
+      const isDemo = currentPassword === 'DigiWork@2026' || currentPassword === 'KaamSetu@2026' || currentPassword === '123456';
       if (!isDemo) {
         return NextResponse.json({
           success: false,

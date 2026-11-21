@@ -12,7 +12,7 @@ export default function ContractorWelcomeScreen() {
           <Text style={{ fontSize: 44 }}>🏗️</Text>
         </View>
 
-        <Text style={styles.brandTitle}>KAAMSETU</Text>
+        <Text style={styles.brandTitle}>DIGIWORK</Text>
         <Text style={styles.contractorBadge}>CONTRACTOR & BUILDER APP</Text>
         <Text style={styles.tagline}>Civil Construction, Infra & Workforce Operations</Text>
 

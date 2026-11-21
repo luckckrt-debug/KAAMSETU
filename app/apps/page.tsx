@@ -26,8 +26,8 @@ import {
 const APPS_METADATA = [
   {
     id: 'worker',
-    name: 'KaamSetu Worker',
-    nameHi: 'काम सेतु श्रमिक ऐप',
+    name: 'DigiWork Worker',
+    nameHi: 'डिजीवर्क श्रमिक ऐप',
     tagline: 'For Skilled Technicians, Daily Wage Labour & Trade Specialists',
     badge: 'WORKER APP',
     colorScheme: 'from-amber-500 to-orange-600',
@@ -36,7 +36,7 @@ const APPS_METADATA = [
     webUrl: '/worker/dashboard',
     registerUrl: '/register/worker',
     apkDownloadUrl: 'https://expo.dev/artifacts/eas/6Zci0-hiEwLc53RGVoY4UVPl-gaA9eF2eVLPF4TRBYo.apk',
-    packageId: 'com.kaamsetu.worker',
+    packageId: 'com.digiwork.worker',
     version: 'v1.0.4 Release',
     size: '64.8 MB',
     features: [
@@ -51,17 +51,17 @@ const APPS_METADATA = [
   },
   {
     id: 'contractor',
-    name: 'KaamSetu Contractor',
-    nameHi: 'काम सेतु ठेकेदार ऐप',
+    name: 'DigiWork Contractor',
+    nameHi: 'डिजीवर्क ठेकेदार ऐप',
     tagline: 'For Civil Contractors, Site Engineers & Workforce Tenders',
     badge: 'CONTRACTOR APP',
-    colorScheme: 'from-[#153451] to-[#2583D5]',
-    iconBg: 'bg-[#153451]',
+    colorScheme: 'from-[#0B1F3A] to-[#2563EB]',
+    iconBg: 'bg-[#0B1F3A]',
     icon: Building2,
     webUrl: '/contractor',
     registerUrl: '/contractor',
     apkDownloadUrl: 'https://expo.dev/artifacts/eas/JPCBbmDl3gfGcYUuCJad-c7QV8jZ39Vt7z736lLmeq0.apk',
-    packageId: 'com.kaamsetu.contractor',
+    packageId: 'com.digiwork.contractor',
     version: 'v1.0.4 Release',
     size: '64.8 MB',
     features: [
@@ -76,17 +76,17 @@ const APPS_METADATA = [
   },
   {
     id: 'hiring',
-    name: 'KaamSetu Hiring Partner',
-    nameHi: 'काम सेतु ग्राहक व हायरिंग पार्टनर',
+    name: 'DigiWork Hiring Partner',
+    nameHi: 'डिजीवर्क हायरिंग पार्टनर व ग्राहक ऐप',
     tagline: 'For On-demand Home Services, Customers & Business Hiring',
     badge: 'CUSTOMER APP',
     colorScheme: 'from-sky-600 to-blue-700',
-    iconBg: 'bg-[#2583D5]',
+    iconBg: 'bg-[#2563EB]',
     icon: Briefcase,
     webUrl: '/hiring/dashboard',
     registerUrl: '/register/customer',
     apkDownloadUrl: 'https://expo.dev/artifacts/eas/TeHenQQP18h968-pHzZ_Odnc2wlMWrzpILU7AbxpUFE.apk',
-    packageId: 'com.kaamsetu.app',
+    packageId: 'com.digiwork.app',
     version: 'v1.0.4 Release',
     size: '64.8 MB',
     features: [
@@ -101,7 +101,7 @@ const APPS_METADATA = [
   }
 ];
 
-export default function KaamSetuAppsLaunchpad() {
+export default function DigiWorkAppsLaunchpad() {
   const [activeTab, setActiveTab] = useState<'all' | 'worker' | 'contractor' | 'hiring'>('all');
   const [showQrModal, setShowQrModal] = useState<string | null>(null);
 
@@ -121,13 +121,13 @@ export default function KaamSetuAppsLaunchpad() {
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-[#153451] tracking-tight leading-tight">
-            KaamSetu 3-in-1 Ecosystem <br />
+            DigiWork 3-in-1 Ecosystem <br />
             <span className="text-[#2583D5]">Launch & Mobile APK Download Hub</span>
           </h1>
 
           <p className="text-sm sm:text-lg text-[#4B6F8E] max-w-2xl mx-auto leading-relaxed">
             One unified workforce network connecting India across three specialized applications: 
-            <strong> KaamSetu Worker</strong>, <strong>KaamSetu Contractor</strong>, and <strong>KaamSetu Hiring Partner</strong>. 
+            <strong> DigiWork Worker</strong>, <strong>DigiWork Contractor</strong>, and <strong>DigiWork Hiring Partner</strong>. 
             Access instantly via web browser or download standalone Android APKs.
           </p>
 
@@ -283,26 +283,26 @@ export default function KaamSetuAppsLaunchpad() {
         </div>
 
         {/* CENTRAL ADMIN CONTROL ROOM BANNER */}
-        <div className="rounded-3xl bg-[#0D2137] border border-[#1A3859] p-6 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="rounded-3xl bg-[#0B1F3A] border border-[#1E3A8A] p-6 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-2xl text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#163352] text-[#60B5F5] text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#163352] text-[#38BDF8] text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-emerald-400" />
               <span>Super Administrator Portal</span>
             </div>
             <h3 className="text-xl sm:text-2xl font-black">
-              Central Admin Control Room
+              DigiWork Control Center
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
               Supervise all 3 applications from one unified command desk: live GPS telemetry radar, 
-              worker KYC verification queue, ₹99 platform revenue ledger, and instant UPI payout approvals.
+              worker KYC verification queue, platform fee revenue ledger, and instant UPI payout approvals.
             </p>
           </div>
 
           <Link
             href="/admin"
-            className="px-6 py-3.5 rounded-xl bg-white text-[#0D2137] hover:bg-slate-100 font-black text-xs uppercase tracking-wider transition-all shadow-sm shrink-0 flex items-center gap-2"
+            className="px-6 py-3.5 rounded-xl bg-white text-[#0B1F3A] hover:bg-slate-100 font-black text-xs uppercase tracking-wider transition-all shadow-sm shrink-0 flex items-center gap-2"
           >
-            <span>Open Admin Control Room</span>
+            <span>Open DigiWork Control Center</span>
             <ExternalLink className="w-4 h-4" />
           </Link>
         </div>

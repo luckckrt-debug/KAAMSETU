@@ -85,7 +85,7 @@ export async function GET(req: NextRequest) {
       return {
         id: u.id,
         userId: u.id,
-        fullName: u.fullName || 'KaamSetu User',
+        fullName: u.fullName || 'DigiWork User',
         phoneNumber: u.phoneNumber,
         email: u.email,
         roles: u.roles || ['CUSTOMER'],

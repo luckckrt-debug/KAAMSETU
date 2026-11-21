@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
         paymentStatus,
         settlementStatus,
         refundAmount: isCancelled ? platformFeeAmount : 0,
-        providerTransactionRef: `TXN-KAAMSETU-${b.id.slice(-6).toUpperCase()}`,
+        providerTransactionRef: `TXN-DIGIWORK-${b.id.slice(-6).toUpperCase()}`,
         createdAt: b.createdAt,
         settledAt: isSettled ? b.completedAt || b.createdAt : undefined,
       };

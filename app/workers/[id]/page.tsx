@@ -237,7 +237,7 @@ export default function WorkerProfileDetailPage() {
               </div>
 
               <div className="pt-3 border-t border-[#EAF6FF] flex items-center justify-between text-[11px] text-[#7697B3]">
-                <span>KaamSetu Verified Partner</span>
+                <span>DigiWork Verified Partner</span>
                 <span className="font-bold text-emerald-600">Active</span>
               </div>
             </div>
@@ -250,11 +250,11 @@ export default function WorkerProfileDetailPage() {
               </p>
               <div className="pt-2 flex flex-col gap-2">
                 <a
-                  href="tel:1800KAAMSETU"
+                  href="tel:18003444967"
                   className="w-full py-2.5 rounded-xl border border-[#D1E8F8] text-[#153451] hover:border-[#2583D5] text-xs font-bold text-center flex items-center justify-center gap-2 transition bg-white"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#2583D5]" />
-                  <span>Call 1800-KAAMSETU</span>
+                  <span>Call 1800-DIGIWORK</span>
                 </a>
               </div>
             </div>

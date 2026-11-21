@@ -35,6 +35,7 @@ app.prepare().then(() => {
   });
 
   // Attach io to global for API routes
+  global.__digiwork_io = io;
   global.__kaamsetu_io = io;
 
   io.on('connection', (socket) => {
@@ -190,6 +191,6 @@ app.prepare().then(() => {
 
   server.listen(port, (err) => {
     if (err) throw err;
-    console.log(`> KAAMSETU Platform running on http://localhost:${port}`);
+    console.log(`> DigiWork Platform running on http://localhost:${port}`);
   });
 });

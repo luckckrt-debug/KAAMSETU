@@ -63,7 +63,7 @@ export default function EmployerHomeScreen() {
       {/* Top Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Text style={styles.appName}>KAAMSETU HIRING (कामसेतु)</Text>
+          <Text style={styles.appName}>DIGIWORK HIRING (डिजीवर्क)</Text>
           <Text style={styles.empGreeting}>{employer?.companyName || 'Employer Dashboard'}</Text>
           <TouchableOpacity style={styles.addressPill} activeOpacity={0.8}>
             <Text style={{ fontSize: 11 }}>📍</Text>

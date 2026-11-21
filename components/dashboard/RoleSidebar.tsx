@@ -63,6 +63,9 @@ export const HIRING_PARTNER_NAV: NavItem[] = [
   { name: 'Instant Request', nameHi: 'तत्काल सेवा अनुरोध', href: '/hiring/book', icon: Zap },
   { name: 'Active Bookings', nameHi: 'सक्रिय काम व GPS', href: '/hiring/bookings', icon: Clock },
   { name: 'Booking History', nameHi: 'पिछली सेवाएं व रसीदें', href: '/hiring/history', icon: CheckCircle2 },
+  { name: 'Refer & Earn', nameHi: 'रेफर व कमाएं', href: '/hiring/referrals', icon: Award, badge: 'Earn ₹' },
+  { name: 'My Referrals', nameHi: 'मेरे रेफरल्स', href: '/hiring/referrals/list', icon: Users },
+  { name: 'Referral Ledger', nameHi: 'रेफरल लेजर', href: '/hiring/referrals/ledger', icon: Wallet },
   { name: 'Payments & Escrow', nameHi: 'सुरक्षित भुगतान', href: '/hiring/payments', icon: CreditCard },
   { name: 'Saved Addresses', nameHi: 'सहेजे गए पते', href: '/hiring/addresses', icon: Building2 },
   { name: 'Customer Profile', nameHi: 'मेरी प्रोफाइल', href: '/hiring/profile', icon: User },
@@ -92,44 +95,44 @@ export default function RoleSidebar({ role, user, onCloseMobile }: RoleSidebarPr
   const pathname = usePathname();
 
   let navItems = WORKER_NAV;
-  let roleTitle = 'KaamSetu Worker';
+  let roleTitle = 'DigiWork Worker';
   let roleSubtitle = 'कुशल श्रमिक कार्यस्थल';
   let roleBadgeClass = 'bg-emerald-50 text-emerald-800 border-emerald-200';
-  let activeItemClass = 'bg-[#2583D5] text-white shadow-md shadow-[#2583D5]/20 font-bold';
-  let inactiveItemClass = 'text-[#153451] hover:bg-[#EAF6FF] hover:text-[#2583D5]';
+  let activeItemClass = 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20 font-bold';
+  let inactiveItemClass = 'text-[#0B1F3A] hover:bg-[#EDF4FC] hover:text-[#2563EB]';
   let roleIcon = HardHat;
 
   if (role === 'HIRING_PARTNER') {
     navItems = HIRING_PARTNER_NAV;
-    roleTitle = 'Customer / Client';
+    roleTitle = 'DigiWork Hiring Partner';
     roleSubtitle = 'ऑन-डिमांड कारीगर बुकिंग व लाइव ट्रैकिंग';
-    roleBadgeClass = 'bg-[#EAF6FF] text-[#2583D5] border-[#D1E8F8]';
-    activeItemClass = 'bg-[#2583D5] text-white shadow-md shadow-[#2583D5]/20 font-bold';
-    inactiveItemClass = 'text-[#153451] hover:bg-[#EAF6FF] hover:text-[#2583D5]';
+    roleBadgeClass = 'bg-[#EDF4FC] text-[#2563EB] border-[#D7E3F1]';
+    activeItemClass = 'bg-[#2563EB] text-white shadow-md shadow-[#2563EB]/20 font-bold';
+    inactiveItemClass = 'text-[#0B1F3A] hover:bg-[#EDF4FC] hover:text-[#2563EB]';
     roleIcon = MapPin;
   } else if (role === 'CONTRACTOR') {
     navItems = CONTRACTOR_NAV;
-    roleTitle = 'Contractor Hub';
+    roleTitle = 'DigiWork Contractor';
     roleSubtitle = 'निर्माण व प्रोजेक्ट प्रबंधन';
     roleBadgeClass = 'bg-amber-50 text-amber-800 border-amber-200';
-    activeItemClass = 'bg-[#153451] text-lime shadow-md shadow-slate-900/20 font-bold';
-    inactiveItemClass = 'text-[#153451] hover:bg-slate-100 hover:text-slate-900';
+    activeItemClass = 'bg-[#0B1F3A] text-white shadow-md shadow-slate-900/20 font-bold';
+    inactiveItemClass = 'text-[#0B1F3A] hover:bg-slate-100 hover:text-slate-900';
     roleIcon = Building2;
   }
 
   const RoleHeaderIcon = roleIcon;
 
   return (
-    <aside className="w-64 bg-white border-r border-[#D9EEFF] flex flex-col justify-between h-full select-none">
+    <aside className="w-64 bg-white border-r border-[#D7E3F1] flex flex-col justify-between h-full select-none">
       {/* Brand & Role Header */}
       <div>
-        <div className="p-5 border-b border-[#D9EEFF]">
-          <Link href="/" className="flex items-center gap-2 mb-3">
-            <div className="w-9 h-9 rounded-xl bg-[#2583D5] text-white flex items-center justify-center font-black shadow-sm">
-              <RoleHeaderIcon className="w-5 h-5" />
+        <div className="p-5 border-b border-[#D7E3F1]">
+          <Link href="/" className="flex items-center gap-2.5 mb-3 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#0B1F3A] to-[#2563EB] text-white flex items-center justify-center font-black shadow-sm group-hover:scale-105 transition-transform">
+              <RoleHeaderIcon className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="text-base font-black text-black tracking-tight block">KAAM<span className="text-[#2583D5]">SETU</span></span>
+              <span className="text-base font-black text-[#0B1F3A] tracking-tight block">Digi<span className="text-[#2563EB]">Work</span></span>
               <span className="text-[10px] font-bold text-[#4B6F8E] block -mt-1 tracking-wider uppercase">
                 {role.replace('_', ' ')}
               </span>
@@ -205,7 +208,7 @@ export default function RoleSidebar({ role, user, onCloseMobile }: RoleSidebarPr
           </div>
         ) : (
           <div className="text-[11px] text-[#4B6F8E] flex items-center justify-between">
-            <span>KaamSetu Platform v2.0</span>
+            <span>DigiWork Platform v2.0</span>
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
           </div>
         )}

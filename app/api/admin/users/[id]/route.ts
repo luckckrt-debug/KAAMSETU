@@ -97,7 +97,7 @@ export async function GET(
     }
 
     if (!user) {
-      return NextResponse.json({ success: false, error: 'User not found in KaamSetu database.' }, { status: 404 });
+      return NextResponse.json({ success: false, error: 'User not found in DigiWork database.' }, { status: 404 });
     }
 
     // Security: NEVER expose passwordHash, tokens, or private secrets!
@@ -105,7 +105,7 @@ export async function GET(
       id: user.id,
       phoneNumber: user.phoneNumber,
       phoneVerified: !!user.phoneVerified,
-      fullName: user.fullName || 'KaamSetu User',
+      fullName: user.fullName || 'DigiWork User',
       email: user.email,
       roles: user.roles || ['CUSTOMER'],
       status: user.status || 'ACTIVE',
@@ -171,9 +171,9 @@ export async function PATCH(
     const body = await req.json();
     const { status, reason, updatedFields } = body;
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
-    let adminName = 'KaamSetu Super Admin';
+    let adminName = 'DigiWork Super Admin';
     let adminRole = 'SUPER_ADMIN';
 
     if (token) {
@@ -245,9 +245,9 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     let adminId = 'user-admin-1';
-    let adminName = 'KaamSetu Super Admin';
+    let adminName = 'DigiWork Super Admin';
     let adminRole = 'SUPER_ADMIN';
 
     if (token) {

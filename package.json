@@ -1,9 +1,9 @@
 {
-  "name": "kaamsetu",
+  "name": "digiwork",
   "version": "1.0.0",
   "packageManager": "pnpm@9.15.4",
   "private": true,
-  "description": "KAAMSETU - Production-oriented Indian Workforce Marketplace Platform",
+  "description": "DigiWork - India's Digital Workforce & Hiring Platform",
   "workspaces": [
     "apps/*",
     "services/*",

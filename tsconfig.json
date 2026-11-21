@@ -19,9 +19,15 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@kaamsetu/shared": ["./packages/shared/src/index.ts"],
+      "@kaamsetu/api-client": ["./packages/api-client/src/index.ts"],
+      "@kaamsetu/ui": ["./packages/ui/src/index.ts"],
+      "@digiwork/shared": ["./packages/shared/src/index.ts"],
+      "@digiwork/api-client": ["./packages/api-client/src/index.ts"],
+      "@digiwork/ui": ["./packages/ui/src/index.ts"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "apps"]
 }

@@ -86,7 +86,7 @@ export default function ContractorPostWorkPage() {
   const [payoutSchedule, setPayoutSchedule] = useState<PayoutSchedule>('DAILY');
   const [attendanceVerification, setAttendanceVerification] = useState('DAILY_SUPERVISOR');
   const [paymentDueDate, setPaymentDueDate] = useState('Same-day evening 08:00 PM');
-  const [paymentTerms, setPaymentTerms] = useState('Daily verified wage transfer via KaamSetu digital central escrow payout');
+  const [paymentTerms, setPaymentTerms] = useState('Daily verified wage transfer via DigiWork digital central escrow payout');
 
   // Multi-category workforce state
   const [categories, setCategories] = useState<WorkforceCategoryForm[]>([

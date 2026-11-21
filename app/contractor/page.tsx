@@ -74,7 +74,7 @@ export default function ContractorLandingPage() {
           
           <div className="lg:col-span-7 space-y-6">
             <h2 className="text-2xl font-black text-forest">
-              Why Prime Builders & Contractors Partner With KaamSetu
+              Why Prime Builders & Contractors Partner With DigiWork
             </h2>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -117,10 +117,10 @@ export default function ContractorLandingPage() {
                 <p className="text-xs text-text-secondary">Talk to our Enterprise Key Accounts Manager</p>
               </div>
               <a
-                href="tel:18005226738"
+                href="tel:18003444967"
                 className="px-4 py-2 rounded-xl bg-forest text-lime text-xs font-black shadow-xs"
               >
-                1800-KAAMSETU
+                1800-DIGIWORK
               </a>
             </div>
           </div>

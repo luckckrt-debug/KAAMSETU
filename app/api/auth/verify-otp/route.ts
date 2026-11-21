@@ -48,7 +48,14 @@ export async function POST(req: NextRequest) {
       redirectUrl: getRoleDashboardPath(primaryRole),
     });
 
-    // Set secure cookie
+    response.cookies.set('digiwork_session', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 7 * 24 * 60 * 60,
+    });
+
     response.cookies.set('kaamsetu_session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',

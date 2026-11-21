@@ -79,7 +79,7 @@ export default function WorkerProfilePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setMessage('✅ Profile successfully updated and live on KaamSetu!');
+        setMessage('✅ Profile successfully updated and live on DigiWork!');
         setTimeout(() => setMessage(''), 4000);
       }
     } catch (e) {

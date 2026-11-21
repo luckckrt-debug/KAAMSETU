@@ -263,7 +263,7 @@ export default function WorkerWalletPage() {
         {/* TAB 1: OVERVIEW */}
         {activeTab === 'OVERVIEW' && (
           <div className="space-y-6">
-            {/* KaamSetu Transparent Pricing Guarantee Banner */}
+            {/* DigiWork Transparent Pricing Guarantee Banner */}
             <div className="p-4 rounded-3xl bg-[#EAF6FF] border border-[#D1E8F8] flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#2583D5] text-white flex items-center justify-center font-black">
@@ -271,7 +271,7 @@ export default function WorkerWalletPage() {
                 </div>
                 <div>
                   <h4 className="font-black text-[#153451] text-sm">
-                    KaamSetu 100% Fair Wage Guarantee
+                    DigiWork 100% Fair Wage Guarantee
                   </h4>
                   <p className="text-xs text-[#4B6F8E]">
                     Your agreed charge is 100% yours. The ₹99 platform convenience fee is paid separately by the customer. Zero deduction from your earnings.

@@ -57,7 +57,7 @@ export default function HowItWorksSection() {
             TRANSPARENT 3-STEP PROCESS • कैसे काम करता है
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#153451] tracking-tight">
-            How KaamSetu Works
+            How DigiWork Works
           </h2>
           <p className="text-base sm:text-lg text-[#4B6F8E] font-medium leading-relaxed">
             A seamless, transparent journey connecting skilled tradespeople and customers across India with total trust and zero middlemen.

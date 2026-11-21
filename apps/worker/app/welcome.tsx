@@ -14,7 +14,7 @@ export default function WelcomeScreen() {
           <Text style={{ fontSize: 44 }}>👷‍♂️</Text>
         </View>
 
-        <Text style={styles.brandTitle}>KAAMSETU</Text>
+        <Text style={styles.brandTitle}>DIGIWORK</Text>
         <Text style={styles.workerBadge}>WORKER APP (कारीगर / मजदूर)</Text>
         <Text style={styles.tagline}>{t.tagline}</Text>
 

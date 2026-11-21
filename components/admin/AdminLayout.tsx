@@ -187,7 +187,7 @@ export default function AdminLayout({
                 </div>
                 <div className="hidden xl:block text-left">
                   <div className="text-xs font-black text-[#153451] leading-none">Super Admin</div>
-                  <div className="text-[10px] text-[#7697B3] font-semibold mt-0.5">KaamSetu HQ</div>
+                  <div className="text-[10px] text-[#7697B3] font-semibold mt-0.5">DigiWork HQ</div>
                 </div>
               </div>
             </div>

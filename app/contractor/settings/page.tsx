@@ -115,7 +115,7 @@ export default function ContractorSettingsPage() {
               </div>
               <div>
                 <span className="text-[#4B6F8E] block">Contractor Desk Email</span>
-                <strong className="text-sm text-[#153451]">contractor@kaamsetu.in</strong>
+                <strong className="text-sm text-[#153451]">contractor@digiwork.in</strong>
               </div>
             </div>
           </div>

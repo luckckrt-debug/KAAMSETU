@@ -2,7 +2,8 @@ import { getMongoDb, recordAdminAuditLog } from './mongodb';
 import { loadStore, saveStore } from './store';
 import { WorkerWallet, WalletLedgerEntry } from './types';
 
-export const KAAMSETU_PLATFORM_FEE = 99;
+export const DIGIWORK_PLATFORM_FEE = 99;
+export const KAAMSETU_PLATFORM_FEE = DIGIWORK_PLATFORM_FEE;
 
 export interface WorkerEarningRecord {
   id: string;
@@ -259,8 +260,8 @@ export async function recordVerifiedJobEarning(params: {
   }
 
   // 8. WebSocket Broadcast
-  if ((global as any).__kaamsetu_io) {
-    const io = (global as any).__kaamsetu_io;
+  if ((global as any).__digiwork_io || (global as any).__kaamsetu_io) {
+    const io = (global as any).__digiwork_io || (global as any).__kaamsetu_io;
     io.to(`worker:${workerProfileId}`).emit('wallet:balance:updated', {
       workerProfileId,
       availableBalance: wallet.availableBalance,
@@ -447,8 +448,8 @@ export async function requestWorkerWithdrawal(params: {
   }
 
   // Socket broadcast
-  if ((global as any).__kaamsetu_io) {
-    const io = (global as any).__kaamsetu_io;
+  if ((global as any).__digiwork_io || (global as any).__kaamsetu_io) {
+    const io = (global as any).__digiwork_io || (global as any).__kaamsetu_io;
     io.to(`worker:${workerProfileId}`).emit('wallet:balance:updated', {
       workerProfileId,
       availableBalance: wallet.availableBalance,
@@ -640,8 +641,8 @@ export async function finalizeWorkerWithdrawal(params: {
   }
 
   // Socket broadcast
-  if ((global as any).__kaamsetu_io) {
-    const io = (global as any).__kaamsetu_io;
+  if ((global as any).__digiwork_io || (global as any).__kaamsetu_io) {
+    const io = (global as any).__digiwork_io || (global as any).__kaamsetu_io;
     io.to(`worker:${withdrawal.workerProfileId}`).emit('wallet:balance:updated', {
       workerProfileId: withdrawal.workerProfileId,
       availableBalance: wallet.availableBalance,

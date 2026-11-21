@@ -18,7 +18,7 @@ export async function GET(req: NextRequest, { params }: { params: { bookingId: s
     }
 
     // 1. Location Privacy & Authorization Check
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (token) {
       const payload = verifySessionToken(token);
       if (payload) {

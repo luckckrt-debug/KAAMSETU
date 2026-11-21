@@ -136,7 +136,7 @@ export default function InteractiveMap({
 
       // Attribution
       L.control.attribution({ position: 'bottomright', prefix: false })
-        .addAttribution('KaamSetu Live GPS &copy; OpenStreetMap')
+        .addAttribution('DigiWork Live GPS &copy; OpenStreetMap')
         .addTo(map);
 
       markersGroupRef.current = L.layerGroup().addTo(map);

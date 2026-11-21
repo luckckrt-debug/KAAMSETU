@@ -9,7 +9,7 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     let adminId = 'user-admin-1';
     let adminName = 'Super Admin';
 
-    const token = req.cookies.get('kaamsetu_session')?.value;
+    const token = (req.cookies.get('digiwork_session')?.value || req.cookies.get('kaamsetu_session')?.value);
     if (token) {
       const payload = verifySessionToken(token);
       if (payload) {

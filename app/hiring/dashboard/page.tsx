@@ -504,7 +504,7 @@ export default function HiringCustomerDashboard() {
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="text-xs font-black text-[#153451]">₹25,000 KaamSetu Guarantee</h4>
+              <h4 className="text-xs font-black text-[#153451]">₹25,000 DigiWork Guarantee</h4>
               <p className="text-[11px] text-[#7697B3]">Protected escrow with quality insurance</p>
             </div>
           </div>

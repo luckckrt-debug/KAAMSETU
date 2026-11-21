@@ -74,7 +74,7 @@ export async function dispatchPayout(params: {
         purpose: 'payout',
         queue_if_low_balance: true,
         reference_id: withdrawal.id,
-        narration: 'KaamSetu Worker Payout',
+        narration: 'DigiWork Worker Payout',
       };
 
       if (account.accountType === 'UPI' && account.upiId) {
