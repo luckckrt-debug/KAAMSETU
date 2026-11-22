@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">DigiWork</string>
+    <string name="tagline">Right People. Right Place. Right Work.</string>
+    <string name="tagline_bilingual">DIGITAL WORKFORCE • भारत</string>
+    <string name="action_search">Search</string>
+    <string name="action_book_now">Book Now</string>
+    <string name="action_accept_job">Accept Job</string>
+    <string name="action_decline">Decline</string>
+    <string name="action_withdraw">Withdraw Money</string>
+    <string name="action_login">Login to Workspace</string>
+    <string name="error_invalid_phone">Please enter a valid 10-digit Indian mobile number.</string>
+    <string name="error_invalid_otp">Please enter the 6-digit OTP code (test OTP: 123456).</string>
+</resources>

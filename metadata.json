@@ -1,0 +1,8 @@
+{
+  "name": "DigiWork",
+  "description": "Indian digital workforce ecosystem connecting verified skilled workers, customers, contractors, and bulk workforce tenders with transparent pricing and digital wallet payouts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
